@@ -1,0 +1,26 @@
+version: '3.9'
+
+networks:
+  aa-bot-network:
+    name: aa-bot-network
+    driver: bridge
+
+volumes:
+  aa-bot-redis-volume:
+  aa-bot-postgres-volume:
+
+services:
+  db:
+    image: postgres:14.5-alpine
+    container_name: aa-bot-db
+    restart: always
+    ports: ["5000:5432"]
+    environment:
+      POSTGRES_DB: aa-bot
+      POSTGRES_USER: aa-bot
+      POSTGRES_PASSWORD: aa-bot
+      POSTGRES_PORT: 5000
+    volumes:
+      - aa-bot-postgres-volume:/var/lib/postgresql/data
+    networks:
+      - aa-bot-network
