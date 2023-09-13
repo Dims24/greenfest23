@@ -1,9 +1,12 @@
 import random
 import telebot
 from datetime import datetime
+from telebot import types
 import time
 import os
 from telebot.types import InputFile
+import re
+import json
 
 import keyboard.main_keyboard as keyboard
 import database.db_aa as db
@@ -29,8 +32,10 @@ incorrect = ['Хм.. даю ещё шанс 😊',
              'Так-так-так, почти! Но нет!',
              'Давай-давай! Я в тебя верю!',
              ]
-menedjer = 483241197
+menedjer = 64783167
 menedjer_1 = 703608663
+
+admin_id = '703608663'
 
 
 # 703608663
@@ -213,7 +218,7 @@ def fire1_1(message):
             if check(message.from_user, "fire_1_2"):
                 bot.send_message(message.chat.id,
                                  '_Вы проходили данный раздел. Выбирайте другой_',
-                                 parse_mode="Markdown")
+                                 parse_mode="Markdown", reply_markup=keyboard.keyboard(message.from_user))
             else:
                 bot.send_message(message.chat.id,
                                  '_Вы проходили данное задание. Переходим к этапу 2_',
@@ -298,7 +303,7 @@ def fire2_1(message):
             if check(message.from_user, "fire_2_2"):
                 bot.send_message(message.chat.id,
                                  '_Вы проходили данный раздел. Выбирайте другой_',
-                                 parse_mode="Markdown")
+                                 parse_mode="Markdown", reply_markup=keyboard.keyboard(message.from_user))
             else:
                 bot.send_message(message.chat.id,
                                  '_Вы проходили данное задание. Переходим к этапу 2_',
@@ -377,7 +382,7 @@ def fire3_1(message):
             if check(message.from_user, "fire_3_2"):
                 bot.send_message(message.chat.id,
                                  '_Вы проходили данный раздел. Выбирайте другой_',
-                                 parse_mode="Markdown")
+                                 parse_mode="Markdown", reply_markup=keyboard.keyboard(message.from_user))
             else:
                 bot.send_message(message.chat.id,
                                  '_Вы проходили данное задание. Переходим к этапу 2_',
@@ -455,7 +460,7 @@ def air1_1(message):
             if check(message.from_user, "air_1_2"):
                 bot.send_message(message.chat.id,
                                  '_Вы проходили данный раздел. Выбирайте другой_',
-                                 parse_mode="Markdown")
+                                 parse_mode="Markdown", reply_markup=keyboard.keyboard(message.from_user))
             else:
                 bot.send_message(message.chat.id,
                                  '_Вы проходили данное задание. Переходим к этапу 2_',
@@ -537,7 +542,7 @@ def air2_1(message):
             if check(message.from_user, "air_2_2"):
                 bot.send_message(message.chat.id,
                                  '_Вы проходили данный раздел. Выбирайте другой_',
-                                 parse_mode="Markdown")
+                                 parse_mode="Markdown", reply_markup=keyboard.keyboard(message.from_user))
             else:
                 bot.send_message(message.chat.id,
                                  '_Вы проходили данное задание. Переходим к этапу 2_',
@@ -611,537 +616,517 @@ def air2_3(message):
         bot.register_next_step_handler(message, air2_3)
 
 
-def antiquiz_two(message):
+# -------------Земля 1---------------------------
+@bot.message_handler(func=lambda message: message.text.lower() == 'земля 1' or message.text.lower() == 'земля 1 ✅',
+                     content_types=['text'])
+def earth1_1(message):
     try:
-        if message.text.lower() in ['охотники за привидениями']:
-            bot.send_message(message.chat.id,
-                             'Отличная работа!'
-                             , parse_mode="Markdown")
-            bot.send_photo(message.chat.id,
-                           'AgACAgIAAxkBAAIBzWQUVjzao6LFm5nwcv5Cv29JnLJRAAJoxjEboWegSFKMdChU_tgZAQADAgADeQADLwQ',
-                           )
-            bot.register_next_step_handler(message, antiquiz_three)
-        else:
-            bot.send_chat_action(message.chat.id, 'typing')
-            bot.send_message(message.chat.id, 'Хм.. предлагаю подумать ещё 😊\n',
-                             parse_mode="Markdown")
-            bot.register_next_step_handler(message, antiquiz_two)
-    except Exception as error:
-        print(f'antiquiz: {error}')
-        bot.register_next_step_handler(message, antiquiz_two)
-
-
-def antiquiz_three(message):
-    try:
-        if message.text.lower() in ['титаник']:
-            bot.send_message(message.chat.id,
-                             'Отличная работа!'
-                             , parse_mode="Markdown")
-            bot.send_photo(message.chat.id,
-                           'AgACAgIAAxkBAAIBzmQUV7-hypf9o0xw3rt4fScBm2lSAAJwxjEboWegSJekAAGDl-DLcQEAAwIAA3kAAy8E',
-                           )
-            bot.register_next_step_handler(message, antiquiz_end)
-        else:
-            bot.send_chat_action(message.chat.id, 'typing')
-            bot.send_message(message.chat.id, 'Хм.. предлагаю подумать ещё 😊\n',
-                             parse_mode="Markdown")
-            bot.register_next_step_handler(message, antiquiz_three)
-    except Exception as error:
-        print(f'antiquiz_three: {error}')
-        bot.register_next_step_handler(message, antiquiz_three)
-
-
-def antiquiz_end(message):
-    try:
-        if message.text.lower() in ['шерлок',
-                                    'шерлок холмс',
-                                    'шерлок ббс',
-                                    'шерлок bbc',
-                                    'sherlock bbc',
-                                    'шерлок холмс и доктор ватсон']:
-            change(message.from_user, "antiquiz")
-            if check_final(message.from_user):
-                end(message)
-            else:
+        if check(message.from_user, "earth_1_1"):
+            if check(message.from_user, "earth_1_2"):
                 bot.send_message(message.chat.id,
-                                 'Отличная работа!',
+                                 '_Вы проходили данный раздел. Выбирайте другой_',
                                  parse_mode="Markdown", reply_markup=keyboard.keyboard(message.from_user))
+            else:
                 bot.send_message(message.chat.id,
-                                 '*Telegram-игры* – это:\n'
+                                 '_Вы проходили данное задание. Переходим к этапу 2_',
+                                 parse_mode="Markdown")
+                bot.send_message(message.chat.id,
+                                 '_Представьте, что вы на пляже потеряли телефон или брошку и теперь вам нужно '
+                                 'по своим следам выявить место потери. Для удобства, мы поделили пляж на сектора. '
+                                 'Решив эту загадку, никакие потери не будут вам страшны!_\n'
                                  '\n'
-                                 '🔸 Новый формат корпоративных игр: не похож на классические предложения '
-                                 '(онлайн-импровизации, онлайн ролевые игры, онлайн-мастер-классы и тп)\n'
-                                 '🔸 Игра-конструктор: можем выбрать сложность игры, длительность, тематику, '
-                                 'задания, и другие доп.функции\n'
-                                 '🔸 Технологичность: проведение игр с помощью Telegram-бота\n'
-                                 '🔸 Эксклюзивность: каждая игра брендируется под Заказчика\n'
-                                 '🔸 Гарантии: тестируем игру с заказчиком за 2-е суток до мероприятия для правок\n'
-                                 '🔸 Удалённая организация под ключ: оптимизация времени\n'
-                                 '🔸 Неограниченное кол-во участников\n'
-                                 '🔸 Индивидуальная или командная игра!\n'
+                                 '_Ответ пишите в формате: Ответ_'
+                                 , parse_mode="Markdown")
+                bot.send_photo(message.chat.id,
+                               'AgACAgIAAxkBAAIBK2UBmu2ynsok1MeDGyX-dIfABcAQAAIC0jEb23IQSN71hr0nhKHHAQADAgADeQADMAQ')
+                bot.register_next_step_handler(message, earth1_3)
+        else:
+            bot.send_message(message.chat.id,
+                             '_Фото Земля 1_',
+                             parse_mode="Markdown")
+            # bot.send_photo(message.chat.id,
+            #                'AgACAgIAAxkBAAIBdGQUSliGbcKAQZ5N3Y3fBbdt3WqeAAIQxjEboWegSOJiFHAp2QmyAQADAgADeQADLwQ',)
+            bot.register_next_step_handler(message, earth1_2)
+    except Exception as error:
+        print(f'earth1_1: {error}')
+        bot.register_next_step_handler(message, earth1_1)
+
+
+def earth1_2(message):
+    try:
+        if message.text.lower() in ['пропустить']:
+            miss(message)
+        elif message.text.lower() in ['время']:
+            change(message.from_user, "earth_1_1")
+            bot.send_message(message.chat.id,
+                             '_Представьте, что вы на пляже потеряли телефон или брошку и теперь вам нужно '
+                             'по своим следам выявить место потери. Для удобства, мы поделили пляж на сектора. '
+                             'Решив эту загадку, никакие потери не будут вам страшны!_\n'
+                             '\n'
+                             '_Ответ пишите в формате: Ответ_'
+                             , parse_mode="Markdown")
+            bot.send_photo(message.chat.id,
+                           'AgACAgIAAxkBAAIBK2UBmu2ynsok1MeDGyX-dIfABcAQAAIC0jEb23IQSN71hr0nhKHHAQADAgADeQADMAQ')
+            bot.register_next_step_handler(message, earth1_3)
+        else:
+            bot.send_message(message.chat.id, random.choice(incorrect))
+            bot.register_next_step_handler(message, earth1_2)
+    except Exception as error:
+        print(f'earth1_2: {error}')
+        bot.register_next_step_handler(message, earth1_2)
+
+
+def earth1_3(message):
+    try:
+        if message.text.lower() in ['пропустить']:
+            miss(message)
+        elif message.text.lower() in ["гимн"]:
+            if check_final(message.from_user):
+                end(message)
+            else:
+                change(message.from_user, "earth_1_2")
+                bot.send_message(message.chat.id,
+                                 '_Молодцы. Вы на шаг ближе к освоению очередной ценности_  👍🏼 _Открывайте меню и '
+                                 'поехали дальше!_\n'
+                                 , parse_mode="Markdown", reply_markup=keyboard.keyboard(message.from_user))
+                bot.send_message(message.chat.id, "Стикер Земля 1")
+                # bot.send_sticker(message.chat.id,"")
+        else:
+            bot.send_message(message.chat.id, random.choice(incorrect))
+            bot.register_next_step_handler(message, earth1_3)
+    except Exception as error:
+        print(f'earth1_3: {error}')
+        bot.register_next_step_handler(message, earth1_3)
+
+
+# -------------Земля 2---------------------------
+@bot.message_handler(func=lambda message: message.text.lower() == 'земля 2' or message.text.lower() == 'земля 2 ✅',
+                     content_types=['text'])
+def earth2_1(message):
+    try:
+        if check(message.from_user, "earth_2_1"):
+            if check(message.from_user, "earth_2_2"):
+                bot.send_message(message.chat.id,
+                                 '_Вы проходили данный раздел. Выбирайте другой_',
+                                 parse_mode="Markdown", reply_markup=keyboard.keyboard(message.from_user))
+            else:
+                bot.send_message(message.chat.id,
+                                 '_Вы проходили данное задание. Переходим к этапу 2_',
+                                 parse_mode="Markdown")
+                bot.send_message(message.chat.id,
+                                 '_Нейросети сейчас окружают нас даже в путешествиях, помогая составить маршруты'
+                                 ' или рассказывая и показывая красивые места.\n'
+                                 'Здесь нейросеть попросили показать известное крылатое выражение, которое связано '
+                                 'с путешествиями. Напишите какое._\n'
                                  '\n'
-                                 'Возвращайся в меню 🥰',
-                                 parse_mode="Markdown", reply_markup=keyboard.telegram_quest_inline())
-                if check_final(message.from_user):
-                    end(message)
+                                 '_Ответ присылайте в формате: Крылатое выражение _'
+                                 , parse_mode="Markdown")
+                bot.send_photo(message.chat.id,
+                               'AgACAgIAAxkBAAIBLGUBnQOOGLmDoOyoAfquJBPHzc8HAAIz0jEb23IQSFCr9Se3d6WHAQADAgADeQADMAQ')
+                bot.register_next_step_handler(message, earth2_3)
+        else:
+            bot.send_message(message.chat.id,
+                             '_Фото Земля 2_',
+                             parse_mode="Markdown")
+            # bot.send_photo(message.chat.id,
+            #                'AgACAgIAAxkBAAIBdGQUSliGbcKAQZ5N3Y3fBbdt3WqeAAIQxjEboWegSOJiFHAp2QmyAQADAgADeQADLwQ',)
+            bot.register_next_step_handler(message, earth2_2)
+    except Exception as error:
+        print(f'earth2_1: {error}')
+        bot.register_next_step_handler(message, earth2_1)
+
+
+def earth2_2(message):
+    try:
+        if message.text.lower() in ['пропустить']:
+            miss(message)
+        elif message.text.lower() in ['время']:
+            change(message.from_user, "earth_2_1")
+            bot.send_message(message.chat.id,
+                             '_Нейросети сейчас окружают нас даже в путешествиях, помогая составить маршруты'
+                             ' или рассказывая и показывая красивые места.\n'
+                             'Здесь нейросеть попросили показать известное крылатое выражение, которое связано '
+                             'с путешествиями. Напишите какое._\n'
+                             '\n'
+                             '_Ответ присылайте в формате: Крылатое выражение _'
+                             , parse_mode="Markdown")
+            bot.send_photo(message.chat.id,
+                           'AgACAgIAAxkBAAIBLGUBnQOOGLmDoOyoAfquJBPHzc8HAAIz0jEb23IQSFCr9Se3d6WHAQADAgADeQADMAQ')
+            bot.register_next_step_handler(message, earth2_3)
+        else:
+            bot.send_message(message.chat.id, random.choice(incorrect))
+            bot.register_next_step_handler(message, earth2_2)
+    except Exception as error:
+        print(f'earth2_2: {error}')
+        bot.register_next_step_handler(message, earth2_2)
+
+
+def earth2_3(message):
+    try:
+        if message.text.lower() in ['пропустить']:
+            miss(message)
+        elif message.text.lower() in ["гимн"]:
+            if check_final(message.from_user):
+                end(message)
+            else:
+                change(message.from_user, "earth_2_2")
+                bot.send_message(message.chat.id,
+                                 '_Молодцы. Вы на шаг ближе к освоению очередной ценности_  👍🏼 _Открывайте меню и '
+                                 'поехали дальше!_\n'
+                                 , parse_mode="Markdown", reply_markup=keyboard.keyboard(message.from_user))
+                bot.send_message(message.chat.id, "Стикер Земля 2")
+                # bot.send_sticker(message.chat.id,"")
+        else:
+            bot.send_message(message.chat.id, random.choice(incorrect))
+            bot.register_next_step_handler(message, earth2_3)
+    except Exception as error:
+        print(f'earth2_3: {error}')
+        bot.register_next_step_handler(message, earth2_3)
+
+
+# -------------Земля 3 (на доработке)---------------------------
+@bot.message_handler(func=lambda message: message.text.lower() == 'земля 3' or message.text.lower() == 'земля 3 ✅',
+                     content_types=['text'])
+def earth3_1(message):
+    try:
+        if check(message.from_user, "earth_3_1"):
+            if check(message.from_user, "earth_3_2"):
+                bot.send_message(message.chat.id,
+                                 '_Вы проходили данный раздел. Выбирайте другой_',
+                                 parse_mode="Markdown", reply_markup=keyboard.keyboard(message.from_user))
+            else:
+                bot.send_message(message.chat.id,
+                                 '_Вы проходили данное задание. Переходим к этапу 2_',
+                                 parse_mode="Markdown")
+                bot.send_message(message.chat.id,
+                                 '_Нейросети сейчас окружают нас даже в путешествиях, помогая составить маршруты'
+                                 ' или рассказывая и показывая красивые места.\n'
+                                 'Здесь нейросеть попросили показать известное крылатое выражение, которое связано '
+                                 'с путешествиями. Напишите какое._\n'
+                                 '\n'
+                                 '_Ответ присылайте в формате: Крылатое выражение _'
+                                 , parse_mode="Markdown")
+                bot.send_photo(message.chat.id,
+                               'AgACAgIAAxkBAAIBLGUBnQOOGLmDoOyoAfquJBPHzc8HAAIz0jEb23IQSFCr9Se3d6WHAQADAgADeQADMAQ')
+                bot.register_next_step_handler(message, earth3_3)
+        else:
+            bot.send_message(message.chat.id,
+                             '_Фото Земля 3_',
+                             parse_mode="Markdown")
+            # bot.send_photo(message.chat.id,
+            #                'AgACAgIAAxkBAAIBdGQUSliGbcKAQZ5N3Y3fBbdt3WqeAAIQxjEboWegSOJiFHAp2QmyAQADAgADeQADLwQ',)
+            bot.register_next_step_handler(message, earth3_2)
+    except Exception as error:
+        print(f'earth3_1: {error}')
+        bot.register_next_step_handler(message, earth3_1)
+
+
+def earth3_2(message):
+    try:
+        if message.text.lower() in ['пропустить']:
+            miss(message)
+        elif message.text.lower() in ['время']:
+            change(message.from_user, "earth_3_1")
+            bot.send_message(message.chat.id,
+                             '_Нейросети сейчас окружают нас даже в путешествиях, помогая составить маршруты'
+                             ' или рассказывая и показывая красивые места.\n'
+                             'Здесь нейросеть попросили показать известное крылатое выражение, которое связано '
+                             'с путешествиями. Напишите какое._\n'
+                             '\n'
+                             '_Ответ присылайте в формате: Крылатое выражение _'
+                             , parse_mode="Markdown")
+            bot.send_photo(message.chat.id,
+                           'AgACAgIAAxkBAAIBLGUBnQOOGLmDoOyoAfquJBPHzc8HAAIz0jEb23IQSFCr9Se3d6WHAQADAgADeQADMAQ')
+            bot.register_next_step_handler(message, earth3_3)
+        else:
+            bot.send_message(message.chat.id, random.choice(incorrect))
+            bot.register_next_step_handler(message, earth3_2)
+    except Exception as error:
+        print(f'earth3_2: {error}')
+        bot.register_next_step_handler(message, earth3_2)
+
+
+def earth3_3(message):
+    try:
+        if message.text.lower() in ['пропустить']:
+            miss(message)
+        elif message.text.lower() in ["гимн"]:
+            if check_final(message.from_user):
+                end(message)
+            else:
+                change(message.from_user, "earth_3_2")
+                bot.send_message(message.chat.id,
+                                 '_Молодцы. Вы на шаг ближе к освоению очередной ценности_  👍🏼 _Открывайте меню и '
+                                 'поехали дальше!_\n'
+                                 , parse_mode="Markdown", reply_markup=keyboard.keyboard(message.from_user))
+                bot.send_message(message.chat.id, "Стикер Земля 3")
+                # bot.send_sticker(message.chat.id,"")
+        else:
+            bot.send_message(message.chat.id, random.choice(incorrect))
+            bot.register_next_step_handler(message, earth3_3)
+    except Exception as error:
+        print(f'earth3_3: {error}')
+        bot.register_next_step_handler(message, earth3_3)
+
+
+# -------------Вода 1---------------------------
+@bot.message_handler(func=lambda message: message.text.lower() == 'вода 1' or message.text.lower() == 'вода 1 ✅',
+                     content_types=['text'])
+def water1_1(message):
+    try:
+        if check(message.from_user, "water_1_1"):
+            if check(message.from_user, "water_1_2"):
+                bot.send_message(message.chat.id,
+                                 '_Вы проходили данный раздел. Выбирайте другой_',
+                                 parse_mode="Markdown", reply_markup=keyboard.keyboard(message.from_user))
+            else:
+                bot.send_message(message.chat.id,
+                                 '_Вы проходили данное задание. Переходим к этапу 2_',
+                                 parse_mode="Markdown")
+                bot.send_message(message.chat.id,
+                                 '_Представьте, что вы попали в гости к своему другу, который только вернулся '
+                                 'из отпуска. Вы очень хотите его удивить, рассказав о его отпуске вместо него. '
+                                 'Для этого вам понадобится внимательность, ведь он еще не успел разобрать вещи. '
+                                 'Посмотрите внимательно на комнату и попробуйте догадаться где был ваш друг._\n'
+                                 '\n'
+                                 '_Ответ присылайте в формате: слово. В одном сообщении ответ на один вопрос._'
+                                 , parse_mode="Markdown")
+                bot.send_photo(message.chat.id,
+                               'AgACAgIAAxkBAAIBLWUBoJC3KwbXehKn7SuoDNrKrPe0AAJC0jEb23IQSCt3cz2nSAABDwEAAwIAA3kAAzAE')
+                bot.send_document(message.chat.id,
+                                  'BQACAgIAAxkBAAIBLmUBoTsZsWP2hMxHHI1wktzH2S8NAAJpNAAC23IQSHT41Md5G-AIMAQ')
+                bot.register_next_step_handler(message, water1_3)
+        else:
+            bot.send_message(message.chat.id,
+                             '_Фото Вода 1_',
+                             parse_mode="Markdown")
+            # bot.send_photo(message.chat.id,
+            #                'AgACAgIAAxkBAAIBdGQUSliGbcKAQZ5N3Y3fBbdt3WqeAAIQxjEboWegSOJiFHAp2QmyAQADAgADeQADLwQ',)
+            bot.register_next_step_handler(message, water1_2)
+    except Exception as error:
+        print(f'water1_1: {error}')
+        bot.register_next_step_handler(message, water1_1)
+
+
+def water1_2(message):
+    try:
+        if message.text.lower() in ['пропустить']:
+            miss(message)
+        elif message.text.lower() in ['время']:
+            change(message.from_user, "water_1_1")
+            bot.send_message(message.chat.id,
+                             '_Представьте, что вы попали в гости к своему другу, который только вернулся '
+                             'из отпуска. Вы очень хотите его удивить, рассказав о его отпуске вместо него. '
+                             'Для этого вам понадобится внимательность, ведь он еще не успел разобрать вещи. '
+                             'Посмотрите внимательно на комнату и попробуйте догадаться где был ваш друг._\n'
+                             '\n'
+                             '_Ответ присылайте в формате: слово. В одном сообщении ответ на один вопрос._'
+                             , parse_mode="Markdown")
+            bot.send_photo(message.chat.id,
+                           'AgACAgIAAxkBAAIBLWUBoJC3KwbXehKn7SuoDNrKrPe0AAJC0jEb23IQSCt3cz2nSAABDwEAAwIAA3kAAzAE')
+            bot.send_document(message.chat.id,
+                              'BQACAgIAAxkBAAIBLmUBoTsZsWP2hMxHHI1wktzH2S8NAAJpNAAC23IQSHT41Md5G-AIMAQ')
+            bot.register_next_step_handler(message, water1_3)
+        else:
+            bot.send_message(message.chat.id, random.choice(incorrect))
+            bot.register_next_step_handler(message, water1_2)
+    except Exception as error:
+        print(f'water1_2: {error}')
+        bot.register_next_step_handler(message, water1_2)
+
+
+def water1_3(message):
+    try:
+        if message.text.lower() in ['cочи']:
+            if check_answer(message.chat, 'answer', "answer_1"):
+                bot.send_message(message.chat.id,
+                                 'Верно, но подобный ответ уже засчитан',
+                                 parse_mode="Markdown", )
+                bot.register_next_step_handler(message, water1_3)
+            else:
+                bot.send_message(message.chat.id,
+                                 'Прекрасно справляешься!',
+                                 parse_mode="Markdown", )
+                change_answer(message.chat, 'answer', "answer_1")
+                if check_answer_final(message.chat, 'answer'):
+                    final_water1_3(message)
+                else:
+                    bot.register_next_step_handler(message, water1_3)
+        elif message.text.lower() in ['сувенир', 'сувенирную тарелку', 'тарелку', 'тарелка', 'сувенирная тарелка']:
+            if check_answer(message.chat, 'answer', "answer_2"):
+                bot.send_message(message.chat.id,
+                                 'Верно, но подобный ответ уже засчитан',
+                                 parse_mode="Markdown", )
+                bot.register_next_step_handler(message, water1_3)
+            else:
+                bot.send_message(message.chat.id,
+                                 'Прекрасно справляешься!',
+                                 parse_mode="Markdown", )
+                change_answer(message.chat, 'answer', "answer_2")
+                if check_answer_final(message.chat, 'answer'):
+                    final_water1_3(message)
+                else:
+                    bot.register_next_step_handler(message, water1_3)
+        elif message.text.lower() in ['самолёт', 'на самолёте', 'самолётом', 'самолет', 'на самолете', 'самолетом']:
+            if check_answer(message.chat, 'answer', "answer_3"):
+                bot.send_message(message.chat.id,
+                                 'Верно, но подобный ответ уже засчитан',
+                                 parse_mode="Markdown", )
+                bot.register_next_step_handler(message, water1_3)
+            else:
+                bot.send_message(message.chat.id,
+                                 'Прекрасно справляешься!',
+                                 parse_mode="Markdown", )
+                change_answer(message.chat, 'answer', "answer_3")
+                if check_answer_final(message.chat, 'answer'):
+                    final_water1_3(message)
+                else:
+                    bot.register_next_step_handler(message, water1_3)
+        elif message.text.lower() in ['сёрфинг', 'сёрфингом', 'серфинг', 'серфингом']:
+            if check_answer(message.chat, 'answer', "answer_4"):
+                bot.send_message(message.chat.id,
+                                 'Верно, но подобный ответ уже засчитан',
+                                 parse_mode="Markdown", )
+                bot.register_next_step_handler(message, water1_3)
+            else:
+                bot.send_message(message.chat.id,
+                                 'Прекрасно справляешься!',
+                                 parse_mode="Markdown", )
+                change_answer(message.chat, 'answer', "answer_4")
+                if check_answer_final(message.chat, 'answer'):
+                    final_water1_3(message)
+                else:
+                    bot.register_next_step_handler(message, water1_3)
         else:
             bot.send_chat_action(message.chat.id, 'typing')
-            bot.send_message(message.chat.id, 'Хм.. предлагаю подумать ещё 😊\n',
+            bot.send_message(message.chat.id, random.choice(incorrect))
+            bot.register_next_step_handler(message, water1_3)
+
+    except Exception as error:
+        print(f'water1_3: {error}')
+        bot.register_next_step_handler(message, water1_3)
+
+
+def final_water1_3(message):
+    change(message.from_user, "water_1_2")
+    bot.send_message(message.chat.id,
+                     '_Молодцы. Вы на шаг ближе к освоению очередной ценности_ 👍🏼 '
+                     '_Открывайте меню и поехали дальше!_', parse_mode="Markdown",
+                     reply_markup=keyboard.keyboard(message.from_user))
+    bot.send_message(message.chat.id, "Стикер Вода 1")
+    # bot.send_sticker(message.chat.id,"")
+
+
+# -------------Вода 2---------------------------
+photo = [
+    'AgACAgIAAxkBAAIBL2UBp4PVb0RnPemQeAAB0AQ_01_b0QACatIxG9tyEEiFzGMpDpplIQEAAwIAA3kAAzAE',
+    'AgACAgIAAxkBAAIBMGUBp5qV6-B9b8JsgguVrPx4v4RKAAJr0jEb23IQSLwWt8P8s2LQAQADAgADeQADMAQ',
+    'AgACAgIAAxkBAAIBMWUBp7SbEFy-jwi70_gaoqGzrQk9AAJu0jEb23IQSIh00uzci50-AQADAgADeQADMAQ',
+    'AgACAgIAAxkBAAIBMmUBp8xuOKETJHaR9VM8KRwRfQS5AAJv0jEb23IQSOO9DPyZE_33AQADAgADeQADMAQ'
+]
+
+
+@bot.message_handler(func=lambda message: message.text.lower() == 'вода 2' or message.text.lower() == 'вода 2 ✅',
+                     content_types=['text'])
+def water2_1(message):
+    try:
+        if check(message.from_user, "water_2_1"):
+            if check(message.from_user, "water_2_2"):
+                bot.send_message(message.chat.id,
+                                 '_Вы проходили данный раздел. Выбирайте другой_',
+                                 parse_mode="Markdown", reply_markup=keyboard.keyboard(message.from_user))
+            else:
+                bot.send_message(message.chat.id,
+                                 '_Вы проходили данное задание. Переходим к этапу 2_',
+                                 parse_mode="Markdown")
+                bot.send_message(message.chat.id,
+                                 '_Обожаю когда ко мне летом приезжает много людей, играют со мной и '
+                                 'фотографируются на память. Хочу и сейчас чтобы вы оставили мне свои фотокарточки '
+                                 'на память, держите пример, сделайте похожее фото и пришлите сюда._\n',
+                                 parse_mode="Markdown")
+                bot.send_photo(message.chat.id,
+                               random.choice(photo))
+                bot.register_next_step_handler(message, water2_3)
+        else:
+            bot.send_message(message.chat.id,
+                             '_Фото Вода 2_',
                              parse_mode="Markdown")
-            bot.register_next_step_handler(message, antiquiz_end)
+            # bot.send_photo(message.chat.id,
+            #                'AgACAgIAAxkBAAIBdGQUSliGbcKAQZ5N3Y3fBbdt3WqeAAIQxjEboWegSOJiFHAp2QmyAQADAgADeQADLwQ',)
+            bot.register_next_step_handler(message, water2_2)
     except Exception as error:
-        print(f'antiquiz_end: {error}')
-        bot.register_next_step_handler(message, antiquiz_end)
+        print(f'water2_1: {error}')
+        bot.register_next_step_handler(message, water2_1)
 
 
-@bot.message_handler(func=lambda message: message.text.lower() == 'шатры' or message.text.lower() == 'шатры ✅',
-                     content_types=['text'])
-def tents(message):
+def water2_2(message):
     try:
-        if check(message.from_user, "tents"):
+        if message.text.lower() in ['пропустить']:
+            miss(message)
+        elif message.text.lower() in ['группа']:
+            change(message.from_user, "water_2_1")
             bot.send_message(message.chat.id,
-                             'Вы проходили данное задание',
-                             parse_mode="Markdown", reply_markup=keyboard.keyboard(message.from_user))
-            bot.send_message(message.chat.id,
-                             'Шатры с установкой под ключ – это мастхэв для уличного мероприятия. Готовые шатры красивы, они '
-                             'хорошо защищают от погодных проявлений. Они позволят укрыться от дождя, ветра или солнца в '
-                             'жаркую погоду. Дополнительно можно смонтировать сцену, арендовать банкетные или фуршетные '
-                             'столы и стулья для гостей.\n'
-                             '\n'
-                             'Про мебель рассказываю отдельно 😏\n'
-                             '\n'
-                             'Возвращайся в меню 🥰',
-                             parse_mode="Markdown", reply_markup=keyboard.telegram_tent_inline())
-        else:
-            bot.send_sticker(message.chat.id,
-                             "CAACAgIAAxkBAAEIHeNkDu9Wd5gvELZtO3MK7S8Y2b8QKgAC5ysAAvIMWEiBgimOerPlQi8E")
-            bot.send_message(message.chat.id,
-                             '🧩 Ой, шатры – это вообще шикарное круглогодичное решение! У нас они все в '
-                             'собственности и готовы в любую погоду и время года служить на вашем ивенте.\n'
-                             '\n'
-                             'Кстати, о задании: представь, что ты – организатор свадебного торжества и '
-                             'прямо сейчас '
-                             'завершается монтаж площадки. Нужно внимательно оценить идеальную готовность '
-                             'и понять, не осталось ли на площадке что-то лишнее. Потому что всё лишнее,'
-                             ' конечно, нужно убрать. \n'
-                             'Главное – в н и м а т е л ь н о с т ь. Её-то сейчас и проверим))\n'
-                             '\n'
-                             '✅ _Назови 4 атрибута, которые *не* потребуются на этом мероприятии. Один '
-                             'лишний предмет – один ответ. Давать ответы можно в произвольном порядке._',
+                             '_Обожаю когда ко мне летом приезжает много людей, играют со мной и '
+                             'фотографируются на память. Хочу и сейчас чтобы вы оставили мне свои фотокарточки '
+                             'на память, держите пример, сделайте похожее фото и пришлите сюда._\n',
                              parse_mode="Markdown")
-            bot.send_document(message.chat.id,
-                              'BQACAgIAAxkBAAINP2QcYGv1LXmOSrRCHVXPVMYTMLlAAAKJKQACos_pSOplKiW5_zLULwQ')
             bot.send_photo(message.chat.id,
-                           'AgACAgIAAxkBAAICIGQVhbzCUTCpsr1NwYMAAe9TMChpJgAC38YxG6FnqEi-V1BXqjzYeQEAAwIAA3kAAy8E',
-                           )
-            bot.register_next_step_handler(message, tents_end)
-    except Exception as error:
-        print(f'tents: {error}')
-        bot.register_next_step_handler(message, tents)
-
-
-def tents_end(message):
-    try:
-        # if check_answer_final(message.from_user, 'tent_answer'):
-        #     end(message)
-        #     change(message.from_user, "tents")
-        if message.text.lower() in ['мишка',
-                                    'медвежонок',
-                                    'медведь',
-                                    'плюшевый мишка',
-                                    'плюшевый медведь',
-                                    'мягкая игрушка',
-                                    'игрушка']:
-            if check_answer(message.from_user, 'tent_answer', "answer_1"):
-                bot.send_message(message.chat.id,
-                                 'Верно, но подобный ответ уже засчитан',
-                                 parse_mode="Markdown", )
-                bot.register_next_step_handler(message, tents_end)
-            else:
-                bot.send_message(message.chat.id,
-                                 'Прекрасно справляешься!',
-                                 parse_mode="Markdown", )
-                change_answer(message.from_user, 'tent_answer', "answer_1")
-                change_answer(message.from_user, 'tent_answer', "answer_5")
-                if check_answer_final(message.from_user, 'tent_answer'):
-                    change(message.from_user, "tents")
-                    tents_end_message(message)
-                else:
-                    bot.register_next_step_handler(message, tents_end)
-        elif message.text.lower() in ['меню',
-                                      'менюшка']:
-            if check_answer(message.from_user, 'tent_answer', "answer_2"):
-                bot.send_message(message.chat.id,
-                                 'Верно, но подобный ответ уже засчитан',
-                                 parse_mode="Markdown", )
-                bot.register_next_step_handler(message, tents_end)
-            else:
-                bot.send_message(message.chat.id,
-                                 'Прекрасно справляешься!',
-                                 parse_mode="Markdown", )
-                change_answer(message.from_user, 'tent_answer', "answer_2")
-                change_answer(message.from_user, 'tent_answer', "answer_5")
-                if check_answer_final(message.from_user, 'tent_answer'):
-                    change(message.from_user, "tents")
-                    tents_end_message(message)
-                else:
-                    bot.register_next_step_handler(message, tents_end)
-        elif message.text.lower() in ['ёлка',
-                                      'елка',
-                                      'новогодняя ёлка',
-                                      'новогодняя елка',
-                                      'ель']:
-            if check_answer(message.from_user, 'tent_answer', "answer_3"):
-                bot.send_message(message.chat.id,
-                                 'Верно, но подобный ответ уже засчитан',
-                                 parse_mode="Markdown", )
-                bot.register_next_step_handler(message, tents_end)
-            else:
-                bot.send_message(message.chat.id,
-                                 'Прекрасно справляешься!',
-                                 parse_mode="Markdown", )
-                change_answer(message.from_user, 'tent_answer', "answer_3")
-                change_answer(message.from_user, 'tent_answer', "answer_5")
-                if check_answer_final(message.from_user, 'tent_answer'):
-                    change(message.from_user, "tents")
-                    tents_end_message(message)
-                else:
-                    bot.register_next_step_handler(message, tents_end)
-        elif message.text.lower() in ['веник',
-                                      'веник и совок',
-                                      'веник,совок',
-                                      'веник с совком',
-                                      'совок',
-                                      'совок и веник',
-                                      'совок с веником',
-                                      'швабра',
-                                      'швабра с совком',
-                                      'совок с шваброй',
-                                      'метла',
-                                      'метла и совок',
-                                      'метла с совком',
-                                      'совок с метлой']:
-            if check_answer(message.from_user, 'tent_answer', "answer_4"):
-                bot.send_message(message.chat.id,
-                                 'Верно, но подобный ответ уже засчитан',
-                                 parse_mode="Markdown", )
-                bot.register_next_step_handler(message, tents_end)
-            else:
-                bot.send_message(message.chat.id,
-                                 'Прекрасно справляешься!',
-                                 parse_mode="Markdown", )
-                change_answer(message.from_user, 'tent_answer', "answer_4")
-                change_answer(message.from_user, 'tent_answer', "answer_5")
-                if check_answer_final(message.from_user, 'tent_answer'):
-                    change(message.from_user, "tents")
-                    tents_end_message(message)
-                else:
-                    bot.register_next_step_handler(message, tents_end)
+                           random.choice(photo))
+            bot.register_next_step_handler(message, water2_3)
         else:
-            bot.send_message(message.chat.id,
-                             'Пу-пу-пу.. немного не то😊',
-                             parse_mode="Markdown", )
-            bot.register_next_step_handler(message, tents_end)
+            bot.send_message(message.chat.id, random.choice(incorrect))
+            bot.register_next_step_handler(message, water2_2)
     except Exception as error:
-        print(f'tents_end: {error}')
-        bot.register_next_step_handler(message, tents_end)
+        print(f'water2_2: {error}')
+        bot.register_next_step_handler(message, water2_2)
 
 
-def tents_end_message(message):
+def water2_3(message):
     try:
-        bot.send_message(message.chat.id,
-                         'Отличная работа!',
-                         parse_mode="Markdown", reply_markup=keyboard.keyboard(message.from_user))
-        bot.send_message(message.chat.id,
-                         'Шатры с установкой под ключ – это мастхэв для уличного мероприятия. Готовые шатры красивы, они '
-                         'хорошо защищают от погодных проявлений. Они позволят укрыться от дождя, ветра или солнца в '
-                         'жаркую погоду. Дополнительно можно смонтировать сцену, арендовать банкетные или фуршетные '
-                         'столы и стулья для гостей.\n'
-                         '\n'
-                         'Про мебель рассказываю отдельно 😏\n'
-                         '\n'
-                         'Возвращайся в меню 🥰',
-                         parse_mode="Markdown", reply_markup=keyboard.telegram_tent_inline())
-        if check_final(message.from_user):
-            end(message)
-    except Exception as error:
-        print(f'tents_end_message: {error}')
-        bot.register_next_step_handler(message, tents_end)
+        if message.content_type == 'photo':
+            keyboard_inline = types.InlineKeyboardMarkup()
+            confirm_button = types.InlineKeyboardButton('Подтвердить', callback_data='confirm')
+            cancel_button = types.InlineKeyboardButton('Отменить', callback_data='cancel')
+            keyboard_inline.row(confirm_button, cancel_button)
+            bot.send_photo(admin_id, message.photo[-1].file_id,
+                           caption=f'Подтвердите отправку этой фотографии для "{message.from_user.first_name}":\n'
+                                   f'\n'
+                                   f'Задание Вода 2:\n'
+                                   f'\n'
+                                   f'[ {message.chat} ]'
+                                   f'#question_4#',
+                           reply_markup=keyboard_inline)
 
-    # bot.register_next_step_handler(message, tents)
-
-
-@bot.message_handler(func=lambda message: message.text.lower() == 'мебель' or message.text.lower() == 'мебель ✅',
-                     content_types=['text'])
-def furniture(message):
-    try:
-        if check(message.from_user, "furniture"):
-            bot.send_message(message.chat.id,
-                             'Вы проходили данное задание',
-                             parse_mode="Markdown", reply_markup=keyboard.keyboard(message.from_user))
-            bot.send_message(message.chat.id,
-                             'Мероприятие любят не только за его наполнение, но и глазами. Потому, рекомендуем выдерживать '
-                             'в любом ивенте общий стиль. Мебель и текстиль, а также интересный декор – это всегда '
-                             'прекрасно.\n'
-                             '\n'
-                             'Возвращайся в меню 🥰',
-                             parse_mode="Markdown", reply_markup=keyboard.telegram_furniture_inline())
+            @bot.callback_query_handler(func=lambda call: True)
+            def callback_handler(call):
+                text = call.message.caption
+                match = re.search(r'\[(.*?)\]', text)
+                question = re.search(r'\#(.*?)\#', text)
+                text = match.group(1).replace("'", "\"")
+                text_end = text.replace("None", "null")
+                value = json.loads(text_end)
+                chat = types.Chat.de_json(value)
+                if call.data == 'confirm':
+                    bot.send_message(call.from_user.id, f'Фотография подтверждена у \"{message.from_user.first_name}\"')
+                    # bot.delete_message(call.from_user.id, call.message.id)
+                    bot.send_message(chat.id,
+                                     '_Молодцы. Вы на шаг ближе к освоению очередной ценности_ 👍🏼 _Открывай меню, '
+                                     'поехали дальше_', reply_markup=keyboard.keyboard(message.from_user))
+                    if check_final(chat):
+                        end(message)
+                elif call.data == 'cancel':
+                    bot.send_message(chat.id, 'Хм.. даю ещё шанс 😊')
+                    # bot.delete_message(call.from_user.id, call.message.id)
+                    bot.send_message(call.from_user.id, f'Фотография отменена у \"{message.from_user.first_name}\"')
+                    bot.register_next_step_handler(message, water2_3)
         else:
-            bot.send_sticker(message.chat.id,
-                             "CAACAgIAAxkBAAEIHzNkDzxnlVv7wpIeJ4ZD_XT8uzXKAAOpJgACYSKBSOj2j1mbeI4SLwQ")
-            bot.send_message(message.chat.id,
-                             '🧩 Не существует мероприятий без мебели… ну онлайн разве только 😀 Она везде нужна: пуфики, '
-                             'гардероб, зеркало в гримёрку, гамаки на природу, паллетные столы… В общем, если я начну '
-                             'перечислять всё, что у нас есть, мы пробудем в этом чате ещё очень-очень долго))\n'
-                             '\n'
-                             'Предлагаю сразу к заданию! Я превратил 5 предметов мебели в анаграмму. Это когда буквы в '
-                             'существующем слове перемешаны.\n'
-                             '\n'
-                             '✅ _Попробуй понять, какие слова я “зашифровал” и вписать их в кроссворд. Главным ответом на этот '
-                             'раунд будет слово из_ *красных* _окошек.\n'
-                             '\n'
-                             'Каждое слово можно проверить. Пиши мне предполагаемую разгадку в таком формате без '
-                             'пробелов_ *1ответ.*\n',
-                             parse_mode="Markdown", reply_markup=keyboard.crossworld())
-            bot.send_photo(message.chat.id,
-                           'AgACAgIAAxkBAAICzGQVpBiiHqWXPhItEBIy_t0PisOdAAJxxzEboWeoSKojveZ7k4K5AQADAgADeQADLwQ')
-            bot.register_next_step_handler(message, furniture_check)
+            bot.send_chat_action(message.chat.id, 'typing')
+            bot.send_message(message.chat.id, 'Нужно фото\n',
+                             parse_mode="Markdown")
+            bot.register_next_step_handler(message, water2_3)
     except Exception as error:
-        print(f'furniture: {error}')
-        bot.register_next_step_handler(message, furniture)
-
-
-def furniture_check(message):
-    try:
-        if message.text.lower() in ['1кресло']:
-            if check_answer(message.from_user, 'furniture_answer', "answer_1"):
-                bot.send_message(message.chat.id,
-                                 'Верно, но подобный ответ уже засчитан',
-                                 parse_mode="Markdown", )
-                bot.register_next_step_handler(message, furniture_check)
-            else:
-                bot.send_message(message.chat.id,
-                                 'Верно',
-                                 parse_mode="Markdown", )
-                change_answer(message.from_user, 'furniture_answer', "answer_1")
-                if check_answer_final(message.from_user, 'furniture_answer'):
-                    change(message.from_user, "furniture")
-                    bot.send_photo(message.chat.id,
-                                   'AgACAgIAAxkBAAICzWQVrj9GWMcYaaYWWXPdN4Kan-OdAAKtxzEboWeoSBaPwuII2i2-AQADAgADeQADLwQ',
-                                   reply_markup=keyboard.crossworld())
-                    bot.register_next_step_handler(message, furniture_end_message)
-                else:
-                    bot.register_next_step_handler(message, furniture_check)
-        elif message.text.lower() in ['2стул']:
-            if check_answer(message.from_user, 'furniture_answer', "answer_2"):
-                bot.send_message(message.chat.id,
-                                 'Верно, но подобный ответ уже засчитан',
-                                 parse_mode="Markdown", )
-                bot.register_next_step_handler(message, furniture_check)
-            else:
-                bot.send_message(message.chat.id,
-                                 'Верно',
-                                 parse_mode="Markdown", )
-                change_answer(message.from_user, 'furniture_answer', "answer_2")
-                if check_answer_final(message.from_user, 'furniture_answer'):
-                    change(message.from_user, "furniture")
-                    bot.send_photo(message.chat.id,
-                                   'AgACAgIAAxkBAAICzWQVrj9GWMcYaaYWWXPdN4Kan-OdAAKtxzEboWeoSBaPwuII2i2-AQADAgADeQADLwQ',
-                                   reply_markup=keyboard.crossworld())
-                    bot.register_next_step_handler(message, furniture_end_message)
-                else:
-                    bot.register_next_step_handler(message, furniture_check)
-        elif message.text.lower() in ['3зеркало']:
-            if check_answer(message.from_user, 'furniture_answer', "answer_3"):
-                bot.send_message(message.chat.id,
-                                 'Верно, но подобный ответ уже засчитан',
-                                 parse_mode="Markdown", )
-                bot.register_next_step_handler(message, furniture_check)
-            else:
-                bot.send_message(message.chat.id,
-                                 'Верно',
-                                 parse_mode="Markdown", )
-                change_answer(message.from_user, 'furniture_answer', "answer_3")
-                if check_answer_final(message.from_user, 'furniture_answer'):
-                    change(message.from_user, "furniture")
-                    bot.send_photo(message.chat.id,
-                                   'AgACAgIAAxkBAAICzWQVrj9GWMcYaaYWWXPdN4Kan-OdAAKtxzEboWeoSBaPwuII2i2-AQADAgADeQADLwQ',
-                                   reply_markup=keyboard.crossworld())
-                    bot.register_next_step_handler(message, furniture_end_message)
-                else:
-                    bot.register_next_step_handler(message, furniture_check)
-        elif message.text.lower() in ['4вешалка']:
-            if check_answer(message.from_user, 'furniture_answer', "answer_4"):
-                bot.send_message(message.chat.id,
-                                 'Верно, но подобный ответ уже засчитан',
-                                 parse_mode="Markdown", )
-                bot.register_next_step_handler(message, furniture_check)
-            else:
-                bot.send_message(message.chat.id,
-                                 'Верно',
-                                 parse_mode="Markdown", )
-                change_answer(message.from_user, 'furniture_answer', "answer_4")
-                if check_answer_final(message.from_user, 'furniture_answer'):
-                    change(message.from_user, "furniture")
-                    bot.send_photo(message.chat.id,
-                                   'AgACAgIAAxkBAAICzWQVrj9GWMcYaaYWWXPdN4Kan-OdAAKtxzEboWeoSBaPwuII2i2-AQADAgADeQADLwQ',
-                                   reply_markup=keyboard.crossworld())
-                    bot.register_next_step_handler(message, furniture_end_message)
-                else:
-                    bot.register_next_step_handler(message, furniture_check)
-        elif message.text.lower() in ['5диван']:
-            if check_answer(message.from_user, 'furniture_answer', "answer_5"):
-                bot.send_message(message.chat.id,
-                                 'Верно, но подобный ответ уже засчитан',
-                                 parse_mode="Markdown", )
-                bot.register_next_step_handler(message, furniture_check)
-            else:
-                bot.send_message(message.chat.id,
-                                 'Верно',
-                                 parse_mode="Markdown", )
-                change_answer(message.from_user, 'furniture_answer', "answer_5")
-                if check_answer_final(message.from_user, 'furniture_answer'):
-                    change(message.from_user, "furniture")
-                    bot.send_photo(message.chat.id,
-                                   'AgACAgIAAxkBAAICzWQVrj9GWMcYaaYWWXPdN4Kan-OdAAKtxzEboWeoSBaPwuII2i2-AQADAgADeQADLwQ',
-                                   reply_markup=keyboard.crossworld())
-                    bot.register_next_step_handler(message, furniture_end_message)
-                else:
-                    bot.register_next_step_handler(message, furniture_check)
-        elif message.text.lower() in ['клад']:
-            bot.send_message(message.chat.id,
-                             'Отличная работа!',
-                             parse_mode="Markdown", reply_markup=keyboard.keyboard(message.from_user))
-            bot.send_message(message.chat.id,
-                             'Мероприятие любят не только за его наполнение, но и глазами. Потому, рекомендуем выдерживать '
-                             'в любом ивенте общий стиль. Мебель и текстиль, а также интересный декор – это всегда '
-                             'прекрасно.\n'
-                             '\n'
-                             'Возвращайся в меню 🥰',
-                             parse_mode="Markdown", reply_markup=keyboard.telegram_furniture_inline())
-            if check_final(message.from_user):
-                end(message)
-        else:
-            bot.send_message(message.chat.id,
-                             'Не верно',
-                             parse_mode="Markdown", reply_markup=keyboard.crossworld())
-            bot.register_next_step_handler(message, furniture_check)
-    except Exception as error:
-        print(f'furniture_check: {error}')
-        bot.register_next_step_handler(message, furniture_check)
-
-
-def furniture_end_message(message):
-    try:
-        if message.text.lower() in ['клад']:
-            bot.send_message(message.chat.id,
-                             'Отличная работа!',
-                             parse_mode="Markdown", reply_markup=keyboard.keyboard(message.from_user))
-            bot.send_message(message.chat.id,
-                             'Мероприятие любят не только за его наполнение, но и глазами. Потому, рекомендуем выдерживать '
-                             'в любом ивенте общий стиль. Мебель и текстиль, а также интересный декор – это всегда '
-                             'прекрасно.\n'
-                             '\n'
-                             'Возвращайся в меню 🥰',
-                             parse_mode="Markdown", reply_markup=keyboard.telegram_furniture_inline())
-            if check_final(message.from_user):
-                end(message)
-        else:
-            bot.send_message(message.chat.id,
-                             'Так-так-так, расслабляться ещё рано 😊',
-                             parse_mode="Markdown", reply_markup=keyboard.crossworld())
-            bot.register_next_step_handler(message, furniture_end_message)
-    except Exception as error:
-        print(f'furniture_end_message: {error}')
-        bot.register_next_step_handler(message, furniture_end_message)
-
-
-@bot.message_handler(func=lambda message: message.text.lower() == 'казино' or message.text.lower() == 'казино ✅',
-                     content_types=['text'])
-def casino(message):
-    try:
-        if check(message.from_user, "furniture"):
-            bot.send_message(message.chat.id,
-                             'Вы проходили данное задание',
-                             parse_mode="Markdown", reply_markup=keyboard.keyboard(message.from_user))
-            bot.send_message(message.chat.id,
-                             'Да, в нашей стране Казино и игра на деньги запрещены. Именно поэтому, наше фан-казино на то '
-                             'и фан. Мы играем не на деньги, а на фишки, интерес и азарт. А ещё, все крупье – настоящие '
-                             'профессионалы. Без шуток, это ребята, которые работали в настоящих казино. Они точно '
-                             'знают своё дело)\n'
-                             'Фан-казино, кулинарное-казино, тиры и игровые аппараты – всё, для того, чтобы создать '
-                             'настоящее погружение!\n',
-                             parse_mode="Markdown", reply_markup=keyboard.telegram_casino_inline())
-        else:
-            bot.send_sticker(message.chat.id,
-                             "CAACAgIAAxkBAAEIHeVkDu949s5aPydxGXaUzMKCPAfQuQAC4igAAu3QWUiJCmpWhUnbJi8E")
-            bot.send_message(message.chat.id, '🧩 Надеюсь азарт от этой игры уже разыгрался, а тут ещё и тема Казино! '
-                                              'Сразу скажу, что Казино у нас фановое и существует в двух вариантах: '
-                                              'классика (покер, рулетка, блэкджек и другие) и кулинарное (виски-казино, '
-                                              'сырное-казино, мармеладное-казино и другие).\n'
-                                              '\n'
-                                              '✅ _Расскажу, конечно, всё подробнее, только сначала предлагаю сыграть '
-                                              'со мной в игру. Игра – русская версия Блэкджека – Двадцать Одно. Суть '
-                                              'очень проста. Я раздаю карты, а тебе нужно набрать в сумме 21 или меньше '
-                                              'очков, чем у меня. Проверяем интуицию. Выбери: пас или ещё?_\n',
-                             parse_mode="Markdown", reply_markup=keyboard.casino_keyboard())
-        bot.send_photo(message.chat.id,
-                       'AgACAgIAAxkBAAICzmQVr1mnpchGiLFy07QfbRCTBcXmAAK4xzEboWeoSI2Opx-qLif-AQADAgADcwADLwQ')
-        bot.send_photo(message.chat.id,
-                       'AgACAgIAAxkBAAICz2QVr20kupkYXZg7vjZdjYIOGbGdAAK8xzEboWeoSHTmDCpUfARyAQADAgADeQADLwQ',
-                       reply_markup=keyboard.casino_keyboard())
-        bot.register_next_step_handler(message, casino_end)
-    except Exception as error:
-        print(f'casino: {error}')
-        bot.register_next_step_handler(message, casino)
-
-
-def casino_end(message):
-    try:
-        if message.text.lower() in ['еще', 'ещё']:
-            change(message.from_user, "casino")
-            bot.send_photo(message.chat.id,
-                           'AgACAgIAAxkBAAIC0GQVsGxi-tAcafF7paB4uDLJIdJlAALDxzEboWeoSPSsU6y5nyniAQADAgADeQADLwQ',
-                           reply_markup=keyboard.keyboard(message.from_user))
-            bot.send_message(message.chat.id,
-                             'Так уж и быть… Отличный выбор, удача на твоей стороне! Победа, получается! 🥳\n'
-                             '\n'
-                             'Да, в нашей стране Казино и игра на деньги запрещены. Именно поэтому, наше фан-казино на то '
-                             'и фан. Мы играем не на деньги, а на фишки, интерес и азарт. А ещё, все крупье – настоящие '
-                             'профессионалы. Без шуток! Это ребята, которые работали в настоящих казино. Они точно '
-                             'знают своё дело)\n'
-                             'Фан-казино, кулинарное-казино, тиры и игровые аппараты – всё, для того, чтобы создать '
-                             'настоящее погружение!\n'
-                             '\n'
-                             'Возвращайся в меню 🥰',
-                             parse_mode="Markdown", reply_markup=keyboard.telegram_casino_inline())
-
-            if check_final(message.from_user):
-                end(message)
-        elif message.text.lower() in ['пас']:
-            change(message.from_user, "casino")
-            bot.send_photo(message.chat.id,
-                           'AgACAgIAAxkBAAIC0WQVsYLApjHwS2V-x4dUwqLx4VU2AALHxzEboWeoSFtjgWM2FOxrAQADAgADeQADLwQ',
-                           reply_markup=keyboard.keyboard(message.from_user))
-            bot.send_message(message.chat.id,
-                             'Ого, удача на твоей стороне! Ну ладно, я расстраиваться сегодня не буду. Победа за тобой, '
-                             'получается! 🥳\n'
-                             '\n'
-                             'Да, в нашей стране Казино и игра на деньги запрещены. Именно поэтому, наше фан-казино на то '
-                             'и фан. Мы играем не на деньги, а на фишки, интерес и азарт. А ещё, все крупье – настоящие '
-                             'профессионалы. Без шуток, это ребята, которые работали в настоящих казино. Они точно '
-                             'знают своё дело)\n'
-                             'Фан-казино, кулинарное-казино, тиры и игровые аппараты – всё, для того, чтобы создать '
-                             'настоящее погружение!\n'
-                             '\n'
-                             'Возвращайся в меню 🥰',
-                             parse_mode="Markdown", reply_markup=keyboard.telegram_casino_inline())
-
-            if check_final(message.from_user):
-                end(message)
-    except Exception as error:
-        print(f'casino_end: {error}')
-        bot.register_next_step_handler(message, casino_end)
+        print(f'water2_3: {error}')
+        bot.register_next_step_handler(message, water2_3)
 
 
 def end(message):

@@ -111,7 +111,7 @@ class Data:
     def check_answer_final(self, table_name):
         dict_cur = self.conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
         dict_cur.execute(
-            f'SELECT answer_1, answer_2, answer_3, answer_4,answer_5 FROM {table_name} WHERE user_id = \'{self.user_data.id}\'')
+            f'SELECT answer_1, answer_2, answer_3, answer_4 FROM {table_name} WHERE user_id = \'{self.user_data.id}\'')
         rec = dict_cur.fetchone()
         self.cursor.close()
         self.conn.close()
