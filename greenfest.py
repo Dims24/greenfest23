@@ -276,7 +276,7 @@ def fire1_3(message):
             else:
                 change(message.from_user, "fire_1_2")
                 bot.send_message(message.chat.id,
-                                 '_Молодцы. Вы на шаг ближе к освоению очередной ценности 👍🏼 Открывайте меню и '
+                                 '_Молодцы. Вы на шаг ближе к освоению очередной ценности_ 👍🏼 _Открывайте меню и '
                                  'поехали дальше!_\n'
                                  , parse_mode="Markdown", reply_markup=keyboard.keyboard(message.from_user))
                 bot.send_message(message.chat.id, "Стикер Огонь 1")
@@ -306,7 +306,7 @@ def fire2_1(message):
                 bot.send_message(message.chat.id,
                                  '_Лето самая жаркая пора, так что дам вам свое задание связанное с тем, как вы '
                                  'люди прячетесь от жары. Запираетесь дома, смотрите фильмы под кондиционером. '
-                                 'Отгадайте какой я загадал фильм поменяв все слова названия на противоположные\n'
+                                 'Отгадайте какой я загадал фильм поменяв все слова названия на противоположные_\n'
                                  , parse_mode="Markdown")
                 bot.send_photo(message.chat.id,
                                'AgACAgIAAxkBAAIBJmUBiugFuCg3G6NpVznbcwjDUffdAALDzDEb23IISJb6zw4DJyZJAQADAgADeQADMAQ')
@@ -332,7 +332,7 @@ def fire2_2(message):
             bot.send_message(message.chat.id,
                              '_Лето самая жаркая пора, так что дам вам свое задание связанное с тем, как вы '
                              'люди прячетесь от жары. Запираетесь дома, смотрите фильмы под кондиционером. '
-                             'Отгадайте какой я загадал фильм поменяв все слова названия на противоположные\n'
+                             'Отгадайте какой я загадал фильм поменяв все слова названия на противоположные_\n'
                              , parse_mode="Markdown")
             bot.send_photo(message.chat.id,
                            'AgACAgIAAxkBAAIBJmUBiugFuCg3G6NpVznbcwjDUffdAALDzDEb23IISJb6zw4DJyZJAQADAgADeQADMAQ')
@@ -349,13 +349,13 @@ def fire2_3(message):
     try:
         if message.text.lower() in ['пропустить']:
             miss(message)
-        elif message.text.lower() in ['500 дней лета' , 'пятьсот дней лета']:
+        elif message.text.lower() in ['500 дней лета', 'пятьсот дней лета']:
             if check_final(message.from_user):
                 end(message)
             else:
                 change(message.from_user, "fire_2_2")
                 bot.send_message(message.chat.id,
-                                 '_Молодцы. Вы на шаг ближе к освоению очередной ценности 👍🏼 Открывайте меню и '
+                                 '_Молодцы. Вы на шаг ближе к освоению очередной ценности_ 👍🏼 _Открывайте меню и '
                                  'поехали дальше!_\n'
                                  , parse_mode="Markdown", reply_markup=keyboard.keyboard(message.from_user))
                 bot.send_message(message.chat.id, "Стикер Огонь 2")
@@ -367,7 +367,249 @@ def fire2_3(message):
         print(f'fire2_3: {error}')
         bot.register_next_step_handler(message, fire2_3)
 
+
 # -------------Огонь 3---------------------------
+@bot.message_handler(func=lambda message: message.text.lower() == 'огонь 3' or message.text.lower() == 'огонь 3 ✅',
+                     content_types=['text'])
+def fire3_1(message):
+    try:
+        if check(message.from_user, "fire_3_1"):
+            if check(message.from_user, "fire_3_2"):
+                bot.send_message(message.chat.id,
+                                 '_Вы проходили данный раздел. Выбирайте другой_',
+                                 parse_mode="Markdown")
+            else:
+                bot.send_message(message.chat.id,
+                                 '_Вы проходили данное задание. Переходим к этапу 2_',
+                                 parse_mode="Markdown")
+                bot.send_message(message.chat.id,
+                                 '_Настоящие коллеги должны понимать друг друга на любом языке! И даже на языке '
+                                 'эмодзи. Попробуйте понять, кто же тут загадан!_\n'
+                                 , parse_mode="Markdown")
+                bot.send_photo(message.chat.id,
+                               'AgACAgIAAxkBAAIBJ2UBjOZBmaA8TnO-wj-2ed-clBt5AALRzDEb23IISBUkSaZSFL5DAQADAgADeQADMAQ')
+                bot.register_next_step_handler(message, fire3_3)
+        else:
+            bot.send_message(message.chat.id,
+                             '_Фото Огонь 3_',
+                             parse_mode="Markdown")
+            # bot.send_photo(message.chat.id,
+            #                'AgACAgIAAxkBAAIBdGQUSliGbcKAQZ5N3Y3fBbdt3WqeAAIQxjEboWegSOJiFHAp2QmyAQADAgADeQADLwQ',)
+            bot.register_next_step_handler(message, fire3_2)
+    except Exception as error:
+        print(f'fire3_1: {error}')
+        bot.register_next_step_handler(message, fire3_1)
+
+
+def fire3_2(message):
+    try:
+        if message.text.lower() in ['пропустить']:
+            miss(message)
+        elif message.text.lower() in ['руководитель']:
+            change(message.from_user, "fire_3_1")
+            bot.send_message(message.chat.id,
+                             '_Лето самая жаркая пора, так что дам вам свое задание связанное с тем, как вы '
+                             'люди прячетесь от жары. Запираетесь дома, смотрите фильмы под кондиционером. '
+                             'Отгадайте какой я загадал фильм поменяв все слова названия на противоположные\n'
+                             , parse_mode="Markdown")
+            bot.send_photo(message.chat.id,
+                           'AgACAgIAAxkBAAIBJ2UBjOZBmaA8TnO-wj-2ed-clBt5AALRzDEb23IISBUkSaZSFL5DAQADAgADeQADMAQ')
+            bot.register_next_step_handler(message, fire3_3)
+        else:
+            bot.send_message(message.chat.id, random.choice(incorrect))
+            bot.register_next_step_handler(message, fire3_2)
+    except Exception as error:
+        print(f'fire3_2: {error}')
+        bot.register_next_step_handler(message, fire3_2)
+
+
+def fire3_3(message):
+    try:
+        if message.text.lower() in ['пропустить']:
+            miss(message)
+        elif message.text.lower() in ['курчатов']:
+            if check_final(message.from_user):
+                end(message)
+            else:
+                change(message.from_user, "fire_3_2")
+                bot.send_message(message.chat.id,
+                                 '_Молодцы. Вы на шаг ближе к освоению очередной ценности_  👍🏼 _Открывайте меню и '
+                                 'поехали дальше!_\n'
+                                 , parse_mode="Markdown", reply_markup=keyboard.keyboard(message.from_user))
+                bot.send_message(message.chat.id, "Стикер Огонь 3")
+                # bot.send_sticker(message.chat.id,"")
+        else:
+            bot.send_message(message.chat.id, random.choice(incorrect))
+            bot.register_next_step_handler(message, fire3_3)
+    except Exception as error:
+        print(f'fire3_3: {error}')
+        bot.register_next_step_handler(message, fire3_3)
+
+
+# -------------Воздух 1---------------------------
+@bot.message_handler(func=lambda message: message.text.lower() == 'воздух 1' or message.text.lower() == 'воздух 1 ✅',
+                     content_types=['text'])
+def air1_1(message):
+    try:
+        if check(message.from_user, "air_1_1"):
+            if check(message.from_user, "air_1_2"):
+                bot.send_message(message.chat.id,
+                                 '_Вы проходили данный раздел. Выбирайте другой_',
+                                 parse_mode="Markdown")
+            else:
+                bot.send_message(message.chat.id,
+                                 '_Вы проходили данное задание. Переходим к этапу 2_',
+                                 parse_mode="Markdown")
+                bot.send_message(message.chat.id,
+                                 '_Слышите? Ветер доносит ноты очень знакомой песни из пляжного ресторанчика! '
+                                 'Но что же это за песня?_\n'
+                                 '\n'
+                                 '_Ответ пишите в формате: Исполнитель_Название_'
+                                 , parse_mode="Markdown")
+                bot.send_audio(message.chat.id,
+                               'CQACAgIAAxkBAAIBKGUBkWuoA1DST-Qzl3RIEpjXTA1qAAJaNgAC23IISBbbTcH2f-itMAQ')
+                bot.register_next_step_handler(message, air1_3)
+        else:
+            bot.send_message(message.chat.id,
+                             '_Фото Воздух 1_',
+                             parse_mode="Markdown")
+            # bot.send_photo(message.chat.id,
+            #                'AgACAgIAAxkBAAIBdGQUSliGbcKAQZ5N3Y3fBbdt3WqeAAIQxjEboWegSOJiFHAp2QmyAQADAgADeQADLwQ',)
+            bot.register_next_step_handler(message, air1_2)
+    except Exception as error:
+        print(f'air1_1: {error}')
+        bot.register_next_step_handler(message, air1_1)
+
+
+def air1_2(message):
+    try:
+        if message.text.lower() in ['пропустить']:
+            miss(message)
+        elif message.text.lower() in ['совесть']:
+            change(message.from_user, "air_1_1")
+            bot.send_message(message.chat.id,
+                             '_Слышите? Ветер доносит ноты очень знакомой песни из пляжного ресторанчика! '
+                             'Но что же это за песня?_\n'
+                             '\n'
+                             '_Ответ пишите в формате: Исполнитель_Название_'
+                             , parse_mode="Markdown")
+            bot.send_audio(message.chat.id,
+                           'CQACAgIAAxkBAAIBKGUBkWuoA1DST-Qzl3RIEpjXTA1qAAJaNgAC23IISBbbTcH2f-itMAQ')
+            bot.register_next_step_handler(message, air1_3)
+        else:
+            bot.send_message(message.chat.id, random.choice(incorrect))
+            bot.register_next_step_handler(message, air1_2)
+    except Exception as error:
+        print(f'air1_2: {error}')
+        bot.register_next_step_handler(message, air1_2)
+
+
+def air1_3(message):
+    try:
+        if message.text.lower() in ['пропустить']:
+            miss(message)
+        elif message.text.lower() in ["жанна фриске_где-то лето", "жанна фриске_где то лето", "фриске_лето"
+            , "фриске_где то лето", "фриске_где-то лето", "жанна фриске лето", "жанна фриске_лето"]:
+            if check_final(message.from_user):
+                end(message)
+            else:
+                change(message.from_user, "air_1_2")
+                bot.send_message(message.chat.id,
+                                 '_Молодцы. Вы на шаг ближе к освоению очередной ценности_  👍🏼 _Открывайте меню и '
+                                 'поехали дальше!_\n'
+                                 , parse_mode="Markdown", reply_markup=keyboard.keyboard(message.from_user))
+                bot.send_message(message.chat.id, "Стикер Воздух 1")
+                # bot.send_sticker(message.chat.id,"")
+        else:
+            bot.send_message(message.chat.id, random.choice(incorrect))
+            bot.register_next_step_handler(message, air1_3)
+    except Exception as error:
+        print(f'air1_3: {error}')
+        bot.register_next_step_handler(message, air1_3)
+
+
+# -------------Воздух 2---------------------------
+@bot.message_handler(func=lambda message: message.text.lower() == 'воздух 2' or message.text.lower() == 'воздух 2 ✅',
+                     content_types=['text'])
+def air2_1(message):
+    try:
+        if check(message.from_user, "air_2_1"):
+            if check(message.from_user, "air_2_2"):
+                bot.send_message(message.chat.id,
+                                 '_Вы проходили данный раздел. Выбирайте другой_',
+                                 parse_mode="Markdown")
+            else:
+                bot.send_message(message.chat.id,
+                                 '_Вы проходили данное задание. Переходим к этапу 2_',
+                                 parse_mode="Markdown")
+                bot.send_message(message.chat.id,
+                                 '_Вспоминать о лете мы будем еще долго, но чтобы его запомнить еще лучше и '
+                                 'детальнее память нужно тренировать! Сможете вспомнить, что же спрятано на картинке?_\n'
+                                 '\n'
+                                 '_Ответ пишите в формате: Ответ_'
+                                 , parse_mode="Markdown")
+                bot.send_photo(message.chat.id,
+                               'AgACAgIAAxkBAAIBKWUBlDwcYdUovnrlFX9kTANsuOkaAALzzDEb23IISMu7e96jWgpQAQADAgADeQADMAQ')
+                bot.register_next_step_handler(message, air2_3)
+        else:
+            bot.send_message(message.chat.id,
+                             '_Фото Воздух 2_',
+                             parse_mode="Markdown")
+            # bot.send_photo(message.chat.id,
+            #                'AgACAgIAAxkBAAIBdGQUSliGbcKAQZ5N3Y3fBbdt3WqeAAIQxjEboWegSOJiFHAp2QmyAQADAgADeQADLwQ',)
+            bot.register_next_step_handler(message, air2_2)
+    except Exception as error:
+        print(f'air2_1: {error}')
+        bot.register_next_step_handler(message, air2_1)
+
+
+def air2_2(message):
+    try:
+        if message.text.lower() in ['пропустить']:
+            miss(message)
+        elif message.text.lower() in ['признание']:
+            change(message.from_user, "air_2_1")
+            bot.send_message(message.chat.id,
+                             '_Вспоминать о лете мы будем еще долго, но чтобы его запомнить еще лучше и '
+                             'детальнее память нужно тренировать! Сможете вспомнить, что же спрятано на картинке?_\n'
+                             '\n'
+                             '_Ответ пишите в формате: Ответ_'
+                             , parse_mode="Markdown")
+            bot.send_photo(message.chat.id,
+                           'AgACAgIAAxkBAAIBKWUBlDwcYdUovnrlFX9kTANsuOkaAALzzDEb23IISMu7e96jWgpQAQADAgADeQADMAQ')
+            bot.register_next_step_handler(message, air2_3)
+        else:
+            bot.send_message(message.chat.id, random.choice(incorrect))
+            bot.register_next_step_handler(message, air2_2)
+    except Exception as error:
+        print(f'air2_2: {error}')
+        bot.register_next_step_handler(message, air2_2)
+
+
+def air2_3(message):
+    try:
+        if message.text.lower() in ['пропустить']:
+            miss(message)
+        elif message.text.lower() in ["памятник", "памятник славскому", "славский"]:
+            if check_final(message.from_user):
+                end(message)
+            else:
+                change(message.from_user, "air_2_2")
+                bot.send_photo(message.chat.id,
+                               'AgACAgIAAxkBAAIBKmUBlUs-i1Gvx_tLykL6AYYDSYHYAAIGzTEb23IISCjL08JPBWSGAQADAgADeQADMAQ')
+                bot.send_message(message.chat.id,
+                                 '_Молодцы. Вы на шаг ближе к освоению очередной ценности_  👍🏼 _Открывайте меню и '
+                                 'поехали дальше!_\n'
+                                 , parse_mode="Markdown", reply_markup=keyboard.keyboard(message.from_user))
+                bot.send_message(message.chat.id, "Стикер Воздух 2")
+                # bot.send_sticker(message.chat.id,"")
+        else:
+            bot.send_message(message.chat.id, random.choice(incorrect))
+            bot.register_next_step_handler(message, air2_3)
+    except Exception as error:
+        print(f'air2_3: {error}')
+        bot.register_next_step_handler(message, air2_3)
+
 
 def antiquiz_two(message):
     try:
