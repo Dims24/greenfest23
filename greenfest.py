@@ -418,7 +418,7 @@ def fire3_2(message):
             bot.send_message(message.chat.id,
                              '_Лето самая жаркая пора, так что дам вам свое задание связанное с тем, как вы '
                              'люди прячетесь от жары. Запираетесь дома, смотрите фильмы под кондиционером. '
-                             'Отгадайте какой я загадал фильм поменяв все слова названия на противоположные\n'
+                             'Отгадайте какой я загадал фильм поменяв все слова названия на противоположные_\n'
                              , parse_mode="Markdown")
             bot.send_photo(message.chat.id,
                            'AgACAgIAAxkBAAIBJ2UBjOZBmaA8TnO-wj-2ed-clBt5AALRzDEb23IISBUkSaZSFL5DAQADAgADeQADMAQ',
@@ -470,11 +470,11 @@ def air1_1(message):
                                  '_Вы проходили данное задание. Переходим к этапу 2_',
                                  parse_mode="Markdown")
                 bot.send_message(message.chat.id,
-                                 '_Слышите? Ветер доносит ноты очень знакомой песни из пляжного ресторанчика! '
+                                 '_Слышите? Ветер доносит ноты очень знакомой песни из пляжного ресторанчика\! '
                                  'Но что же это за песня?_\n'
                                  '\n'
-                                 '_Ответ пишите в формате: Исполнитель_Название_'
-                                 , parse_mode="Markdown")
+                                 '_Ответ пишите в формате: *Исполнитель\_Название*_'
+                                 , parse_mode="MarkdownV2")
                 bot.send_audio(message.chat.id,
                                'CQACAgIAAxkBAAIBKGUBkWuoA1DST-Qzl3RIEpjXTA1qAAJaNgAC23IISBbbTcH2f-itMAQ',
                                reply_markup=keyboard.keyboard_miss())
@@ -501,7 +501,7 @@ def air1_2(message):
                              '_Слышите? Ветер доносит ноты очень знакомой песни из пляжного ресторанчика! '
                              'Но что же это за песня?_\n'
                              '\n'
-                             '_Ответ пишите в формате: Исполнитель_Название_'
+                             '_Ответ пишите в формате: ```Исполнитель\\_Название```_'
                              , parse_mode="Markdown")
             bot.send_audio(message.chat.id,
                            'CQACAgIAAxkBAAIBKGUBkWuoA1DST-Qzl3RIEpjXTA1qAAJaNgAC23IISBbbTcH2f-itMAQ',reply_markup=keyboard.keyboard_miss())
@@ -810,15 +810,14 @@ def earth3_1(message):
                                  '_Вы проходили данное задание. Переходим к этапу 2_',
                                  parse_mode="Markdown")
                 bot.send_message(message.chat.id,
-                                 '_Нейросети сейчас окружают нас даже в путешествиях, помогая составить маршруты'
-                                 ' или рассказывая и показывая красивые места.\n'
-                                 'Здесь нейросеть попросили показать известное крылатое выражение, которое связано '
-                                 'с путешествиями. Напишите какое._\n'
-                                 '\n'
-                                 '_Ответ присылайте в формате: Крылатое выражение _'
+                                 '_Вы давно ходили в поход? Или вообще не ходили? Ничего страшного, сейчас вместе'
+                                 ' к нему подготовимся. Нас ждет путешествие по горам Кавказа, 2 ночи у озера, жаркая,'
+                                 ' но дождливая погода, так что возьмите с собой все, что может для этого пригодиться.'
+                                 ' Ниже в стикерах можете выбрать вещи которые вам понадобиться, четырех будет '
+                                 'достаточно, остальное уже собрано._'
                                  , parse_mode="Markdown")
-                bot.send_photo(message.chat.id,
-                               'AgACAgIAAxkBAAIBLGUBnQOOGLmDoOyoAfquJBPHzc8HAAIz0jEb23IQSFCr9Se3d6WHAQADAgADeQADMAQ'
+                bot.send_sticker(message.chat.id,
+                               'CAACAgIAAxkBAAEKSrdlAievMcMK_16ed7RacF0pzcFZiwACvzUAAhu2-UvUOmjztTLceDAE'
                                ,reply_markup=keyboard.keyboard_miss())
                 bot.register_next_step_handler(message, earth3_3)
         else:
@@ -837,15 +836,14 @@ def earth3_2(message):
     try:
         if message.text.lower() in ['пропустить']:
             miss(message)
-        elif message.text.lower() in ['время']:
+        elif message.text.lower() in ['тимбилдинг']:
             change(message.from_user, "earth_3_1")
             bot.send_message(message.chat.id,
-                             '_Нейросети сейчас окружают нас даже в путешествиях, помогая составить маршруты'
-                             ' или рассказывая и показывая красивые места.\n'
-                             'Здесь нейросеть попросили показать известное крылатое выражение, которое связано '
-                             'с путешествиями. Напишите какое._\n'
-                             '\n'
-                             '_Ответ присылайте в формате: Крылатое выражение _'
+                             '_Вы давно ходили в поход? Или вообще не ходили? Ничего страшного, сейчас вместе'
+                             ' к нему подготовимся. Нас ждет путешествие по горам Кавказа, 2 ночи у озера, жаркая,'
+                             ' но дождливая погода, так что возьмите с собой все, что может для этого пригодиться.'
+                             ' Ниже в стикерах можете выбрать вещи которые вам понадобиться, четырех будет '
+                             'достаточно, остальное уже собрано._'
                              , parse_mode="Markdown")
             bot.send_photo(message.chat.id,
                            'AgACAgIAAxkBAAIBLGUBnQOOGLmDoOyoAfquJBPHzc8HAAIz0jEb23IQSFCr9Se3d6WHAQADAgADeQADMAQ',

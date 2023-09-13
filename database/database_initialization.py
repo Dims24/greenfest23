@@ -27,7 +27,7 @@ def init_database():
                     username varchar,
                     number   varchar,
                     start_at time ,
-                    end_at   time NULL
+                    end_at   time NULL,
                     delta   time NULL
                 );
         """

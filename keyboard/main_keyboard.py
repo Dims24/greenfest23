@@ -101,12 +101,6 @@ def earth3(list):
         itembtn10 = types.KeyboardButton('Земля 3 ✅')
     return itembtn10
 
-def keyboard_back():
-    markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
-    itembtn1 = types.KeyboardButton('Вернуться в меню')
-    markup.add(itembtn1)
-    return markup
-
 def keyboard_miss():
     markup = types.ReplyKeyboardMarkup(one_time_keyboard=True, resize_keyboard=True)
     itembtn1 = types.KeyboardButton('Пропустить')
