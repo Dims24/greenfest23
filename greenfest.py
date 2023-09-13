@@ -63,7 +63,6 @@ def handle_start(message):
     if (message.from_user.id == menedjer):
         bot.send_message(message.chat.id, 'Вам доступен экспорт', reply_markup=keyboard.export())
     else:
-
         info = db.Data(message.from_user)
         info.create()
         bot.send_sticker(message.chat.id,
@@ -131,7 +130,7 @@ def surname(message):
     try:
         if message.content_type == 'text':
             collector(message)
-            setSurname(message)
+            set_surname(message)
             bot.send_message(message.chat.id,
                              "_Отлично! Теперь_ *имя*", parse_mode="Markdown")
             bot.register_next_step_handler(message, name)
@@ -149,7 +148,7 @@ def surname(message):
 def name(message):
     try:
         if message.content_type == 'text':
-            setName(message)
+            set_name(message)
             bot.send_message(message.chat.id,
                              "_Великолепно! И последнее –_ *номер телефона*", parse_mode="Markdown")
             bot.register_next_step_handler(message, start)
@@ -167,7 +166,7 @@ def name(message):
 def start(message):
     try:
         if message.content_type == 'text':
-            setPhone(message)
+            set_phone(message)
             bot.send_sticker(message.chat.id,
                              "CAACAgIAAxkBAAEIHzFkDzxFeaWhNjihFqQaSFaZNWMzSAACWyoAAvMreEibkHdAfD2kCS8E")
             bot.send_message(message.chat.id, '_Лето – уникальная пора, когда даже самый заядлый домосед выбирается '
@@ -228,16 +227,16 @@ def fire1_1(message):
                                  'Но кажется эти подают своими зонтиками какие-то сигналы. Что же они говорят?\n'
                                  '\n'
                                  'Ответ напишите в формате: Ответ_\n'
-                                 , parse_mode="Markdown")
+                                 , parse_mode="Markdown", reply_markup=keyboard.keyboard_miss())
                 bot.send_animation(message.chat.id,
-                                   'AAMCAgADGQEAA4NlAXVjaamg6iMcZJ2F5junybau2gACijUAAttyCEirQ648afbeKgEAB20AAzAE')
+                                   'CgACAgIAAxkBAAIBymUBuGq1gX6rUNMxkQ0ur_OhTD9HAAJtNQAC23IQSJkRFhX3xlARMAQ')
                 bot.send_photo(message.chat.id,
                                'AgACAgIAAxkBAAOEZQF1oHWShV1Rck_ako-srlwsGakAAnfMMRvbcghIdYpfVx2b-iABAAMCAAN5AAMwBA')
                 bot.register_next_step_handler(message, fire1_3)
         else:
             bot.send_message(message.chat.id,
                              '_Фото Огонь 1_',
-                             parse_mode="Markdown")
+                             parse_mode="Markdown", reply_markup=keyboard.keyboard_miss())
             # bot.send_photo(message.chat.id,
             #                'AgACAgIAAxkBAAIBdGQUSliGbcKAQZ5N3Y3fBbdt3WqeAAIQxjEboWegSOJiFHAp2QmyAQADAgADeQADLwQ',)
             bot.register_next_step_handler(message, fire1_2)
@@ -261,7 +260,8 @@ def fire1_2(message):
             bot.send_animation(message.chat.id,
                                'CgACAgIAAxkBAAP6ZQGC445qkv0soM-YQRWZLmYuS6IAAuQ1AALbcghIP5UtsByzqiUwBA')
             bot.send_photo(message.chat.id,
-                           'AgACAgIAAxkBAAOEZQF1oHWShV1Rck_ako-srlwsGakAAnfMMRvbcghIdYpfVx2b-iABAAMCAAN5AAMwBA')
+                           'AgACAgIAAxkBAAOEZQF1oHWShV1Rck_ako-srlwsGakAAnfMMRvbcghIdYpfVx2b-iABAAMCAAN5AAMwBA'
+                           , reply_markup=keyboard.keyboard_miss())
             bot.register_next_step_handler(message, fire1_3)
         else:
             bot.send_message(message.chat.id, random.choice(incorrect))
@@ -314,12 +314,13 @@ def fire2_1(message):
                                  'Отгадайте какой я загадал фильм поменяв все слова названия на противоположные_\n'
                                  , parse_mode="Markdown")
                 bot.send_photo(message.chat.id,
-                               'AgACAgIAAxkBAAIBJmUBiugFuCg3G6NpVznbcwjDUffdAALDzDEb23IISJb6zw4DJyZJAQADAgADeQADMAQ')
+                               'AgACAgIAAxkBAAIBJmUBiugFuCg3G6NpVznbcwjDUffdAALDzDEb23IISJb6zw4DJyZJAQADAgADeQADMAQ'
+                               ,reply_markup=keyboard.keyboard_miss())
                 bot.register_next_step_handler(message, fire2_3)
         else:
             bot.send_message(message.chat.id,
                              '_Фото Огонь 2_',
-                             parse_mode="Markdown")
+                             parse_mode="Markdown",reply_markup=keyboard.keyboard_miss())
             # bot.send_photo(message.chat.id,
             #                'AgACAgIAAxkBAAIBdGQUSliGbcKAQZ5N3Y3fBbdt3WqeAAIQxjEboWegSOJiFHAp2QmyAQADAgADeQADLwQ',)
             bot.register_next_step_handler(message, fire2_2)
@@ -340,7 +341,8 @@ def fire2_2(message):
                              'Отгадайте какой я загадал фильм поменяв все слова названия на противоположные_\n'
                              , parse_mode="Markdown")
             bot.send_photo(message.chat.id,
-                           'AgACAgIAAxkBAAIBJmUBiugFuCg3G6NpVznbcwjDUffdAALDzDEb23IISJb6zw4DJyZJAQADAgADeQADMAQ')
+                           'AgACAgIAAxkBAAIBJmUBiugFuCg3G6NpVznbcwjDUffdAALDzDEb23IISJb6zw4DJyZJAQADAgADeQADMAQ',
+                           reply_markup=keyboard.keyboard_miss())
             bot.register_next_step_handler(message, fire2_3)
         else:
             bot.send_message(message.chat.id, random.choice(incorrect))
@@ -392,12 +394,13 @@ def fire3_1(message):
                                  'эмодзи. Попробуйте понять, кто же тут загадан!_\n'
                                  , parse_mode="Markdown")
                 bot.send_photo(message.chat.id,
-                               'AgACAgIAAxkBAAIBJ2UBjOZBmaA8TnO-wj-2ed-clBt5AALRzDEb23IISBUkSaZSFL5DAQADAgADeQADMAQ')
+                               'AgACAgIAAxkBAAIBJ2UBjOZBmaA8TnO-wj-2ed-clBt5AALRzDEb23IISBUkSaZSFL5DAQADAgADeQADMAQ',
+                               reply_markup=keyboard.keyboard_miss())
                 bot.register_next_step_handler(message, fire3_3)
         else:
             bot.send_message(message.chat.id,
                              '_Фото Огонь 3_',
-                             parse_mode="Markdown")
+                             parse_mode="Markdown",reply_markup=keyboard.keyboard_miss())
             # bot.send_photo(message.chat.id,
             #                'AgACAgIAAxkBAAIBdGQUSliGbcKAQZ5N3Y3fBbdt3WqeAAIQxjEboWegSOJiFHAp2QmyAQADAgADeQADLwQ',)
             bot.register_next_step_handler(message, fire3_2)
@@ -418,7 +421,8 @@ def fire3_2(message):
                              'Отгадайте какой я загадал фильм поменяв все слова названия на противоположные\n'
                              , parse_mode="Markdown")
             bot.send_photo(message.chat.id,
-                           'AgACAgIAAxkBAAIBJ2UBjOZBmaA8TnO-wj-2ed-clBt5AALRzDEb23IISBUkSaZSFL5DAQADAgADeQADMAQ')
+                           'AgACAgIAAxkBAAIBJ2UBjOZBmaA8TnO-wj-2ed-clBt5AALRzDEb23IISBUkSaZSFL5DAQADAgADeQADMAQ',
+                           reply_markup=keyboard.keyboard_miss())
             bot.register_next_step_handler(message, fire3_3)
         else:
             bot.send_message(message.chat.id, random.choice(incorrect))
@@ -472,12 +476,13 @@ def air1_1(message):
                                  '_Ответ пишите в формате: Исполнитель_Название_'
                                  , parse_mode="Markdown")
                 bot.send_audio(message.chat.id,
-                               'CQACAgIAAxkBAAIBKGUBkWuoA1DST-Qzl3RIEpjXTA1qAAJaNgAC23IISBbbTcH2f-itMAQ')
+                               'CQACAgIAAxkBAAIBKGUBkWuoA1DST-Qzl3RIEpjXTA1qAAJaNgAC23IISBbbTcH2f-itMAQ',
+                               reply_markup=keyboard.keyboard_miss())
                 bot.register_next_step_handler(message, air1_3)
         else:
             bot.send_message(message.chat.id,
                              '_Фото Воздух 1_',
-                             parse_mode="Markdown")
+                             parse_mode="Markdown",reply_markup=keyboard.keyboard_miss())
             # bot.send_photo(message.chat.id,
             #                'AgACAgIAAxkBAAIBdGQUSliGbcKAQZ5N3Y3fBbdt3WqeAAIQxjEboWegSOJiFHAp2QmyAQADAgADeQADLwQ',)
             bot.register_next_step_handler(message, air1_2)
@@ -499,7 +504,7 @@ def air1_2(message):
                              '_Ответ пишите в формате: Исполнитель_Название_'
                              , parse_mode="Markdown")
             bot.send_audio(message.chat.id,
-                           'CQACAgIAAxkBAAIBKGUBkWuoA1DST-Qzl3RIEpjXTA1qAAJaNgAC23IISBbbTcH2f-itMAQ')
+                           'CQACAgIAAxkBAAIBKGUBkWuoA1DST-Qzl3RIEpjXTA1qAAJaNgAC23IISBbbTcH2f-itMAQ',reply_markup=keyboard.keyboard_miss())
             bot.register_next_step_handler(message, air1_3)
         else:
             bot.send_message(message.chat.id, random.choice(incorrect))
@@ -554,12 +559,13 @@ def air2_1(message):
                                  '_Ответ пишите в формате: Ответ_'
                                  , parse_mode="Markdown")
                 bot.send_photo(message.chat.id,
-                               'AgACAgIAAxkBAAIBKWUBlDwcYdUovnrlFX9kTANsuOkaAALzzDEb23IISMu7e96jWgpQAQADAgADeQADMAQ')
+                               'AgACAgIAAxkBAAIBKWUBlDwcYdUovnrlFX9kTANsuOkaAALzzDEb23IISMu7e96jWgpQAQADAgADeQADMAQ'
+                               ,reply_markup=keyboard.keyboard_miss())
                 bot.register_next_step_handler(message, air2_3)
         else:
             bot.send_message(message.chat.id,
                              '_Фото Воздух 2_',
-                             parse_mode="Markdown")
+                             parse_mode="Markdown",reply_markup=keyboard.keyboard_miss())
             # bot.send_photo(message.chat.id,
             #                'AgACAgIAAxkBAAIBdGQUSliGbcKAQZ5N3Y3fBbdt3WqeAAIQxjEboWegSOJiFHAp2QmyAQADAgADeQADLwQ',)
             bot.register_next_step_handler(message, air2_2)
@@ -581,7 +587,8 @@ def air2_2(message):
                              '_Ответ пишите в формате: Ответ_'
                              , parse_mode="Markdown")
             bot.send_photo(message.chat.id,
-                           'AgACAgIAAxkBAAIBKWUBlDwcYdUovnrlFX9kTANsuOkaAALzzDEb23IISMu7e96jWgpQAQADAgADeQADMAQ')
+                           'AgACAgIAAxkBAAIBKWUBlDwcYdUovnrlFX9kTANsuOkaAALzzDEb23IISMu7e96jWgpQAQADAgADeQADMAQ',
+                           reply_markup=keyboard.keyboard_miss())
             bot.register_next_step_handler(message, air2_3)
         else:
             bot.send_message(message.chat.id, random.choice(incorrect))
@@ -638,12 +645,13 @@ def earth1_1(message):
                                  '_Ответ пишите в формате: Ответ_'
                                  , parse_mode="Markdown")
                 bot.send_photo(message.chat.id,
-                               'AgACAgIAAxkBAAIBK2UBmu2ynsok1MeDGyX-dIfABcAQAAIC0jEb23IQSN71hr0nhKHHAQADAgADeQADMAQ')
+                               'AgACAgIAAxkBAAIBK2UBmu2ynsok1MeDGyX-dIfABcAQAAIC0jEb23IQSN71hr0nhKHHAQADAgADeQADMAQ',
+                               reply_markup=keyboard.keyboard_miss())
                 bot.register_next_step_handler(message, earth1_3)
         else:
             bot.send_message(message.chat.id,
                              '_Фото Земля 1_',
-                             parse_mode="Markdown")
+                             parse_mode="Markdown",reply_markup=keyboard.keyboard_miss())
             # bot.send_photo(message.chat.id,
             #                'AgACAgIAAxkBAAIBdGQUSliGbcKAQZ5N3Y3fBbdt3WqeAAIQxjEboWegSOJiFHAp2QmyAQADAgADeQADLwQ',)
             bot.register_next_step_handler(message, earth1_2)
@@ -666,7 +674,8 @@ def earth1_2(message):
                              '_Ответ пишите в формате: Ответ_'
                              , parse_mode="Markdown")
             bot.send_photo(message.chat.id,
-                           'AgACAgIAAxkBAAIBK2UBmu2ynsok1MeDGyX-dIfABcAQAAIC0jEb23IQSN71hr0nhKHHAQADAgADeQADMAQ')
+                           'AgACAgIAAxkBAAIBK2UBmu2ynsok1MeDGyX-dIfABcAQAAIC0jEb23IQSN71hr0nhKHHAQADAgADeQADMAQ',
+                           reply_markup=keyboard.keyboard_miss())
             bot.register_next_step_handler(message, earth1_3)
         else:
             bot.send_message(message.chat.id, random.choice(incorrect))
@@ -722,12 +731,13 @@ def earth2_1(message):
                                  '_Ответ присылайте в формате: Крылатое выражение _'
                                  , parse_mode="Markdown")
                 bot.send_photo(message.chat.id,
-                               'AgACAgIAAxkBAAIBLGUBnQOOGLmDoOyoAfquJBPHzc8HAAIz0jEb23IQSFCr9Se3d6WHAQADAgADeQADMAQ')
+                               'AgACAgIAAxkBAAIBLGUBnQOOGLmDoOyoAfquJBPHzc8HAAIz0jEb23IQSFCr9Se3d6WHAQADAgADeQADMAQ'
+                               ,reply_markup=keyboard.keyboard_miss())
                 bot.register_next_step_handler(message, earth2_3)
         else:
             bot.send_message(message.chat.id,
                              '_Фото Земля 2_',
-                             parse_mode="Markdown")
+                             parse_mode="Markdown",reply_markup=keyboard.keyboard_miss())
             # bot.send_photo(message.chat.id,
             #                'AgACAgIAAxkBAAIBdGQUSliGbcKAQZ5N3Y3fBbdt3WqeAAIQxjEboWegSOJiFHAp2QmyAQADAgADeQADLwQ',)
             bot.register_next_step_handler(message, earth2_2)
@@ -751,7 +761,8 @@ def earth2_2(message):
                              '_Ответ присылайте в формате: Крылатое выражение _'
                              , parse_mode="Markdown")
             bot.send_photo(message.chat.id,
-                           'AgACAgIAAxkBAAIBLGUBnQOOGLmDoOyoAfquJBPHzc8HAAIz0jEb23IQSFCr9Se3d6WHAQADAgADeQADMAQ')
+                           'AgACAgIAAxkBAAIBLGUBnQOOGLmDoOyoAfquJBPHzc8HAAIz0jEb23IQSFCr9Se3d6WHAQADAgADeQADMAQ',
+                           reply_markup=keyboard.keyboard_miss())
             bot.register_next_step_handler(message, earth2_3)
         else:
             bot.send_message(message.chat.id, random.choice(incorrect))
@@ -807,12 +818,13 @@ def earth3_1(message):
                                  '_Ответ присылайте в формате: Крылатое выражение _'
                                  , parse_mode="Markdown")
                 bot.send_photo(message.chat.id,
-                               'AgACAgIAAxkBAAIBLGUBnQOOGLmDoOyoAfquJBPHzc8HAAIz0jEb23IQSFCr9Se3d6WHAQADAgADeQADMAQ')
+                               'AgACAgIAAxkBAAIBLGUBnQOOGLmDoOyoAfquJBPHzc8HAAIz0jEb23IQSFCr9Se3d6WHAQADAgADeQADMAQ'
+                               ,reply_markup=keyboard.keyboard_miss())
                 bot.register_next_step_handler(message, earth3_3)
         else:
             bot.send_message(message.chat.id,
                              '_Фото Земля 3_',
-                             parse_mode="Markdown")
+                             parse_mode="Markdown",reply_markup=keyboard.keyboard_miss())
             # bot.send_photo(message.chat.id,
             #                'AgACAgIAAxkBAAIBdGQUSliGbcKAQZ5N3Y3fBbdt3WqeAAIQxjEboWegSOJiFHAp2QmyAQADAgADeQADLwQ',)
             bot.register_next_step_handler(message, earth3_2)
@@ -836,7 +848,8 @@ def earth3_2(message):
                              '_Ответ присылайте в формате: Крылатое выражение _'
                              , parse_mode="Markdown")
             bot.send_photo(message.chat.id,
-                           'AgACAgIAAxkBAAIBLGUBnQOOGLmDoOyoAfquJBPHzc8HAAIz0jEb23IQSFCr9Se3d6WHAQADAgADeQADMAQ')
+                           'AgACAgIAAxkBAAIBLGUBnQOOGLmDoOyoAfquJBPHzc8HAAIz0jEb23IQSFCr9Se3d6WHAQADAgADeQADMAQ',
+                           reply_markup=keyboard.keyboard_miss())
             bot.register_next_step_handler(message, earth3_3)
         else:
             bot.send_message(message.chat.id, random.choice(incorrect))
@@ -894,12 +907,14 @@ def water1_1(message):
                 bot.send_photo(message.chat.id,
                                'AgACAgIAAxkBAAIBLWUBoJC3KwbXehKn7SuoDNrKrPe0AAJC0jEb23IQSCt3cz2nSAABDwEAAwIAA3kAAzAE')
                 bot.send_document(message.chat.id,
-                                  'BQACAgIAAxkBAAIBLmUBoTsZsWP2hMxHHI1wktzH2S8NAAJpNAAC23IQSHT41Md5G-AIMAQ')
+                                  'BQACAgIAAxkBAAIBLmUBoTsZsWP2hMxHHI1wktzH2S8NAAJpNAAC23IQSHT41Md5G-AIMAQ',
+                                  reply_markup=keyboard.keyboard_miss())
                 bot.register_next_step_handler(message, water1_3)
         else:
             bot.send_message(message.chat.id,
                              '_Фото Вода 1_',
-                             parse_mode="Markdown")
+                             parse_mode="Markdown",
+                             reply_markup=keyboard.keyboard_miss())
             # bot.send_photo(message.chat.id,
             #                'AgACAgIAAxkBAAIBdGQUSliGbcKAQZ5N3Y3fBbdt3WqeAAIQxjEboWegSOJiFHAp2QmyAQADAgADeQADLwQ',)
             bot.register_next_step_handler(message, water1_2)
@@ -925,7 +940,8 @@ def water1_2(message):
             bot.send_photo(message.chat.id,
                            'AgACAgIAAxkBAAIBLWUBoJC3KwbXehKn7SuoDNrKrPe0AAJC0jEb23IQSCt3cz2nSAABDwEAAwIAA3kAAzAE')
             bot.send_document(message.chat.id,
-                              'BQACAgIAAxkBAAIBLmUBoTsZsWP2hMxHHI1wktzH2S8NAAJpNAAC23IQSHT41Md5G-AIMAQ')
+                              'BQACAgIAAxkBAAIBLmUBoTsZsWP2hMxHHI1wktzH2S8NAAJpNAAC23IQSHT41Md5G-AIMAQ',
+                              reply_markup=keyboard.keyboard_miss())
             bot.register_next_step_handler(message, water1_3)
         else:
             bot.send_message(message.chat.id, random.choice(incorrect))
@@ -937,16 +953,18 @@ def water1_2(message):
 
 def water1_3(message):
     try:
+        if message.text.lower() in ['пропустить']:
+            miss(message)
         if message.text.lower() in ['cочи']:
             if check_answer(message.chat, 'answer', "answer_1"):
                 bot.send_message(message.chat.id,
                                  'Верно, но подобный ответ уже засчитан',
-                                 parse_mode="Markdown", )
+                                 parse_mode="Markdown",reply_markup=keyboard.keyboard_miss())
                 bot.register_next_step_handler(message, water1_3)
             else:
                 bot.send_message(message.chat.id,
                                  'Прекрасно справляешься!',
-                                 parse_mode="Markdown", )
+                                 parse_mode="Markdown", reply_markup=keyboard.keyboard_miss())
                 change_answer(message.chat, 'answer', "answer_1")
                 if check_answer_final(message.chat, 'answer'):
                     final_water1_3(message)
@@ -956,12 +974,12 @@ def water1_3(message):
             if check_answer(message.chat, 'answer', "answer_2"):
                 bot.send_message(message.chat.id,
                                  'Верно, но подобный ответ уже засчитан',
-                                 parse_mode="Markdown", )
+                                 parse_mode="Markdown", reply_markup=keyboard.keyboard_miss())
                 bot.register_next_step_handler(message, water1_3)
             else:
                 bot.send_message(message.chat.id,
                                  'Прекрасно справляешься!',
-                                 parse_mode="Markdown", )
+                                 parse_mode="Markdown",reply_markup=keyboard.keyboard_miss() )
                 change_answer(message.chat, 'answer', "answer_2")
                 if check_answer_final(message.chat, 'answer'):
                     final_water1_3(message)
@@ -971,12 +989,12 @@ def water1_3(message):
             if check_answer(message.chat, 'answer', "answer_3"):
                 bot.send_message(message.chat.id,
                                  'Верно, но подобный ответ уже засчитан',
-                                 parse_mode="Markdown", )
+                                 parse_mode="Markdown",reply_markup=keyboard.keyboard_miss() )
                 bot.register_next_step_handler(message, water1_3)
             else:
                 bot.send_message(message.chat.id,
                                  'Прекрасно справляешься!',
-                                 parse_mode="Markdown", )
+                                 parse_mode="Markdown",reply_markup=keyboard.keyboard_miss() )
                 change_answer(message.chat, 'answer', "answer_3")
                 if check_answer_final(message.chat, 'answer'):
                     final_water1_3(message)
@@ -986,12 +1004,12 @@ def water1_3(message):
             if check_answer(message.chat, 'answer', "answer_4"):
                 bot.send_message(message.chat.id,
                                  'Верно, но подобный ответ уже засчитан',
-                                 parse_mode="Markdown", )
+                                 parse_mode="Markdown", reply_markup=keyboard.keyboard_miss())
                 bot.register_next_step_handler(message, water1_3)
             else:
                 bot.send_message(message.chat.id,
                                  'Прекрасно справляешься!',
-                                 parse_mode="Markdown", )
+                                 parse_mode="Markdown",reply_markup=keyboard.keyboard_miss() )
                 change_answer(message.chat, 'answer', "answer_4")
                 if check_answer_final(message.chat, 'answer'):
                     final_water1_3(message)
@@ -1043,14 +1061,14 @@ def water2_1(message):
                                  '_Обожаю когда ко мне летом приезжает много людей, играют со мной и '
                                  'фотографируются на память. Хочу и сейчас чтобы вы оставили мне свои фотокарточки '
                                  'на память, держите пример, сделайте похожее фото и пришлите сюда._\n',
-                                 parse_mode="Markdown")
+                                 parse_mode="Markdown", reply_markup=keyboard.keyboard_miss())
                 bot.send_photo(message.chat.id,
                                random.choice(photo))
                 bot.register_next_step_handler(message, water2_3)
         else:
             bot.send_message(message.chat.id,
                              '_Фото Вода 2_',
-                             parse_mode="Markdown")
+                             parse_mode="Markdown", reply_markup=keyboard.keyboard_miss())
             # bot.send_photo(message.chat.id,
             #                'AgACAgIAAxkBAAIBdGQUSliGbcKAQZ5N3Y3fBbdt3WqeAAIQxjEboWegSOJiFHAp2QmyAQADAgADeQADLwQ',)
             bot.register_next_step_handler(message, water2_2)
@@ -1071,7 +1089,7 @@ def water2_2(message):
                              'на память, держите пример, сделайте похожее фото и пришлите сюда._\n',
                              parse_mode="Markdown")
             bot.send_photo(message.chat.id,
-                           random.choice(photo))
+                           random.choice(photo), reply_markup=keyboard.keyboard_miss())
             bot.register_next_step_handler(message, water2_3)
         else:
             bot.send_message(message.chat.id, random.choice(incorrect))
@@ -1083,6 +1101,8 @@ def water2_2(message):
 
 def water2_3(message):
     try:
+        if message.text.lower() in ['пропустить']:
+            miss(message)
         if message.content_type == 'photo':
             keyboard_inline = types.InlineKeyboardMarkup()
             confirm_button = types.InlineKeyboardButton('Подтвердить', callback_data='confirm')
@@ -1109,9 +1129,10 @@ def water2_3(message):
                 if call.data == 'confirm':
                     bot.send_message(call.from_user.id, f'Фотография подтверждена у \"{message.from_user.first_name}\"')
                     # bot.delete_message(call.from_user.id, call.message.id)
+                    change(message.from_user, "water_2_2")
                     bot.send_message(chat.id,
                                      '_Молодцы. Вы на шаг ближе к освоению очередной ценности_ 👍🏼 _Открывай меню, '
-                                     'поехали дальше_', reply_markup=keyboard.keyboard(message.from_user))
+                                     'поехали дальше_',parse_mode="Markdown", reply_markup=keyboard.keyboard(message.from_user))
                     if check_final(chat):
                         end(message)
                 elif call.data == 'cancel':
@@ -1159,11 +1180,10 @@ def check(user_id, name_colum):
 
 
 def check_final(user_data):
-    # rais = [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
     database = db.Data(user_data)
     number = database.check_final()
-    # number.remove(str(user_data.id))
     if all(number):
+        database.final()
         return True
     else:
         return False
@@ -1198,19 +1218,19 @@ def collector(message):
         user.collection(name)
 
 
-def setSurname(message):
+def set_surname(message):
     user = db.Data(message.from_user)
     surname = message.text
     user.setSurname(surname)
 
 
-def setName(message):
+def set_name(message):
     user = db.Data(message.from_user)
     name = message.text
     user.setName(name)
 
 
-def setPhone(message):
+def set_phone(message):
     user = db.Data(message.from_user)
     phone = message.text
     user.setPhone(phone)

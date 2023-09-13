@@ -1,7 +1,7 @@
 import psycopg2
 from contextlib import closing
 from psycopg2.extras import DictCursor
-from datetime import datetime
+import datetime
 
 
 class Data:
@@ -59,7 +59,7 @@ class Data:
         self.conn.close()
 
     def setPhone(self, number):
-        current_date_time = datetime.now()
+        current_date_time = datetime.datetime.now()
         update_query = "update users set number = %s, start_at = %s where user_id = %s"
         self.cursor.execute(update_query, (number, current_date_time, str(self.user_data.id)))
         self.conn.commit()
@@ -108,6 +108,28 @@ class Data:
         self.conn.close()
         return rec
 
+    def final(self):
+        current_date_time = datetime.datetime.now()
+        delta = self.delta(current_date_time)
+        update_query = "update users set end_at = %s, delta = %s where user_id = %s"
+        self.cursor.execute(update_query, (current_date_time, delta, str(self.user_data.id)))
+        self.conn.commit()
+        self.cursor.close()
+        self.conn.close()
+
+    def delta(self, end_at):
+        dict_cur = self.conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
+        dict_cur.execute(f'SELECT start_at from users where user_id = \'{self.user_data.id}\'')
+        rec = dict_cur.fetchone()
+        self.cursor.close()
+        self.conn.close()
+        start_datetime = datetime.datetime.combine(datetime.date(1970, 1, 1), rec[0])
+        end_datetime = datetime.datetime.combine(datetime.date(1970, 1, 1), end_at)
+
+        time_difference = end_datetime - start_datetime
+
+        return time_difference
+
     def check_answer_final(self, table_name):
         dict_cur = self.conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
         dict_cur.execute(
@@ -133,23 +155,3 @@ class Data:
                 self.conn.close()
             except Exception as error:
                 print(error)
-
-    def collection_phone(self, phone):
-        update_query = "update users set number = %s where user_id = %s"
-        self.cursor.execute(update_query, (phone, str(self.user_data.id)))
-        self.conn.commit()
-        self.cursor.close()
-        self.conn.close()
-
-    def flag_change(self):
-        update_query = f'UPDATE collector SET flag = \'win\' where user_id = {self.user_id}'
-        self.cursor.execute(update_query)
-        self.conn.commit()
-        self.cursor.close()
-        self.conn.close()
-
-    def check_user_collector(self):
-        check = f'select exists(SELECT user_id FROM users WHERE user_id = \'{self.user_data.id}\')'
-        self.cursor.execute(check)
-        result = self.cursor.fetchone()
-        return result[0]

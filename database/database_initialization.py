@@ -28,6 +28,7 @@ def init_database():
                     number   varchar,
                     start_at time ,
                     end_at   time NULL
+                    delta   time NULL
                 );
         """
         init_task = """
