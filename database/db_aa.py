@@ -13,11 +13,11 @@ class Data:
 
     def getConn(self):
         conn = psycopg2.connect(
-            dbname='aa-bot',
-            user='aa-bot',
-            password='aa-bot',
+            dbname='greenfest-bot',
+            user='greenfest-bot',
+            password='greenfest-bot',
             host='localhost',
-            port='5000'
+            port='5001'
         )
 
         return conn
@@ -31,22 +31,46 @@ class Data:
         self.cursor.execute(check)
         result = self.cursor.fetchone()
         if (result[0] == False):
-            current_date_time = datetime.now()
-            sql_user = "INSERT INTO users (user_id, name, username, created_at) VALUES (%s, %s, %s, %s)"
-            values_user = (self.user_data.id, self.user_data.first_name, self.user_data.username, current_date_time)
+            sql_user = "INSERT INTO users (user_id, username) VALUES (%s,  %s)"
+            values_user = (self.user_data.id, self.user_data.username)
             self.cursor.execute(sql_user, values_user)
             sql_task = "INSERT INTO tasks (user_id) VALUES (%s)"
             values_tasks = (self.user_data.id,)
             self.cursor.execute(sql_task, values_tasks)
-            sql_answer_tent = "INSERT INTO tent_answer (user_id) VALUES (%s)"
+            sql_answer = "INSERT INTO answer (user_id) VALUES (%s)"
             values_answer_tent = (self.user_data.id,)
-            self.cursor.execute(sql_answer_tent, values_answer_tent)
-            sql_furniture_answer = "INSERT INTO furniture_answer (user_id) VALUES (%s)"
-            values_answer_furniture = (self.user_data.id,)
-            self.cursor.execute(sql_furniture_answer, values_answer_furniture)
+            self.cursor.execute(sql_answer, values_answer_tent)
             self.conn.commit()
             self.cursor.close()
             self.conn.close()
+
+    def setName(self, name):
+        update_query = "update users set name = %s where user_id = %s"
+        self.cursor.execute(update_query, (name, str(self.user_data.id)))
+        self.conn.commit()
+        self.cursor.close()
+        self.conn.close()
+
+    def setSurname(self, surname):
+        update_query = "update users set surname = %s where user_id = %s"
+        self.cursor.execute(update_query, (surname, str(self.user_data.id)))
+        self.conn.commit()
+        self.cursor.close()
+        self.conn.close()
+
+    def setPhone(self, number):
+        current_date_time = datetime.now()
+        update_query = "update users set number = %s, start_at = %s where user_id = %s"
+        self.cursor.execute(update_query, (number, current_date_time, str(self.user_data.id)))
+        self.conn.commit()
+        self.cursor.close()
+        self.conn.close()
+
+    def replace(self, column_name):
+        self.cursor.execute(f'UPDATE tasks SET {column_name} = true WHERE user_id = \'{self.user_data.id}\'')
+        self.conn.commit()
+        self.cursor.close()
+        self.conn.close()
 
     def table(self):
         dict_cur = self.conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
@@ -61,12 +85,6 @@ class Data:
         rec = dict_cur.fetchone()
 
         return rec
-
-    def replace(self, column_name):
-        self.cursor.execute(f'UPDATE tasks SET {column_name} = true WHERE user_id = \'{self.user_data.id}\'')
-        self.conn.commit()
-        self.cursor.close()
-        self.conn.close()
 
     def replace_answer(self, table_name, column_name):
         self.cursor.execute(f'UPDATE {table_name} SET {column_name} = true WHERE user_id = \'{self.user_data.id}\'')
@@ -83,7 +101,8 @@ class Data:
 
     def check_final(self):
         dict_cur = self.conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
-        dict_cur.execute(f'SELECT antiquiz, tents, furniture, casino FROM tasks WHERE user_id = \'{self.user_data.id}\'')
+        dict_cur.execute(
+            f'SELECT air_1_1,air_1_2,earth_1_1,earth_1_2,fire_1_1,fire_1_2,air_2_1,air_2_2,water_1_1,water_1_2,water_2_1,water_2_2,earth_2_1,earth_2_2,fire_2_1,fire_2_2,earth_3_1,earth_3_2,fire_3_1,fire_3_2 FROM tasks WHERE user_id = \'{self.user_data.id}\'')
         rec = dict_cur.fetchone()
         self.cursor.close()
         self.conn.close()
@@ -91,7 +110,8 @@ class Data:
 
     def check_answer_final(self, table_name):
         dict_cur = self.conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
-        dict_cur.execute(f'SELECT answer_1, answer_2, answer_3, answer_4,answer_5 FROM {table_name} WHERE user_id = \'{self.user_data.id}\'')
+        dict_cur.execute(
+            f'SELECT answer_1, answer_2, answer_3, answer_4,answer_5 FROM {table_name} WHERE user_id = \'{self.user_data.id}\'')
         rec = dict_cur.fetchone()
         self.cursor.close()
         self.conn.close()

@@ -3,12 +3,11 @@ import psycopg2
 
 def init_database():
     conn = psycopg2.connect(
-        dbname='aa-bot',
-        user='aa-bot',
-        password='aa-bot',
+        dbname='greenfest-bot',
+        user='greenfest-bot',
+        password='greenfest-bot',
         host='localhost',
-        port='5000'
-    )
+        port='5001')
 
     # Open a cursor to perform database operations
     cur = conn.cursor()
@@ -23,8 +22,8 @@ def init_database():
                 (
                     id SERIAL PRIMARY KEY,
                     user_id varchar not null,
-                    name     varchar not null,
-                    surname     varchar not null,
+                    name     varchar,
+                    surname     varchar,
                     username varchar,
                     number   varchar,
                     start_at time ,
@@ -36,46 +35,42 @@ def init_database():
                 (
                     id          SERIAL PRIMARY KEY,
                     user_id     varchar not null,
-                    air_1    boolean default false,
-                    earth_1    boolean default false,
-                    fire_1    boolean default false,
-                    air_2    boolean default false,
-                    water_1    boolean default false,
-                    water_2    boolean default false,
-                    earth_2    boolean default false,
-                    fire_2    boolean default false,
-                    earth_3    boolean default false,
-                    fire_3       boolean default false
+                    air_1_1    boolean default false,
+                    air_1_2    boolean default false,
+                    earth_1_1    boolean default false,
+                    earth_1_2    boolean default false,
+                    fire_1_1    boolean default false,
+                    fire_1_2    boolean default false,
+                    air_2_1    boolean default false,
+                    air_2_2    boolean default false,
+                    water_1_1    boolean default false,
+                    water_1_2    boolean default false,
+                    water_2_1    boolean default false,
+                    water_2_2    boolean default false,
+                    earth_2_1    boolean default false,
+                    earth_2_2    boolean default false,
+                    fire_2_1    boolean default false,
+                    fire_2_2    boolean default false,
+                    earth_3_1    boolean default false,
+                    earth_3_2    boolean default false,
+                    fire_3_1       boolean default false,
+                    fire_3_2       boolean default false
                 );
         """
-        tent_answer = """
-                                create table tent_answer
+        answer = """
+                                create table answer
                         (
                             id          SERIAL PRIMARY KEY,
                             user_id     varchar not null,
                             answer_1    boolean default false,
                             answer_2       boolean default false,
                             answer_3   boolean default false,
-                            answer_4      boolean default false,
-                            answer_5      boolean default false
+                            answer_4      boolean default false
                         );
                 """
-        furniture_answer = """
-                                        create table furniture_answer
-                                (
-                                    id          SERIAL PRIMARY KEY,
-                                    user_id     varchar not null,
-                                    answer_1    boolean default false,
-                                    answer_2       boolean default false,
-                                    answer_3   boolean default false,
-                                    answer_4      boolean default false,
-                                    answer_5      boolean default false
-                                );
-                        """
         cur.execute(init_user)
         cur.execute(init_task)
-        cur.execute(tent_answer)
-        cur.execute(furniture_answer)
+        cur.execute(answer)
 
     # Commit the transaction and close the cursor and connection
     conn.commit()

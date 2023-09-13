@@ -1,3 +1,4 @@
+import random
 import telebot
 from datetime import datetime
 import time
@@ -22,6 +23,12 @@ def text_check(text):
     return regex.sub('', text)
 
 
+incorrect = ['Хм.. даю ещё шанс 😊',
+             'Предлагаю поразмыслить ещё',
+             'Нуууу... не то, увы',
+             'Так-так-так, почти! Но нет!',
+             'Давай-давай! Я в тебя верю!',
+             ]
 menedjer = 483241197
 menedjer_1 = 703608663
 
@@ -45,25 +52,55 @@ menedjer_1 = 703608663
 #         # User did not come from a QR code or link
 #         bot.reply_to(message, 'Welcome!')
 
-# @bot.message_handler(func=lambda message: message.text[:15] == 'Вернуться в нач')
+# -------------Начало---------------------------
 @bot.message_handler(commands=['start'])
 def handle_start(message):
-    if (message.from_user.id == menedjer_1):
+    if (message.from_user.id == menedjer):
         bot.send_message(message.chat.id, 'Вам доступен экспорт', reply_markup=keyboard.export())
     else:
+
         info = db.Data(message.from_user)
         info.create()
         bot.send_sticker(message.chat.id,
                          "CAACAgIAAxkBAAEIHd1kDu6_l3UN8qquRGL97sxH0shhzAACGCwAAnCfWEhLkKAVEv7IwC8E")
-        bot.send_message(message.chat.id, 'Привет, дорогой друг! ❤️\n'
+        bot.send_message(message.chat.id, '_Привет, дорогой друг! БЛА БЛА БЛА_\n'
                                           '\n'
-                                          'Я – специальный бот сервисной компании «Аренда Аттракционов». '
-                                          'Предлагаю тебе пройти мою небольшую игру и получить скидку в 15% '
-                                          'на аренду оборудования. Если готов, пиши - *да*', parse_mode="Markdown")
-        bot.register_next_step_handler(message, rules)
-        bot.send_message(64783167, f'Бота запустил: {message.from_user.first_name}, @{message.from_user.username}')
-        bot.send_message(1248171558, f'Бота запустил: {message.from_user.first_name}, @{message.from_user.username}')
-        bot.send_message(483241197, f'Бота запустил: {message.from_user.first_name}, @{message.from_user.username}')
+                                          '_Мы подготовили для тебя квест. Впереди интересные загадки на логику, а также '
+                                          'активности, которые расположены по всей территории._', parse_mode="Markdown")
+        bot.send_sticker(message.chat.id,
+                         "CAACAgIAAxkBAAEIHd1kDu6_l3UN8qquRGL97sxH0shhzAACGCwAAnCfWEhLkKAVEv7IwC8E")
+        bot.send_message(message.chat.id,
+                         "_Прежде, чем мы начнём, расскажу об игре. Всё очень просто:_\n"
+                         "\n"
+                         "_1. Каждый играет сам за себя, при желании  можно объединиться в пары. "
+                         "Бот будет работать с 11:00 до 16:00\n"
+                         "\n"
+                         "2. Войти в игру можно в рамках указанного времени, также есть возможность поставить её на "
+                         "паузу и продолжить позднее!\n"
+                         "\n"
+                         "3. Ты получишь меню с десятью заданиями. Выбирай любое и нажимай на него\n"
+                         "\n"
+                         "4. Я пришлю карту с обозначением точки оффлайн-активности \n"
+                         "\n"
+                         "5. Когда придешь на точку, проводник даст тебе оффлайн-задание\n"
+                         "\n"
+                         "6. После его прохождения проводник скажет кодовое слово, которое надо написать в чат\n"
+                         "\n"
+                         "7. После кода, я пришлю тебе логическое задание. Ответ впиши в чат\n"
+                         "\n"
+                         "8. После выполнения задания одной ценности появится галочка о прохождении\n"
+                         "\n"
+                         "9. Задание можно пропустить и вернуться в меню\n"
+                         "\n"
+                         "За прохождение всех заданий, ты получишь 10 Гринкоинов,но для этого нам нужно познакомиться\n"
+                         "\n"
+                         "По любым вопросам обращайся:_ [@blacklist_event](@blacklist_event)\n"
+                         "\n"
+                         "_Если всё понятно, введи свою_ *фамилию*", parse_mode="Markdown")
+        bot.register_next_step_handler(message, surname)
+        # bot.send_message(64783167, f'Бота запустил: {message.from_user.first_name}, @{message.from_user.username}')
+        # bot.send_message(1248171558, f'Бота запустил: {message.from_user.first_name}, @{message.from_user.username}')
+        # bot.send_message(483241197, f'Бота запустил: {message.from_user.first_name}, @{message.from_user.username}')
 
 
 @bot.message_handler(func=lambda message: message.text.lower() == 'экспорт данных', content_types=['text'])
@@ -77,120 +114,260 @@ def export(message):
     except Exception as error:
         print(f'export: {error}')
 
+
 @bot.message_handler(content_types=['document', 'photo', 'audio', 'video', 'animation', 'voice'])
 def take(message):
+    print(message)
     bot.delete_message(message.chat.id, message.message_id)
 
 
-def rules(message):
-    try:
-        if message.text.lower() in ['да']:
-            bot.send_message(message.chat.id,
-                             "🥰 Ура! Рад, что ты здесь\n"
-                             "\n"
-                             "Для начала расскажу несколько правил:\n"
-                             "⚡️ Справа снизу кнопка вызова меню\n"
-                             "⚡️ Основная задача пройти все 4 задания\n"
-                             "⚡️ Задания можно проходить в любом порядке\n"
-                             "⚡️ Как только раунд решен, в меню появится галочка о прохождении\n"
-                             "⚡️ Пройдя все задания, появится промокод на скидку\n"
-                             "\n"
-                             "Всё понятно?\n"
-                             "Если да, введи своё имя\n"
-                             "Если нет пиши [@natashka1026](@natashka1026)\n", parse_mode="Markdown")
-            bot.register_next_step_handler(message, fio)
-        else:
-            bot.send_chat_action(message.chat.id, 'typing')
-            bot.send_message(message.chat.id, '_Надо ввести_ *да*\n',
-                             parse_mode="Markdown")
-            bot.register_next_step_handler(message, rules)
-    except Exception as error:
-        print(f'rules: {error}')
-        bot.register_next_step_handler(message, rules)
-
-@bot.message_handler(func=lambda message: message.text.lower() == 'вернуться в меню', content_types=['text'])
-def fio(message):
+# -------------Ввод имени---------------------------
+def surname(message):
     try:
         if message.content_type == 'text':
             collector(message)
+            setSurname(message)
+            bot.send_message(message.chat.id,
+                             "_Отлично! Теперь_ *имя*", parse_mode="Markdown")
+            bot.register_next_step_handler(message, name)
+        else:
+            bot.send_chat_action(message.chat.id, 'typing')
+            bot.send_message(message.chat.id, '_Надо ввести_ *фамилию*\n',
+                             parse_mode="Markdown")
+            bot.register_next_step_handler(message, surname)
+    except Exception as error:
+        print(f'surname: {error}')
+        bot.register_next_step_handler(message, surname)
+
+
+# -------------Ввод телефона---------------------------
+def name(message):
+    try:
+        if message.content_type == 'text':
+            setName(message)
+            bot.send_message(message.chat.id,
+                             "_Великолепно! И последнее –_ *номер телефона*", parse_mode="Markdown")
+            bot.register_next_step_handler(message, start)
+        else:
+            bot.send_chat_action(message.chat.id, 'typing')
+            bot.send_message(message.chat.id, '_Надо ввести_ *имя*\n',
+                             parse_mode="Markdown")
+            bot.register_next_step_handler(message, name)
+    except Exception as error:
+        print(f'name: {error}')
+        bot.register_next_step_handler(message, name)
+
+
+# -------------Начало---------------------------
+def start(message):
+    try:
+        if message.content_type == 'text':
+            setPhone(message)
             bot.send_sticker(message.chat.id,
                              "CAACAgIAAxkBAAEIHzFkDzxFeaWhNjihFqQaSFaZNWMzSAACWyoAAvMreEibkHdAfD2kCS8E")
-            bot.send_message(message.chat.id, '⚡️ Аренда Аттракционов – сервисная компания. В 2023 году нам исполняется'
-                                              ' 10 лет. Представляешь? Уже 10 лет, мы сопровождаем мероприятия!\n'
+            bot.send_message(message.chat.id, '_Лето – уникальная пора, когда даже самый заядлый домосед выбирается '
+                                              'на природу и в путешествия. Именно там можно получить нестандартный опыт,'
+                                              ' который может пригодиться. Вот только сейчас портал в лето закрыт!\n'
                                               '\n'
-                                              'В нашем арсенале есть, кажется, всё, что нужно для качественного ивента:\n'
+                                              'Мы предлагаем отправиться еще в одно путешествие, столкнуться со всеми '
+                                              'стихиями и приручить их! Ведь есть сходства между сотрудниками Гринатома'
+                                              ' и стихиями: один с огнем в глазах берется за новые проекты; другой '
+                                              'креативный и легкий на подъем как воздушные потоки; есть люди, которых'
+                                              ' не остановить в рабочем процессе как бурную реку; а есть люди-титаны,'
+                                              ' спокойные и уравновешенные при любых кризисах как скалы. И именно эта '
+                                              'уникальность нас всех объединяет.\n'
                                               '\n'
-                                              '1) Шатры и мебель\n'
-                                              '2) Стритфуд и кейтеринг\n'
-                                              '3) Фан и кулинарное казино\n'
-                                              '4) Игровое оборудование (VR, игровые, спортивные, ретро)\n'
-                                              '5) Надувные аттракционы\n'
-                                              '6) Тимбилдинги, квесты и интеллектуальные игры\n'
-                                              '7) Профессиональный персонал\n'
-                                              '8) Фотозоны\n'
-                                              '9) Мастер-классы\n'
-                                              '10) Техническое оборудование\n'
+                                              'Самое время получить уникальные навыки: прокачать в себе все стихии и '
+                                              'продлить летние энергичные деньки.\n'
                                               '\n'
-                                              'Сейчас предлагаем с помощью нескольких заданий на логику, познакомиться '
-                                              'ближе с некоторыми из позиций.\n'
-                                              '\n'
-                                              'P.s, кстати, сейчас ты уже участвуешь в Telegram-квесте “Антиквиз” 😏\n'
-                                              '\n'
-                                              'Справа снизу есть квадратная кнопка с четырьмя точками, которая откроет '
-                                              'меню. Нажми её!',
+                                              'Справа снизу есть кнопка, которая откроет меню, нажми её!_\n',
                              parse_mode="Markdown", reply_markup=keyboard.keyboard(message.from_user))
-            # bot.register_next_step_handler(message, antiquiz)
         else:
             bot.delete_message(message.chat.id, message.message_id)
-            bot.send_message(message.chat.id, 'Мне нужны только твое Имя\n'
+            bot.send_message(message.chat.id, '_Мне нужен только твой_ *номер телефона*\n'
                              , parse_mode="Markdown")
-            bot.register_next_step_handler(message, fio)
+            bot.register_next_step_handler(message, name)
     except Exception as error:
-        print(f'rules: {error}')
-        bot.register_next_step_handler(message, fio)
+        print(f'start: {error}')
+        bot.register_next_step_handler(message, name)
 
 
-@bot.message_handler(func=lambda message: message.text.lower() == 'антиквиз' or message.text.lower() == 'антиквиз ✅', content_types=['text'])
-def antiquiz(message):
+# -------------Пропустить---------------------------
+@bot.message_handler(func=lambda message: message.text.lower() == 'пропустить', content_types=['text'])
+def miss(message):
     try:
-        if check(message.from_user, "antiquiz"):
-            bot.send_message(message.chat.id,
-                             'Вы проходили данное задание',
-                             parse_mode="Markdown", reply_markup=keyboard.keyboard(message.from_user))
-            bot.send_message(message.chat.id,
-                             '*Telegram-игры* – это:\n'
-                             '\n'
-                             '🔸 Новый формат корпоративных игр: не похож на классические предложения '
-                             '(онлайн-импровизации, онлайн ролевые игры, онлайн-мастер-классы и тп)\n'
-                             '🔸 Игра-конструктор: можем выбрать сложность игры, длительность, тематику, '
-                             'задания, и другие доп.функции\n'
-                             '🔸 Технологичность: проведение игр с помощью Telegram-бота\n'
-                             '🔸 Эксклюзивность: каждая игра брендируется под Заказчика\n'
-                             '🔸 Гарантии: тестируем игру с заказчиком за 2-е суток до мероприятия для правок\n'
-                             '🔸 Удалённая организация под ключ: оптимизация времени\n'
-                             '🔸 Неограниченное кол-во участников\n'
-                             '🔸 Индивидуальная или командная игра!\n'
-                             '\n'
-                             'Возвращайся в меню 🥰',
-                             parse_mode="Markdown", reply_markup=keyboard.telegram_quest_inline())
+        bot.send_message(message.chat.id, '_Решил пропустить задание? Ничего страшного, ты можешь пройти его '
+                                          'позже, а сейчас выбирай новое!_\n',
+                         parse_mode="Markdown", reply_markup=keyboard.keyboard(message.from_user))
+    except Exception as error:
+        print(f'miss: {error}')
+        bot.register_next_step_handler(message, miss)
+
+
+# -------------Огонь 1---------------------------
+@bot.message_handler(func=lambda message: message.text.lower() == 'огонь 1' or message.text.lower() == 'огонь 1 ✅',
+                     content_types=['text'])
+def fire1_1(message):
+    try:
+        if check(message.from_user, "fire_1_1"):
+            if check(message.from_user, "fire_1_2"):
+                bot.send_message(message.chat.id,
+                                 '_Вы проходили данный раздел. Выбирайте другой_',
+                                 parse_mode="Markdown")
+            else:
+                bot.send_message(message.chat.id,
+                                 '_Вы проходили данное задание. Переходим к этапу 2_',
+                                 parse_mode="Markdown")
+                bot.send_message(message.chat.id,
+                                 '_Ох уж эти люди, они так любят прятаться от моего братца Солнышка на своих пляжах. '
+                                 'Но кажется эти подают своими зонтиками какие-то сигналы. Что же они говорят?\n'
+                                 '\n'
+                                 'Ответ напишите в формате: Ответ_\n'
+                                 , parse_mode="Markdown")
+                bot.send_animation(message.chat.id,
+                                   'AAMCAgADGQEAA4NlAXVjaamg6iMcZJ2F5junybau2gACijUAAttyCEirQ648afbeKgEAB20AAzAE')
+                bot.send_photo(message.chat.id,
+                               'AgACAgIAAxkBAAOEZQF1oHWShV1Rck_ako-srlwsGakAAnfMMRvbcghIdYpfVx2b-iABAAMCAAN5AAMwBA')
+                bot.register_next_step_handler(message, fire1_3)
         else:
             bot.send_message(message.chat.id,
-                             '🧩 Антиквиз – новый формат корпоративных интеллектуальных игр. Все задания Антиквиза на'
-                             ' логику, потому, для прохождения потребуется только смекалка\n'
-                             '\n'
-                             'Тематика игры может быть абсолютно любой. Для примера, мы взяли классику - задание '
-                             'по фильмам.\n'
-                             '\n'
-                             '✅ _Задача очень проста, внимательно посмотри на эмодзи и напиши название фильма в ответ_'
-                             ,parse_mode="Markdown",)
-            bot.send_photo(message.chat.id,
-                           'AgACAgIAAxkBAAIBdGQUSliGbcKAQZ5N3Y3fBbdt3WqeAAIQxjEboWegSOJiFHAp2QmyAQADAgADeQADLwQ',
-                           )
-            bot.register_next_step_handler(message, antiquiz_two)
+                             '_Фото Огонь 1_',
+                             parse_mode="Markdown")
+            # bot.send_photo(message.chat.id,
+            #                'AgACAgIAAxkBAAIBdGQUSliGbcKAQZ5N3Y3fBbdt3WqeAAIQxjEboWegSOJiFHAp2QmyAQADAgADeQADLwQ',)
+            bot.register_next_step_handler(message, fire1_2)
     except Exception as error:
-        print(f'antiquiz: {error}')
-        bot.register_next_step_handler(message, antiquiz)
+        print(f'fire1_1: {error}')
+        bot.register_next_step_handler(message, fire1_1)
 
+
+def fire1_2(message):
+    try:
+        if message.text.lower() in ['пропустить']:
+            miss(message)
+        elif message.text.lower() in ['защита']:
+            change(message.from_user, "fire_1_1")
+            bot.send_message(message.chat.id,
+                             '_Ох уж эти люди, они так любят прятаться от моего братца Солнышка на своих пляжах. '
+                             'Но кажется эти подают своими зонтиками какие-то сигналы. Что же они говорят?\n'
+                             '\n'
+                             'Ответ напишите в формате: Ответ_\n'
+                             , parse_mode="Markdown")
+            bot.send_animation(message.chat.id,
+                               'CgACAgIAAxkBAAP6ZQGC445qkv0soM-YQRWZLmYuS6IAAuQ1AALbcghIP5UtsByzqiUwBA')
+            bot.send_photo(message.chat.id,
+                           'AgACAgIAAxkBAAOEZQF1oHWShV1Rck_ako-srlwsGakAAnfMMRvbcghIdYpfVx2b-iABAAMCAAN5AAMwBA')
+            bot.register_next_step_handler(message, fire1_3)
+        else:
+            bot.send_message(message.chat.id, random.choice(incorrect))
+            bot.register_next_step_handler(message, fire1_2)
+    except Exception as error:
+        print(f'fire1_2: {error}')
+        bot.register_next_step_handler(message, fire1_2)
+
+
+def fire1_3(message):
+    try:
+        if message.text.lower() in ['пропустить']:
+            miss(message)
+        elif message.text.lower() in ['жарко']:
+            if check_final(message.from_user):
+                end(message)
+            else:
+                change(message.from_user, "fire_1_2")
+                bot.send_message(message.chat.id,
+                                 '_Молодцы. Вы на шаг ближе к освоению очередной ценности 👍🏼 Открывайте меню и '
+                                 'поехали дальше!_\n'
+                                 , parse_mode="Markdown", reply_markup=keyboard.keyboard(message.from_user))
+                bot.send_message(message.chat.id, "Стикер Огонь 1")
+                # bot.send_sticker(message.chat.id,"")
+        else:
+            bot.send_message(message.chat.id, random.choice(incorrect))
+            bot.register_next_step_handler(message, fire1_3)
+    except Exception as error:
+        print(f'fire1_3: {error}')
+        bot.register_next_step_handler(message, fire1_3)
+
+
+# -------------Огонь 2---------------------------
+@bot.message_handler(func=lambda message: message.text.lower() == 'огонь 2' or message.text.lower() == 'огонь 2 ✅',
+                     content_types=['text'])
+def fire2_1(message):
+    try:
+        if check(message.from_user, "fire_2_1"):
+            if check(message.from_user, "fire_2_2"):
+                bot.send_message(message.chat.id,
+                                 '_Вы проходили данный раздел. Выбирайте другой_',
+                                 parse_mode="Markdown")
+            else:
+                bot.send_message(message.chat.id,
+                                 '_Вы проходили данное задание. Переходим к этапу 2_',
+                                 parse_mode="Markdown")
+                bot.send_message(message.chat.id,
+                                 '_Лето самая жаркая пора, так что дам вам свое задание связанное с тем, как вы '
+                                 'люди прячетесь от жары. Запираетесь дома, смотрите фильмы под кондиционером. '
+                                 'Отгадайте какой я загадал фильм поменяв все слова названия на противоположные\n'
+                                 , parse_mode="Markdown")
+                bot.send_photo(message.chat.id,
+                               'AgACAgIAAxkBAAIBJmUBiugFuCg3G6NpVznbcwjDUffdAALDzDEb23IISJb6zw4DJyZJAQADAgADeQADMAQ')
+                bot.register_next_step_handler(message, fire2_3)
+        else:
+            bot.send_message(message.chat.id,
+                             '_Фото Огонь 2_',
+                             parse_mode="Markdown")
+            # bot.send_photo(message.chat.id,
+            #                'AgACAgIAAxkBAAIBdGQUSliGbcKAQZ5N3Y3fBbdt3WqeAAIQxjEboWegSOJiFHAp2QmyAQADAgADeQADLwQ',)
+            bot.register_next_step_handler(message, fire2_2)
+    except Exception as error:
+        print(f'fire2_1: {error}')
+        bot.register_next_step_handler(message, fire2_1)
+
+
+def fire2_2(message):
+    try:
+        if message.text.lower() in ['пропустить']:
+            miss(message)
+        elif message.text.lower() in ['весомость']:
+            change(message.from_user, "fire_2_1")
+            bot.send_message(message.chat.id,
+                             '_Лето самая жаркая пора, так что дам вам свое задание связанное с тем, как вы '
+                             'люди прячетесь от жары. Запираетесь дома, смотрите фильмы под кондиционером. '
+                             'Отгадайте какой я загадал фильм поменяв все слова названия на противоположные\n'
+                             , parse_mode="Markdown")
+            bot.send_photo(message.chat.id,
+                           'AgACAgIAAxkBAAIBJmUBiugFuCg3G6NpVznbcwjDUffdAALDzDEb23IISJb6zw4DJyZJAQADAgADeQADMAQ')
+            bot.register_next_step_handler(message, fire2_3)
+        else:
+            bot.send_message(message.chat.id, random.choice(incorrect))
+            bot.register_next_step_handler(message, fire2_2)
+    except Exception as error:
+        print(f'fire2_2: {error}')
+        bot.register_next_step_handler(message, fire2_2)
+
+
+def fire2_3(message):
+    try:
+        if message.text.lower() in ['пропустить']:
+            miss(message)
+        elif message.text.lower() in ['500 дней лета' , 'пятьсот дней лета']:
+            if check_final(message.from_user):
+                end(message)
+            else:
+                change(message.from_user, "fire_2_2")
+                bot.send_message(message.chat.id,
+                                 '_Молодцы. Вы на шаг ближе к освоению очередной ценности 👍🏼 Открывайте меню и '
+                                 'поехали дальше!_\n'
+                                 , parse_mode="Markdown", reply_markup=keyboard.keyboard(message.from_user))
+                bot.send_message(message.chat.id, "Стикер Огонь 2")
+                # bot.send_sticker(message.chat.id,"")
+        else:
+            bot.send_message(message.chat.id, random.choice(incorrect))
+            bot.register_next_step_handler(message, fire2_3)
+    except Exception as error:
+        print(f'fire2_3: {error}')
+        bot.register_next_step_handler(message, fire2_3)
+
+# -------------Огонь 3---------------------------
 
 def antiquiz_two(message):
     try:
@@ -275,7 +452,8 @@ def antiquiz_end(message):
         bot.register_next_step_handler(message, antiquiz_end)
 
 
-@bot.message_handler(func=lambda message: message.text.lower() == 'шатры' or message.text.lower() == 'шатры ✅', content_types=['text'])
+@bot.message_handler(func=lambda message: message.text.lower() == 'шатры' or message.text.lower() == 'шатры ✅',
+                     content_types=['text'])
 def tents(message):
     try:
         if check(message.from_user, "tents"):
@@ -295,21 +473,22 @@ def tents(message):
         else:
             bot.send_sticker(message.chat.id,
                              "CAACAgIAAxkBAAEIHeNkDu9Wd5gvELZtO3MK7S8Y2b8QKgAC5ysAAvIMWEiBgimOerPlQi8E")
-            bot.send_message(message.chat.id, '🧩 Ой, шатры – это вообще шикарное круглогодичное решение! У нас они все в '
-                                              'собственности и готовы в любую погоду и время года служить на вашем ивенте.\n'
-                                              '\n'
-                                              'Кстати, о задании: представь, что ты – организатор свадебного торжества и '
-                                              'прямо сейчас '
-                                              'завершается монтаж площадки. Нужно внимательно оценить идеальную готовность '
-                                              'и понять, не осталось ли на площадке что-то лишнее. Потому что всё лишнее,'
-                                              ' конечно, нужно убрать. \n'
-                                              'Главное – в н и м а т е л ь н о с т ь. Её-то сейчас и проверим))\n'
-                                              '\n'
-                                              '✅ _Назови 4 атрибута, которые *не* потребуются на этом мероприятии. Один '
-                                              'лишний предмет – один ответ. Давать ответы можно в произвольном порядке._',
+            bot.send_message(message.chat.id,
+                             '🧩 Ой, шатры – это вообще шикарное круглогодичное решение! У нас они все в '
+                             'собственности и готовы в любую погоду и время года служить на вашем ивенте.\n'
+                             '\n'
+                             'Кстати, о задании: представь, что ты – организатор свадебного торжества и '
+                             'прямо сейчас '
+                             'завершается монтаж площадки. Нужно внимательно оценить идеальную готовность '
+                             'и понять, не осталось ли на площадке что-то лишнее. Потому что всё лишнее,'
+                             ' конечно, нужно убрать. \n'
+                             'Главное – в н и м а т е л ь н о с т ь. Её-то сейчас и проверим))\n'
+                             '\n'
+                             '✅ _Назови 4 атрибута, которые *не* потребуются на этом мероприятии. Один '
+                             'лишний предмет – один ответ. Давать ответы можно в произвольном порядке._',
                              parse_mode="Markdown")
             bot.send_document(message.chat.id,
-                           'BQACAgIAAxkBAAINP2QcYGv1LXmOSrRCHVXPVMYTMLlAAAKJKQACos_pSOplKiW5_zLULwQ')
+                              'BQACAgIAAxkBAAINP2QcYGv1LXmOSrRCHVXPVMYTMLlAAAKJKQACos_pSOplKiW5_zLULwQ')
             bot.send_photo(message.chat.id,
                            'AgACAgIAAxkBAAICIGQVhbzCUTCpsr1NwYMAAe9TMChpJgAC38YxG6FnqEi-V1BXqjzYeQEAAwIAA3kAAy8E',
                            )
@@ -450,7 +629,8 @@ def tents_end_message(message):
     # bot.register_next_step_handler(message, tents)
 
 
-@bot.message_handler(func=lambda message: message.text.lower() == 'мебель' or message.text.lower() == 'мебель ✅', content_types=['text'])
+@bot.message_handler(func=lambda message: message.text.lower() == 'мебель' or message.text.lower() == 'мебель ✅',
+                     content_types=['text'])
 def furniture(message):
     try:
         if check(message.from_user, "furniture"):
@@ -634,7 +814,8 @@ def furniture_end_message(message):
         bot.register_next_step_handler(message, furniture_end_message)
 
 
-@bot.message_handler(func=lambda message: message.text.lower() == 'казино' or message.text.lower() == 'казино ✅', content_types=['text'])
+@bot.message_handler(func=lambda message: message.text.lower() == 'казино' or message.text.lower() == 'казино ✅',
+                     content_types=['text'])
 def casino(message):
     try:
         if check(message.from_user, "furniture"):
@@ -678,7 +859,8 @@ def casino_end(message):
         if message.text.lower() in ['еще', 'ещё']:
             change(message.from_user, "casino")
             bot.send_photo(message.chat.id,
-                           'AgACAgIAAxkBAAIC0GQVsGxi-tAcafF7paB4uDLJIdJlAALDxzEboWeoSPSsU6y5nyniAQADAgADeQADLwQ',reply_markup=keyboard.keyboard(message.from_user))
+                           'AgACAgIAAxkBAAIC0GQVsGxi-tAcafF7paB4uDLJIdJlAALDxzEboWeoSPSsU6y5nyniAQADAgADeQADLwQ',
+                           reply_markup=keyboard.keyboard(message.from_user))
             bot.send_message(message.chat.id,
                              'Так уж и быть… Отличный выбор, удача на твоей стороне! Победа, получается! 🥳\n'
                              '\n'
@@ -697,7 +879,8 @@ def casino_end(message):
         elif message.text.lower() in ['пас']:
             change(message.from_user, "casino")
             bot.send_photo(message.chat.id,
-                           'AgACAgIAAxkBAAIC0WQVsYLApjHwS2V-x4dUwqLx4VU2AALHxzEboWeoSFtjgWM2FOxrAQADAgADeQADLwQ', reply_markup=keyboard.keyboard(message.from_user))
+                           'AgACAgIAAxkBAAIC0WQVsYLApjHwS2V-x4dUwqLx4VU2AALHxzEboWeoSFtjgWM2FOxrAQADAgADeQADLwQ',
+                           reply_markup=keyboard.keyboard(message.from_user))
             bot.send_message(message.chat.id,
                              'Ого, удача на твоей стороне! Ну ладно, я расстраиваться сегодня не буду. Победа за тобой, '
                              'получается! 🥳\n'
@@ -720,59 +903,17 @@ def casino_end(message):
 
 
 def end(message):
-    try:
-        bot.send_sticker(message.chat.id,
-                         "CAACAgIAAxkBAAEIHzVkDzyVU6XqbFLkRK6_y80nhMPWqgACSisAAof_eEh223V-zyr6vS8E")
-        bot.send_message(message.chat.id, 'Поздравляю! 🥳\n'
-                                          'Мой сегодняшний квест полностью пройден. А это значит, что я с чистой '
-                                          'совестью готов вручить тебе промокод!\n'
-                                          '\n'
-                                          'Напиши, пожалуйста, свой номер телефона!',
-                         parse_mode="Markdown")
-        bot.register_next_step_handler(message, end_phone)
-    except Exception as error:
-        print(f'end: {error}')
-        bot.register_next_step_handler(message, casino_end)
+    bot.send_sticker(message.chat.id,
+                     "CAACAgIAAxkBAAEIHzFkDzxFeaWhNjihFqQaSFaZNWMzSAACWyoAAvMreEibkHdAfD2kCS8E")
+    bot.send_message(message.chat.id, '_Вау! Я в восторге от того, как хорошо ты разбираешься в ценностях компании.'
+                                      ' Я тобой горжусь. Потому что самая главная, СЕКРЕТНАЯ, ценность нашей '
+                                      'компании – её люди. Это ТЫ!\n'
+                                      '\n'
+                                      'Впереди ещё очень много интересного. Желаю тебе приятного отдыха на пляже '
+                                      '“Улетай”_\n',
+                     parse_mode="Markdown", disable_web_page_preview=True)
+    bot.register_next_step_handler(message, end)
 
-def end_phone(message):
-    try:
-        if message.content_type=='text':
-            telephone(message)
-            bot.send_sticker(message.chat.id,
-                             "CAACAgIAAxkBAAEIHzFkDzxFeaWhNjihFqQaSFaZNWMzSAACWyoAAvMreEibkHdAfD2kCS8E")
-            bot.send_message(message.chat.id, '❤️ Сервисная компания “Аренда Аттракционов”\n'
-                                              '\n'
-                                              'В наш День Рождения, хотим вручить скидку 15% тебе!\n'
-                                              '\n'
-                                              '🔹 *ПРОМОКОД:* ARENDA2023\n'
-                                              'Подписывайся на наш telegram-канал, будь в курсе всех наших новинок!\n'
-                                              '\n'
-                                              '[Канал Аренды Аттракционов](https://t.me/arenda_attrakcionov)'
-                                              '\n'
-                                              'До новых встреч!\n'
-                                              'Обнимаем!\n'
-                                              '❤️',
-                             parse_mode="Markdown", reply_markup=keyboard.keyboard(message.from_user), disable_web_page_preview=True)
-    except Exception as error:
-        print(f'end_phone: {error}')
-        bot.register_next_step_handler(message, casino_end)
-# def end(message):
-#     bot.send_sticker(message.chat.id,
-#                      "CAACAgIAAxkBAAEIHzFkDzxFeaWhNjihFqQaSFaZNWMzSAACWyoAAvMreEibkHdAfD2kCS8E")
-#     bot.send_message(message.chat.id, '❤️ Сервисная компания “Аренда Аттракционов”\n'
-#                                       '\n'
-#                                       'В наш День Рождения, хотим вручить скидку 15% тебе!\n'
-#                                       '\n'
-#                                       '🔹 ПРОМОКОД: ARENDA2023\n'
-#                                       'Подписывайся на наш telegram-канал, будь в курсе всех наших новинок!\n'
-#                                       '\n'
-#                                       '[Telegram](https://t.me/arenda_attrakcionov)'
-#                                       '\n'
-#                                       'До новых встреч!\n'
-#                                       'Обнимаем!\n'
-#                                       '❤️',
-#                      parse_mode="Markdown",disable_web_page_preview=True)
-#         # bot.register_next_step_handler(message, end_phone)
 
 def change(user_data, name_colum):
     database = db.Data(user_data)
@@ -829,10 +970,24 @@ def collector(message):
         name = message.text
         user.collection(name)
 
-def telephone(message):
+
+def setSurname(message):
+    user = db.Data(message.from_user)
+    surname = message.text
+    user.setSurname(surname)
+
+
+def setName(message):
+    user = db.Data(message.from_user)
+    name = message.text
+    user.setName(name)
+
+
+def setPhone(message):
     user = db.Data(message.from_user)
     phone = message.text
-    user.collection_phone(phone)
+    user.setPhone(phone)
+
 
 while True:
     try:
