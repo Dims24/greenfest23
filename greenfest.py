@@ -1220,8 +1220,9 @@ def water2_2(message):
 
 def water2_3(message):
     try:
-        if message.text.lower() in ['пропустить']:
-            miss(message)
+        if message.content_type == 'text':
+            if message.text.lower() in ['пропустить']:
+                miss(message)
         elif message.content_type == 'photo':
             keyboard_inline = types.InlineKeyboardMarkup()
             confirm_button = types.InlineKeyboardButton('Подтвердить', callback_data='confirm')
