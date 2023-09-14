@@ -60,7 +60,7 @@ admin_id = '703608663'
 # -------------Начало---------------------------
 @bot.message_handler(commands=['start'])
 def handle_start(message):
-    if (message.from_user.id == menedjer):
+    if (message.from_user.id == menedjer_1):
         bot.send_message(message.chat.id, 'Вам доступен экспорт', reply_markup=keyboard.export())
     else:
         info = db.Data(message.from_user)
@@ -110,7 +110,7 @@ def handle_start(message):
 @bot.message_handler(func=lambda message: message.text.lower() == 'экспорт данных', content_types=['text'])
 def export(message):
     try:
-        if (message.from_user.id == menedjer):
+        if (message.from_user.id == menedjer_1):
             excel_name = export_data()
             print(excel_name)
             bot.send_document(message.chat.id, InputFile(excel_name))

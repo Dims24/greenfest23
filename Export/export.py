@@ -7,21 +7,21 @@ from telebot.types import InputFile
 
 def export_data():
     conn = psycopg2.connect(
-        dbname='aa-bot',
-        user='aa-bot',
-        password='aa-bot',
+        dbname='greenfest-bot',
+        user='greenfest-bot',
+        password='greenfest-bot',
         host='localhost',
-        port='5000'
+        port='5001'
     )
     cur = conn.cursor()
 
     # Fetch the data from the table using a query
-    query = 'SELECT id, name, username, number,created_at FROM users'
+    query = 'SELECT id, name, surname, username, number,start_at,end_at,delta FROM users'
     cur.execute(query)
     data = cur.fetchall()
 
     # Load the data into a pandas DataFrame
-    df = pd.DataFrame(data, columns=['№', 'Имя', 'Username', 'Телефон', 'Дата создания'])
+    df = pd.DataFrame(data, columns=['№', 'Имя', 'Фамилия', 'Username', 'Телефон', 'Начало', "Конец", "Время выполнения"])
     current_date = date.today()
     # Export the DataFrame to Excel
     df.to_excel(f'{current_date}.xlsx', index=False)
