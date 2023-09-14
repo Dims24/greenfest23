@@ -88,14 +88,14 @@ def earth1(list):
     return itembtn8
 
 def earth2(list):
-    if (list[14] == False or list[15] == False):
+    if (list[12] == False or list[13] == False):
         itembtn9 = types.KeyboardButton('Земля 2')
     else:
         itembtn9 = types.KeyboardButton('Земля 2 ✅')
     return itembtn9
 
 def earth3(list):
-    if (list[18] == False or list[19] == False):
+    if (list[16] == False or list[17] == False):
         itembtn10 = types.KeyboardButton('Земля 3')
     else:
         itembtn10 = types.KeyboardButton('Земля 3 ✅')

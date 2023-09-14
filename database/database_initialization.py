@@ -69,9 +69,22 @@ def init_database():
                             answer_4      boolean default false
                         );
                 """
+
+        answer_sticker = """
+                                        create table answer_sticker
+                                (
+                                    id          SERIAL PRIMARY KEY,
+                                    user_id     varchar not null,
+                                    answer_1    boolean default false,
+                                    answer_2       boolean default false,
+                                    answer_3   boolean default false,
+                                    answer_4      boolean default false
+                                );
+                        """
         cur.execute(init_user)
         cur.execute(init_task)
         cur.execute(answer)
+        cur.execute(answer_sticker)
 
     # Commit the transaction and close the cursor and connection
     conn.commit()

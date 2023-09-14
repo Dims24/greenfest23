@@ -40,6 +40,9 @@ class Data:
             sql_answer = "INSERT INTO answer (user_id) VALUES (%s)"
             values_answer_tent = (self.user_data.id,)
             self.cursor.execute(sql_answer, values_answer_tent)
+            sql_answer_sticker = "INSERT INTO answer_sticker (user_id) VALUES (%s)"
+            values_answer_sticker = (self.user_data.id,)
+            self.cursor.execute(sql_answer_sticker, values_answer_sticker)
             self.conn.commit()
             self.cursor.close()
             self.conn.close()

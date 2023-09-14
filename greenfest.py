@@ -67,7 +67,7 @@ def handle_start(message):
         info.create()
         bot.send_sticker(message.chat.id,
                          "CAACAgIAAxkBAAEKSkJlAf8wjDicj1FxMdp1JVJrKoquYgACZTEAAmKeCUi6gWV5y2hgaTAE")
-        bot.send_message(message.chat.id, '_Привет, дорогой друг! БЛА БЛА БЛА_\n'
+        bot.send_message(message.chat.id, '_Привет, дорогой друг!_\n'
                                           '\n'
                                           '_Мы подготовили для тебя квест. Впереди интересные загадки на логику, а также '
                                           'активности, которые расположены по всей территории._', parse_mode="Markdown")
@@ -119,7 +119,7 @@ def export(message):
         print(f'export: {error}')
 
 
-@bot.message_handler(content_types=['document', 'photo', 'audio', 'video', 'animation', 'voice'])
+@bot.message_handler(content_types=['document', 'photo', 'audio', 'video', 'animation', 'voice', 'sticker'])
 def take(message):
     print(message)
     bot.delete_message(message.chat.id, message.message_id)
@@ -222,7 +222,8 @@ def fire1_1(message):
                 bot.send_message(message.chat.id,
                                  '_Вы проходили данное задание. Переходим к этапу 2_',
                                  parse_mode="Markdown")
-                bot.send_sticker(message.chat.id, 'CAACAgIAAxkBAAEKSnZlAhGzFb1BWCzfNqoeKfo9R-uJsAACEjkAArpp-Eub3YPQbW7KUzAE')
+                bot.send_sticker(message.chat.id,
+                                 'CAACAgIAAxkBAAEKSnZlAhGzFb1BWCzfNqoeKfo9R-uJsAACEjkAArpp-Eub3YPQbW7KUzAE')
                 bot.send_message(message.chat.id,
                                  '_Ох уж эти люди, они так любят прятаться от моего братца Солнышка на своих пляжах. '
                                  'Но кажется эти подают своими зонтиками какие-то сигналы. Что же они говорят?\n'
@@ -279,16 +280,15 @@ def fire1_3(message):
         if message.text.lower() in ['пропустить']:
             miss(message)
         elif message.text.lower() in ['жарко']:
+
+            change(message.from_user, "fire_1_2")
+            bot.send_message(message.chat.id,
+                             '_Молодцы. Вы на шаг ближе к открытию портала в лето_ 👍🏼 _Открывайте меню и '
+                             'поехали дальше!_\n'
+                             , parse_mode="Markdown", reply_markup=keyboard.keyboard(message.from_user))
+            bot.send_sticker(message.chat.id, get_need_sticker(message, 'fire'))
             if check_final(message.from_user):
                 end(message)
-            else:
-                change(message.from_user, "fire_1_2")
-                bot.send_message(message.chat.id,
-                                 '_Молодцы. Вы на шаг ближе к открытию портала в лето_ 👍🏼 _Открывайте меню и '
-                                 'поехали дальше!_\n'
-                                 , parse_mode="Markdown", reply_markup=keyboard.keyboard(message.from_user))
-                bot.send_message(message.chat.id, "Стикер Огонь 1")
-                # bot.send_sticker(message.chat.id,"")
         else:
             bot.send_message(message.chat.id, random.choice(incorrect))
             bot.register_next_step_handler(message, fire1_3)
@@ -311,7 +311,8 @@ def fire2_1(message):
                 bot.send_message(message.chat.id,
                                  '_Вы проходили данное задание. Переходим к этапу 2_',
                                  parse_mode="Markdown")
-                bot.send_sticker(message.chat.id,'CAACAgIAAxkBAAEKSnZlAhGzFb1BWCzfNqoeKfo9R-uJsAACEjkAArpp-Eub3YPQbW7KUzAE')
+                bot.send_sticker(message.chat.id,
+                                 'CAACAgIAAxkBAAEKSnZlAhGzFb1BWCzfNqoeKfo9R-uJsAACEjkAArpp-Eub3YPQbW7KUzAE')
                 bot.send_message(message.chat.id,
                                  '_Лето самая жаркая пора, так что дам вам свое задание связанное с тем, как вы '
                                  'люди прячетесь от жары. Запираетесь дома, смотрите фильмы под кондиционером. '
@@ -319,12 +320,12 @@ def fire2_1(message):
                                  , parse_mode="Markdown")
                 bot.send_photo(message.chat.id,
                                'AgACAgIAAxkBAAIBJmUBiugFuCg3G6NpVznbcwjDUffdAALDzDEb23IISJb6zw4DJyZJAQADAgADeQADMAQ'
-                               ,reply_markup=keyboard.keyboard_miss())
+                               , reply_markup=keyboard.keyboard_miss())
                 bot.register_next_step_handler(message, fire2_3)
         else:
             bot.send_message(message.chat.id,
                              '_Фото Огонь 2_',
-                             parse_mode="Markdown",reply_markup=keyboard.keyboard_miss())
+                             parse_mode="Markdown", reply_markup=keyboard.keyboard_miss())
             # bot.send_photo(message.chat.id,
             #                'AgACAgIAAxkBAAIBdGQUSliGbcKAQZ5N3Y3fBbdt3WqeAAIQxjEboWegSOJiFHAp2QmyAQADAgADeQADLwQ',)
             bot.register_next_step_handler(message, fire2_2)
@@ -363,16 +364,15 @@ def fire2_3(message):
         if message.text.lower() in ['пропустить']:
             miss(message)
         elif message.text.lower() in ['500 дней лета', 'пятьсот дней лета']:
+
+            change(message.from_user, "fire_2_2")
+            bot.send_message(message.chat.id,
+                             '_Молодцы. Вы на шаг ближе к открытию портала в лето_ 👍🏼 _Открывайте меню и '
+                             'поехали дальше!_\n'
+                             , parse_mode="Markdown", reply_markup=keyboard.keyboard(message.from_user))
+            bot.send_sticker(message.chat.id, get_need_sticker(message, 'fire'))
             if check_final(message.from_user):
                 end(message)
-            else:
-                change(message.from_user, "fire_2_2")
-                bot.send_message(message.chat.id,
-                                 '_Молодцы. Вы на шаг ближе к открытию портала в лето_ 👍🏼 _Открывайте меню и '
-                                 'поехали дальше!_\n'
-                                 , parse_mode="Markdown", reply_markup=keyboard.keyboard(message.from_user))
-                bot.send_message(message.chat.id, "Стикер Огонь 2")
-                # bot.send_sticker(message.chat.id,"")
         else:
             bot.send_message(message.chat.id, random.choice(incorrect))
             bot.register_next_step_handler(message, fire2_3)
@@ -408,7 +408,7 @@ def fire3_1(message):
         else:
             bot.send_message(message.chat.id,
                              '_Фото Огонь 3_',
-                             parse_mode="Markdown",reply_markup=keyboard.keyboard_miss())
+                             parse_mode="Markdown", reply_markup=keyboard.keyboard_miss())
             # bot.send_photo(message.chat.id,
             #                'AgACAgIAAxkBAAIBdGQUSliGbcKAQZ5N3Y3fBbdt3WqeAAIQxjEboWegSOJiFHAp2QmyAQADAgADeQADLwQ',)
             bot.register_next_step_handler(message, fire3_2)
@@ -447,16 +447,15 @@ def fire3_3(message):
         if message.text.lower() in ['пропустить']:
             miss(message)
         elif message.text.lower() in ['курчатов']:
+
+            change(message.from_user, "fire_3_2")
+            bot.send_message(message.chat.id,
+                             '_Молодцы. Вы на шаг ближе к открытию портала в лето_  👍🏼 _Открывайте меню и '
+                             'поехали дальше!_\n'
+                             , parse_mode="Markdown", reply_markup=keyboard.keyboard(message.from_user))
+            bot.send_sticker(message.chat.id, get_need_sticker(message, 'fire'))
             if check_final(message.from_user):
                 end(message)
-            else:
-                change(message.from_user, "fire_3_2")
-                bot.send_message(message.chat.id,
-                                 '_Молодцы. Вы на шаг ближе к открытию портала в лето_  👍🏼 _Открывайте меню и '
-                                 'поехали дальше!_\n'
-                                 , parse_mode="Markdown", reply_markup=keyboard.keyboard(message.from_user))
-                bot.send_message(message.chat.id, "Стикер Огонь 3")
-                # bot.send_sticker(message.chat.id,"")
         else:
             bot.send_message(message.chat.id, random.choice(incorrect))
             bot.register_next_step_handler(message, fire3_3)
@@ -494,7 +493,7 @@ def air1_1(message):
         else:
             bot.send_message(message.chat.id,
                              '_Фото Воздух 1_',
-                             parse_mode="Markdown",reply_markup=keyboard.keyboard_miss())
+                             parse_mode="Markdown", reply_markup=keyboard.keyboard_miss())
             # bot.send_photo(message.chat.id,
             #                'AgACAgIAAxkBAAIBdGQUSliGbcKAQZ5N3Y3fBbdt3WqeAAIQxjEboWegSOJiFHAp2QmyAQADAgADeQADLwQ',)
             bot.register_next_step_handler(message, air1_2)
@@ -512,13 +511,14 @@ def air1_2(message):
             bot.send_sticker(message.chat.id,
                              'CAACAgIAAxkBAAEKSnplAhG4q6JXZwisEN6tV5PuwoVTigACWjYAAtua-UtLaF6wxMrMaTAE')
             bot.send_message(message.chat.id,
-                             '_Слышите? Ветер доносит ноты очень знакомой песни из пляжного ресторанчика! '
+                             '_Слышите? Ветер доносит ноты очень знакомой песни из пляжного ресторанчика\! '
                              'Но что же это за песня?_\n'
                              '\n'
-                             '_Ответ пишите в формате: ```Исполнитель\\_Название```_'
-                             , parse_mode="Markdown")
+                             '_Ответ пишите в формате: *Исполнитель\_Название*_'
+                             , parse_mode="MarkdownV2")
             bot.send_audio(message.chat.id,
-                           'CQACAgIAAxkBAAIBKGUBkWuoA1DST-Qzl3RIEpjXTA1qAAJaNgAC23IISBbbTcH2f-itMAQ',reply_markup=keyboard.keyboard_miss())
+                           'CQACAgIAAxkBAAIBKGUBkWuoA1DST-Qzl3RIEpjXTA1qAAJaNgAC23IISBbbTcH2f-itMAQ',
+                           reply_markup=keyboard.keyboard_miss())
             bot.register_next_step_handler(message, air1_3)
         else:
             bot.send_message(message.chat.id, random.choice(incorrect))
@@ -534,16 +534,15 @@ def air1_3(message):
             miss(message)
         elif message.text.lower() in ["жанна фриске_где-то лето", "жанна фриске_где то лето", "фриске_лето"
             , "фриске_где то лето", "фриске_где-то лето", "жанна фриске лето", "жанна фриске_лето"]:
+
+            change(message.from_user, "air_1_2")
+            bot.send_message(message.chat.id,
+                             '_Молодцы. Вы на шаг ближе к открытию портала в лето_  👍🏼 _Открывайте меню и '
+                             'поехали дальше!_\n'
+                             , parse_mode="Markdown", reply_markup=keyboard.keyboard(message.from_user))
+            bot.send_sticker(message.chat.id, get_need_sticker(message, 'air'))
             if check_final(message.from_user):
                 end(message)
-            else:
-                change(message.from_user, "air_1_2")
-                bot.send_message(message.chat.id,
-                                 '_Молодцы. Вы на шаг ближе к открытию портала в лето_  👍🏼 _Открывайте меню и '
-                                 'поехали дальше!_\n'
-                                 , parse_mode="Markdown", reply_markup=keyboard.keyboard(message.from_user))
-                bot.send_message(message.chat.id, "Стикер Воздух 1")
-                # bot.send_sticker(message.chat.id,"")
         else:
             bot.send_message(message.chat.id, random.choice(incorrect))
             bot.register_next_step_handler(message, air1_3)
@@ -576,12 +575,12 @@ def air2_1(message):
                                  , parse_mode="Markdown")
                 bot.send_photo(message.chat.id,
                                'AgACAgIAAxkBAAIBKWUBlDwcYdUovnrlFX9kTANsuOkaAALzzDEb23IISMu7e96jWgpQAQADAgADeQADMAQ'
-                               ,reply_markup=keyboard.keyboard_miss())
+                               , reply_markup=keyboard.keyboard_miss())
                 bot.register_next_step_handler(message, air2_3)
         else:
             bot.send_message(message.chat.id,
                              '_Фото Воздух 2_',
-                             parse_mode="Markdown",reply_markup=keyboard.keyboard_miss())
+                             parse_mode="Markdown", reply_markup=keyboard.keyboard_miss())
             # bot.send_photo(message.chat.id,
             #                'AgACAgIAAxkBAAIBdGQUSliGbcKAQZ5N3Y3fBbdt3WqeAAIQxjEboWegSOJiFHAp2QmyAQADAgADeQADLwQ',)
             bot.register_next_step_handler(message, air2_2)
@@ -621,18 +620,16 @@ def air2_3(message):
         if message.text.lower() in ['пропустить']:
             miss(message)
         elif message.text.lower() in ["памятник", "памятник славскому", "славский"]:
+            change(message.from_user, "air_2_2")
+            bot.send_photo(message.chat.id,
+                           'AgACAgIAAxkBAAIBKmUBlUs-i1Gvx_tLykL6AYYDSYHYAAIGzTEb23IISCjL08JPBWSGAQADAgADeQADMAQ')
+            bot.send_message(message.chat.id,
+                             '_Молодцы. Вы на шаг ближе к открытию портала в лето_  👍🏼 _Открывайте меню и '
+                             'поехали дальше!_\n'
+                             , parse_mode="Markdown", reply_markup=keyboard.keyboard(message.from_user))
+            bot.send_sticker(message.chat.id, get_need_sticker(message, 'air'))
             if check_final(message.from_user):
                 end(message)
-            else:
-                change(message.from_user, "air_2_2")
-                bot.send_photo(message.chat.id,
-                               'AgACAgIAAxkBAAIBKmUBlUs-i1Gvx_tLykL6AYYDSYHYAAIGzTEb23IISCjL08JPBWSGAQADAgADeQADMAQ')
-                bot.send_message(message.chat.id,
-                                 '_Молодцы. Вы на шаг ближе к открытию портала в лето_  👍🏼 _Открывайте меню и '
-                                 'поехали дальше!_\n'
-                                 , parse_mode="Markdown", reply_markup=keyboard.keyboard(message.from_user))
-                bot.send_message(message.chat.id, "Стикер Воздух 2")
-                # bot.send_sticker(message.chat.id,"")
         else:
             bot.send_message(message.chat.id, random.choice(incorrect))
             bot.register_next_step_handler(message, air2_3)
@@ -671,7 +668,7 @@ def earth1_1(message):
         else:
             bot.send_message(message.chat.id,
                              '_Фото Земля 1_',
-                             parse_mode="Markdown",reply_markup=keyboard.keyboard_miss())
+                             parse_mode="Markdown", reply_markup=keyboard.keyboard_miss())
             # bot.send_photo(message.chat.id,
             #                'AgACAgIAAxkBAAIBdGQUSliGbcKAQZ5N3Y3fBbdt3WqeAAIQxjEboWegSOJiFHAp2QmyAQADAgADeQADLwQ',)
             bot.register_next_step_handler(message, earth1_2)
@@ -712,16 +709,14 @@ def earth1_3(message):
         if message.text.lower() in ['пропустить']:
             miss(message)
         elif message.text.lower() in ["гимн"]:
+            change(message.from_user, "earth_1_2")
+            bot.send_message(message.chat.id,
+                             '_Молодцы. Вы на шаг ближе к открытию портала в лето_  👍🏼 _Открывайте меню и '
+                             'поехали дальше!_\n'
+                             , parse_mode="Markdown", reply_markup=keyboard.keyboard(message.from_user))
+            bot.send_sticker(message.chat.id, get_need_sticker(message, 'earth'))
             if check_final(message.from_user):
                 end(message)
-            else:
-                change(message.from_user, "earth_1_2")
-                bot.send_message(message.chat.id,
-                                 '_Молодцы. Вы на шаг ближе к открытию портала в лето_  👍🏼 _Открывайте меню и '
-                                 'поехали дальше!_\n'
-                                 , parse_mode="Markdown", reply_markup=keyboard.keyboard(message.from_user))
-                bot.send_message(message.chat.id, "Стикер Земля 1")
-                # bot.send_sticker(message.chat.id,"")
         else:
             bot.send_message(message.chat.id, random.choice(incorrect))
             bot.register_next_step_handler(message, earth1_3)
@@ -756,12 +751,12 @@ def earth2_1(message):
                                  , parse_mode="Markdown")
                 bot.send_photo(message.chat.id,
                                'AgACAgIAAxkBAAIBLGUBnQOOGLmDoOyoAfquJBPHzc8HAAIz0jEb23IQSFCr9Se3d6WHAQADAgADeQADMAQ'
-                               ,reply_markup=keyboard.keyboard_miss())
+                               , reply_markup=keyboard.keyboard_miss())
                 bot.register_next_step_handler(message, earth2_3)
         else:
             bot.send_message(message.chat.id,
                              '_Фото Земля 2_',
-                             parse_mode="Markdown",reply_markup=keyboard.keyboard_miss())
+                             parse_mode="Markdown", reply_markup=keyboard.keyboard_miss())
             # bot.send_photo(message.chat.id,
             #                'AgACAgIAAxkBAAIBdGQUSliGbcKAQZ5N3Y3fBbdt3WqeAAIQxjEboWegSOJiFHAp2QmyAQADAgADeQADLwQ',)
             bot.register_next_step_handler(message, earth2_2)
@@ -803,16 +798,14 @@ def earth2_3(message):
         if message.text.lower() in ['пропустить']:
             miss(message)
         elif message.text.lower() in ["гимн"]:
+            change(message.from_user, "earth_2_2")
+            bot.send_message(message.chat.id,
+                             '_Молодцы. Вы на шаг ближе к открытию портала в лето_  👍🏼 _Открывайте меню и '
+                             'поехали дальше!_\n'
+                             , parse_mode="Markdown", reply_markup=keyboard.keyboard(message.from_user))
+            bot.send_sticker(message.chat.id, get_need_sticker(message, 'earth'))
             if check_final(message.from_user):
                 end(message)
-            else:
-                change(message.from_user, "earth_2_2")
-                bot.send_message(message.chat.id,
-                                 '_Молодцы. Вы на шаг ближе к открытию портала в лето_  👍🏼 _Открывайте меню и '
-                                 'поехали дальше!_\n'
-                                 , parse_mode="Markdown", reply_markup=keyboard.keyboard(message.from_user))
-                bot.send_message(message.chat.id, "Стикер Земля 2")
-                # bot.send_sticker(message.chat.id,"")
         else:
             bot.send_message(message.chat.id, random.choice(incorrect))
             bot.register_next_step_handler(message, earth2_3)
@@ -845,13 +838,13 @@ def earth3_1(message):
                                  'достаточно, остальное уже собрано._'
                                  , parse_mode="Markdown")
                 bot.send_sticker(message.chat.id,
-                               'CAACAgIAAxkBAAEKSrdlAievMcMK_16ed7RacF0pzcFZiwACvzUAAhu2-UvUOmjztTLceDAE'
-                               ,reply_markup=keyboard.keyboard_miss())
+                                 'CAACAgIAAxkBAAEKSrdlAievMcMK_16ed7RacF0pzcFZiwACvzUAAhu2-UvUOmjztTLceDAE'
+                                 , reply_markup=keyboard.keyboard_miss())
                 bot.register_next_step_handler(message, earth3_3)
         else:
             bot.send_message(message.chat.id,
                              '_Фото Земля 3_',
-                             parse_mode="Markdown",reply_markup=keyboard.keyboard_miss())
+                             parse_mode="Markdown", reply_markup=keyboard.keyboard_miss())
             # bot.send_photo(message.chat.id,
             #                'AgACAgIAAxkBAAIBdGQUSliGbcKAQZ5N3Y3fBbdt3WqeAAIQxjEboWegSOJiFHAp2QmyAQADAgADeQADLwQ',)
             bot.register_next_step_handler(message, earth3_2)
@@ -875,9 +868,9 @@ def earth3_2(message):
                              ' Ниже в стикерах можете выбрать вещи которые вам понадобиться, четырех будет '
                              'достаточно, остальное уже собрано._'
                              , parse_mode="Markdown")
-            bot.send_photo(message.chat.id,
-                           'AgACAgIAAxkBAAIBLGUBnQOOGLmDoOyoAfquJBPHzc8HAAIz0jEb23IQSFCr9Se3d6WHAQADAgADeQADMAQ',
-                           reply_markup=keyboard.keyboard_miss())
+            bot.send_sticker(message.chat.id,
+                             'CAACAgIAAxkBAAEKSrdlAievMcMK_16ed7RacF0pzcFZiwACvzUAAhu2-UvUOmjztTLceDAE'
+                             , reply_markup=keyboard.keyboard_miss())
             bot.register_next_step_handler(message, earth3_3)
         else:
             bot.send_message(message.chat.id, random.choice(incorrect))
@@ -889,25 +882,114 @@ def earth3_2(message):
 
 def earth3_3(message):
     try:
-        if message.text.lower() in ['пропустить']:
-            miss(message)
-        elif message.text.lower() in ["гимн"]:
-            if check_final(message.from_user):
-                end(message)
-            else:
-                change(message.from_user, "earth_3_2")
+        if message.content_type == 'text':
+            if message.text.lower() in ['пропустить']:
+                miss(message)
+        elif message.content_type == 'sticker':
+            if message.sticker.file_unique_id == "AgADBTwAApA4-Es":
+                if check_answer(message.chat, 'answer_sticker', "answer_1"):
+                    bot.send_message(message.chat.id,
+                                     '_Плавки уже были_',
+                                     parse_mode="Markdown", reply_markup=keyboard.keyboard_miss())
+                    bot.register_next_step_handler(message, earth3_3)
+                else:
+                    bot.send_message(message.chat.id,
+                                     '_Купальные шорты всегда пригодятся в жаркую погодку, тем более у озера '
+                                     'остановки будут_',
+                                     parse_mode="Markdown", reply_markup=keyboard.keyboard_miss())
+                    change_answer(message.chat, 'answer_sticker', "answer_1")
+                    if check_answer_final(message.chat, 'answer_sticker'):
+                        final_earth3_3(message)
+                    else:
+                        bot.register_next_step_handler(message, earth3_3)
+            elif message.sticker.file_unique_id == "AgADWzwAAu0E-Us":
+                if check_answer(message.chat, 'answer_sticker', "answer_2"):
+                    bot.send_message(message.chat.id,
+                                     '_Спальник уже был, внимательнее_',
+                                     parse_mode="Markdown", reply_markup=keyboard.keyboard_miss())
+                    bot.register_next_step_handler(message, earth3_3)
+                else:
+                    bot.send_message(message.chat.id,
+                                     '_Конечно да, без спальника нам не обойтись._',
+                                     parse_mode="Markdown", reply_markup=keyboard.keyboard_miss())
+                    change_answer(message.chat, 'answer_sticker', "answer_2")
+                    if check_answer_final(message.chat, 'answer_sticker'):
+                        final_earth3_3(message)
+                    else:
+                        bot.register_next_step_handler(message, earth3_3)
+            elif message.sticker.file_unique_id == "AgADcTkAAmo7-Us":
+                if check_answer(message.chat, 'answer_sticker', "answer_3"):
+                    bot.send_message(message.chat.id,
+                                     '_Ну был же повербанк, давай другое_',
+                                     parse_mode="Markdown", reply_markup=keyboard.keyboard_miss())
+                    bot.register_next_step_handler(message, earth3_3)
+                else:
+                    bot.send_message(message.chat.id,
+                                     '_Мощный, думаю на пару дней его должно хватить, чтоб не остаться без связи._',
+                                     parse_mode="Markdown", reply_markup=keyboard.keyboard_miss())
+                    change_answer(message.chat, 'answer_sticker', "answer_3")
+                    if check_answer_final(message.chat, 'answer_sticker'):
+                        final_earth3_3(message)
+                    else:
+                        bot.register_next_step_handler(message, earth3_3)
+            elif message.sticker.file_unique_id == "AgADRjYAAvzQ-Es":
+                if check_answer(message.chat, 'answer_sticker', "answer_4"):
+                    bot.send_message(message.chat.id,
+                                     '_Опять дождевик? Ты серьезно?!_',
+                                     parse_mode="Markdown", reply_markup=keyboard.keyboard_miss())
+                    bot.register_next_step_handler(message, earth3_3)
+                else:
+                    bot.send_message(message.chat.id,
+                                     '_Почти не занимает места и точно пригодится при непогоде, конечно берем._',
+                                     parse_mode="Markdown", reply_markup=keyboard.keyboard_miss())
+                    change_answer(message.chat, 'answer_sticker', "answer_4")
+                    if check_answer_final(message.chat, 'answer_sticker'):
+                        final_earth3_3(message)
+                    else:
+                        bot.register_next_step_handler(message, earth3_3)
+            elif message.sticker.file_unique_id == "AgADjTsAAgYhEUg":
                 bot.send_message(message.chat.id,
-                                 '_Молодцы. Вы на шаг ближе к открытию портала в лето_  👍🏼 _Открывайте меню и '
-                                 'поехали дальше!_\n'
-                                 , parse_mode="Markdown", reply_markup=keyboard.keyboard(message.from_user))
-                bot.send_message(message.chat.id, "Стикер Земля 3")
-                # bot.send_sticker(message.chat.id,"")
+                                 '_Какой еще сноуборд, вы смеетесь? Не февраль месяц же._',
+                                 parse_mode="Markdown", reply_markup=keyboard.keyboard_miss())
+                bot.register_next_step_handler(message, earth3_3)
+            elif message.sticker.file_unique_id == "AgAD5TwAAsay-Es":
+                bot.send_message(message.chat.id,
+                                 '_Не самая необходимая вещь в походе, думаю лучше его все же оставить._',
+                                 parse_mode="Markdown", reply_markup=keyboard.keyboard_miss())
+                bot.register_next_step_handler(message, earth3_3)
+            elif message.sticker.file_unique_id == "AgADqj0AAjzS-Es":
+                bot.send_message(message.chat.id,
+                                 '_Ладно бы еще пластиковая или железная была, но фарфор? Нет уж, у нас с собой специальная посуда будет._',
+                                 parse_mode="Markdown", reply_markup=keyboard.keyboard_miss())
+                bot.register_next_step_handler(message, earth3_3)
+            elif message.sticker.file_unique_id == "AgADqDYAAqwQ-Es":
+                bot.send_message(message.chat.id,
+                                 '_Он конечно полезен при дожде, но все же в городе._',
+                                 parse_mode="Markdown", reply_markup=keyboard.keyboard_miss())
+                bot.register_next_step_handler(message, earth3_3)
+            else:
+                bot.send_chat_action(message.chat.id, 'typing')
+                bot.send_message(message.chat.id, random.choice(incorrect))
+                bot.register_next_step_handler(message, earth3_3)
         else:
+            bot.send_chat_action(message.chat.id, 'typing')
             bot.send_message(message.chat.id, random.choice(incorrect))
             bot.register_next_step_handler(message, earth3_3)
+
     except Exception as error:
         print(f'earth3_3: {error}')
         bot.register_next_step_handler(message, earth3_3)
+
+
+def final_earth3_3(message):
+    change(message.from_user, "earth_3_2")
+    bot.send_message(message.chat.id,
+                     '_Молодцы. Вы на шаг ближе к открытию портала в лето_ 👍🏼 '
+                     '_Открывайте меню и поехали дальше!_', parse_mode="Markdown",
+                     reply_markup=keyboard.keyboard(message.from_user))
+    bot.send_sticker(message.chat.id, get_need_sticker(message, 'earth'))
+    if check_final(message.from_user):
+        end(message)
 
 
 # -------------Вода 1---------------------------
@@ -957,7 +1039,7 @@ def water1_2(message):
     try:
         if message.text.lower() in ['пропустить']:
             miss(message)
-        elif message.text.lower() in ['время']:
+        elif message.text.lower() in ['результат']:
             change(message.from_user, "water_1_1")
             bot.send_sticker(message.chat.id,
                              'CAACAgIAAxkBAAEKSnxlAhG781wuehAVBimZSbaSvjnPzwAC9T0AArW8-EtxOhdKihMcPjAE')
@@ -987,11 +1069,11 @@ def water1_3(message):
     try:
         if message.text.lower() in ['пропустить']:
             miss(message)
-        if message.text.lower() in ['cочи']:
+        elif message.text.lower() in ['сочи']:
             if check_answer(message.chat, 'answer', "answer_1"):
                 bot.send_message(message.chat.id,
                                  'Верно, но подобный ответ уже засчитан',
-                                 parse_mode="Markdown",reply_markup=keyboard.keyboard_miss())
+                                 parse_mode="Markdown", reply_markup=keyboard.keyboard_miss())
                 bot.register_next_step_handler(message, water1_3)
             else:
                 bot.send_message(message.chat.id,
@@ -1011,7 +1093,7 @@ def water1_3(message):
             else:
                 bot.send_message(message.chat.id,
                                  'Прекрасно справляешься!',
-                                 parse_mode="Markdown",reply_markup=keyboard.keyboard_miss() )
+                                 parse_mode="Markdown", reply_markup=keyboard.keyboard_miss())
                 change_answer(message.chat, 'answer', "answer_2")
                 if check_answer_final(message.chat, 'answer'):
                     final_water1_3(message)
@@ -1021,12 +1103,12 @@ def water1_3(message):
             if check_answer(message.chat, 'answer', "answer_3"):
                 bot.send_message(message.chat.id,
                                  'Верно, но подобный ответ уже засчитан',
-                                 parse_mode="Markdown",reply_markup=keyboard.keyboard_miss() )
+                                 parse_mode="Markdown", reply_markup=keyboard.keyboard_miss())
                 bot.register_next_step_handler(message, water1_3)
             else:
                 bot.send_message(message.chat.id,
                                  'Прекрасно справляешься!',
-                                 parse_mode="Markdown",reply_markup=keyboard.keyboard_miss() )
+                                 parse_mode="Markdown", reply_markup=keyboard.keyboard_miss())
                 change_answer(message.chat, 'answer', "answer_3")
                 if check_answer_final(message.chat, 'answer'):
                     final_water1_3(message)
@@ -1041,7 +1123,7 @@ def water1_3(message):
             else:
                 bot.send_message(message.chat.id,
                                  'Прекрасно справляешься!',
-                                 parse_mode="Markdown",reply_markup=keyboard.keyboard_miss() )
+                                 parse_mode="Markdown", reply_markup=keyboard.keyboard_miss())
                 change_answer(message.chat, 'answer', "answer_4")
                 if check_answer_final(message.chat, 'answer'):
                     final_water1_3(message)
@@ -1063,8 +1145,9 @@ def final_water1_3(message):
                      '_Молодцы. Вы на шаг ближе к открытию портала в лето_ 👍🏼 '
                      '_Открывайте меню и поехали дальше!_', parse_mode="Markdown",
                      reply_markup=keyboard.keyboard(message.from_user))
-    bot.send_message(message.chat.id, "Стикер Вода 1")
-    # bot.send_sticker(message.chat.id,"")
+    bot.send_sticker(message.chat.id, get_need_sticker(message, 'water'))
+    if check_final(message.from_user):
+        end(message)
 
 
 # -------------Вода 2---------------------------
@@ -1139,7 +1222,7 @@ def water2_3(message):
     try:
         if message.text.lower() in ['пропустить']:
             miss(message)
-        if message.content_type == 'photo':
+        elif message.content_type == 'photo':
             keyboard_inline = types.InlineKeyboardMarkup()
             confirm_button = types.InlineKeyboardButton('Подтвердить', callback_data='confirm')
             cancel_button = types.InlineKeyboardButton('Отменить', callback_data='cancel')
@@ -1168,7 +1251,9 @@ def water2_3(message):
                     change(message.from_user, "water_2_2")
                     bot.send_message(chat.id,
                                      '_Молодцы. Вы на шаг ближе к открытию портала в лето_ 👍🏼 _Открывай меню, '
-                                     'поехали дальше_',parse_mode="Markdown", reply_markup=keyboard.keyboard(message.from_user))
+                                     'поехали дальше_', parse_mode="Markdown",
+                                     reply_markup=keyboard.keyboard(message.from_user))
+                    bot.send_sticker(message.chat.id, get_need_sticker(message, 'water'))
                     if check_final(chat):
                         end(message)
                 elif call.data == 'cancel':
@@ -1272,6 +1357,87 @@ def set_phone(message):
     user = db.Data(message.from_user)
     phone = message.text
     user.setPhone(phone)
+
+
+def get_need_sticker(message, task):
+    user = db.Data(message.from_user)
+    table = user.table()
+    table = table[2:]
+    if task == 'fire':
+        completed_tasks = 0
+
+        # Проверяем каждое задание и увеличиваем счетчик, если оно выполнено
+        if table[4] and table[5]:
+            completed_tasks += 1
+        if table[14] and table[15]:
+            completed_tasks += 1
+        if table[18] and table[19]:
+            completed_tasks += 1
+
+        # Выполняем действие в зависимости от количества выполненных заданий
+        if completed_tasks == 1:
+            return 'CAACAgIAAxkBAAEKSoZlAhN-B_da5hlceynC-wEDMeaybQACdzkAAsJ--EvZihJw4QLHXTAE'
+        elif completed_tasks == 2:
+            return 'CAACAgIAAxkBAAEKSoplAhPoRT3l4YbhtB_tXRADrBm9RwACIz0AAmkK-UtgOHrpYpDlzDAE'
+        elif completed_tasks == 3:
+            return 'CAACAgIAAxkBAAEKSohlAhOC-nEhUO-_mUSErpcyVjABygACuzYAAm7k-Ev3812SKKnsUDAE'
+        else:
+            print("Ни одно задание не выполнено")
+
+    elif task == 'earth':
+        completed_tasks = 0
+
+        # Проверяем каждое задание и увеличиваем счетчик, если оно выполнено
+        if table[2] and table[3]:
+            completed_tasks += 1
+        if table[12] and table[13]:
+            completed_tasks += 1
+        if table[16] and table[17]:
+            completed_tasks += 1
+
+        # Выполняем действие в зависимости от количества выполненных заданий
+        if completed_tasks == 1:
+            return 'CAACAgIAAxkBAAEKSoxlAhQQqQZ29KYw2IS-w5_McKrWtQACcTYAAr6f-EtKXDM7ySzwNzAE'
+        elif completed_tasks == 2:
+            return 'CAACAgIAAxkBAAEKSo5lAhQW7g1qIOLIxxWal_jYao7eXAACKzUAAsej-UvHhW5LHh5tGjAE'
+        elif completed_tasks == 3:
+            return 'CAACAgIAAxkBAAEKSpBlAhQbxm1kh6jZjj4K-wABnQJKHrgAAn45AALx-fhL6jMmealKI0swBA'
+        else:
+            print("Ни одно задание не выполнено")
+
+    elif task == 'water':
+        completed_tasks = 0
+
+        # Проверяем каждое задание и увеличиваем счетчик, если оно выполнено
+        if table[8] and table[9]:
+            completed_tasks += 1
+        if table[10] and table[11]:
+            completed_tasks += 1
+
+        # Выполняем действие в зависимости от количества выполненных заданий
+        if completed_tasks == 1:
+            return 'CAACAgIAAxkBAAEKSpJlAhSyrJTwjLjyxBtspPXnGhmmNwACTzUAAnFj-EsyPQzF5pWYoDAE'
+        elif completed_tasks == 2:
+            return 'CAACAgIAAxkBAAEKSpRlAhS0-3XNB-Y6UrdcD-wLkQkupQAC7DQAAvmL-EvHjwABBMgz4lMwBA'
+        else:
+            print("Ни одно задание не выполнено")
+
+    elif task == 'air':
+        completed_tasks = 0
+
+        # Проверяем каждое задание и увеличиваем счетчик, если оно выполнено
+        if table[0] and table[1]:
+            completed_tasks += 1
+        if table[6] and table[7]:
+            completed_tasks += 1
+
+        # Выполняем действие в зависимости от количества выполненных заданий
+        if completed_tasks == 1:
+            return 'CAACAgIAAxkBAAEKSpZlAhT7rKOUrdqVlXkYpp8PfLixtgACrzAAAmaAAUiZ5OExs-sdeDAE'
+        elif completed_tasks == 2:
+            return 'CAACAgIAAxkBAAEKSphlAhT-Vn6EjhoBMVehrqjrRITv9QACGDkAAh7i-EuZnloJctgIJjAE'
+        else:
+            print("Ни одно задание не выполнено")
 
 
 while True:
