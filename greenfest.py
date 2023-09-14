@@ -66,13 +66,13 @@ def handle_start(message):
         info = db.Data(message.from_user)
         info.create()
         bot.send_sticker(message.chat.id,
-                         "CAACAgIAAxkBAAEIHd1kDu6_l3UN8qquRGL97sxH0shhzAACGCwAAnCfWEhLkKAVEv7IwC8E")
+                         "CAACAgIAAxkBAAEKSkJlAf8wjDicj1FxMdp1JVJrKoquYgACZTEAAmKeCUi6gWV5y2hgaTAE")
         bot.send_message(message.chat.id, '_Привет, дорогой друг! БЛА БЛА БЛА_\n'
                                           '\n'
                                           '_Мы подготовили для тебя квест. Впереди интересные загадки на логику, а также '
                                           'активности, которые расположены по всей территории._', parse_mode="Markdown")
         bot.send_sticker(message.chat.id,
-                         "CAACAgIAAxkBAAEIHd1kDu6_l3UN8qquRGL97sxH0shhzAACGCwAAnCfWEhLkKAVEv7IwC8E")
+                         "CAACAgIAAxkBAAEKSn9lAhICYzX0fZrQl-hmN_Z5TwjkYgACF0YAAqUFEEjYj5lzUIFNxjAE")
         bot.send_message(message.chat.id,
                          "_Прежде, чем мы начнём, расскажу об игре. Всё очень просто:_\n"
                          "\n"
@@ -168,7 +168,7 @@ def start(message):
         if message.content_type == 'text':
             set_phone(message)
             bot.send_sticker(message.chat.id,
-                             "CAACAgIAAxkBAAEIHzFkDzxFeaWhNjihFqQaSFaZNWMzSAACWyoAAvMreEibkHdAfD2kCS8E")
+                             "CAACAgIAAxkBAAEKSkZlAgABoWZXxef8hvXfWYJNdtSikK4AAio0AAK5UQABSAOfBYq7prLiMAQ")
             bot.send_message(message.chat.id, '_Лето – уникальная пора, когда даже самый заядлый домосед выбирается '
                                               'на природу и в путешествия. Именно там можно получить нестандартный опыт,'
                                               ' который может пригодиться. Вот только сейчас портал в лето закрыт!\n'
@@ -222,6 +222,7 @@ def fire1_1(message):
                 bot.send_message(message.chat.id,
                                  '_Вы проходили данное задание. Переходим к этапу 2_',
                                  parse_mode="Markdown")
+                bot.send_sticker(message.chat.id, 'CAACAgIAAxkBAAEKSnZlAhGzFb1BWCzfNqoeKfo9R-uJsAACEjkAArpp-Eub3YPQbW7KUzAE')
                 bot.send_message(message.chat.id,
                                  '_Ох уж эти люди, они так любят прятаться от моего братца Солнышка на своих пляжах. '
                                  'Но кажется эти подают своими зонтиками какие-то сигналы. Что же они говорят?\n'
@@ -251,6 +252,8 @@ def fire1_2(message):
             miss(message)
         elif message.text.lower() in ['защита']:
             change(message.from_user, "fire_1_1")
+            bot.send_sticker(message.chat.id,
+                             'CAACAgIAAxkBAAEKSnZlAhGzFb1BWCzfNqoeKfo9R-uJsAACEjkAArpp-Eub3YPQbW7KUzAE')
             bot.send_message(message.chat.id,
                              '_Ох уж эти люди, они так любят прятаться от моего братца Солнышка на своих пляжах. '
                              'Но кажется эти подают своими зонтиками какие-то сигналы. Что же они говорят?\n'
@@ -281,7 +284,7 @@ def fire1_3(message):
             else:
                 change(message.from_user, "fire_1_2")
                 bot.send_message(message.chat.id,
-                                 '_Молодцы. Вы на шаг ближе к освоению очередной ценности_ 👍🏼 _Открывайте меню и '
+                                 '_Молодцы. Вы на шаг ближе к открытию портала в лето_ 👍🏼 _Открывайте меню и '
                                  'поехали дальше!_\n'
                                  , parse_mode="Markdown", reply_markup=keyboard.keyboard(message.from_user))
                 bot.send_message(message.chat.id, "Стикер Огонь 1")
@@ -308,6 +311,7 @@ def fire2_1(message):
                 bot.send_message(message.chat.id,
                                  '_Вы проходили данное задание. Переходим к этапу 2_',
                                  parse_mode="Markdown")
+                bot.send_sticker(message.chat.id,'CAACAgIAAxkBAAEKSnZlAhGzFb1BWCzfNqoeKfo9R-uJsAACEjkAArpp-Eub3YPQbW7KUzAE')
                 bot.send_message(message.chat.id,
                                  '_Лето самая жаркая пора, так что дам вам свое задание связанное с тем, как вы '
                                  'люди прячетесь от жары. Запираетесь дома, смотрите фильмы под кондиционером. '
@@ -335,6 +339,8 @@ def fire2_2(message):
             miss(message)
         elif message.text.lower() in ['весомость']:
             change(message.from_user, "fire_2_1")
+            bot.send_sticker(message.chat.id,
+                             'CAACAgIAAxkBAAEKSnZlAhGzFb1BWCzfNqoeKfo9R-uJsAACEjkAArpp-Eub3YPQbW7KUzAE')
             bot.send_message(message.chat.id,
                              '_Лето самая жаркая пора, так что дам вам свое задание связанное с тем, как вы '
                              'люди прячетесь от жары. Запираетесь дома, смотрите фильмы под кондиционером. '
@@ -362,7 +368,7 @@ def fire2_3(message):
             else:
                 change(message.from_user, "fire_2_2")
                 bot.send_message(message.chat.id,
-                                 '_Молодцы. Вы на шаг ближе к освоению очередной ценности_ 👍🏼 _Открывайте меню и '
+                                 '_Молодцы. Вы на шаг ближе к открытию портала в лето_ 👍🏼 _Открывайте меню и '
                                  'поехали дальше!_\n'
                                  , parse_mode="Markdown", reply_markup=keyboard.keyboard(message.from_user))
                 bot.send_message(message.chat.id, "Стикер Огонь 2")
@@ -389,6 +395,8 @@ def fire3_1(message):
                 bot.send_message(message.chat.id,
                                  '_Вы проходили данное задание. Переходим к этапу 2_',
                                  parse_mode="Markdown")
+                bot.send_sticker(message.chat.id,
+                                 'CAACAgIAAxkBAAEKSnZlAhGzFb1BWCzfNqoeKfo9R-uJsAACEjkAArpp-Eub3YPQbW7KUzAE')
                 bot.send_message(message.chat.id,
                                  '_Настоящие коллеги должны понимать друг друга на любом языке! И даже на языке '
                                  'эмодзи. Попробуйте понять, кто же тут загадан!_\n'
@@ -415,6 +423,8 @@ def fire3_2(message):
             miss(message)
         elif message.text.lower() in ['руководитель']:
             change(message.from_user, "fire_3_1")
+            bot.send_sticker(message.chat.id,
+                             'CAACAgIAAxkBAAEKSnZlAhGzFb1BWCzfNqoeKfo9R-uJsAACEjkAArpp-Eub3YPQbW7KUzAE')
             bot.send_message(message.chat.id,
                              '_Лето самая жаркая пора, так что дам вам свое задание связанное с тем, как вы '
                              'люди прячетесь от жары. Запираетесь дома, смотрите фильмы под кондиционером. '
@@ -442,7 +452,7 @@ def fire3_3(message):
             else:
                 change(message.from_user, "fire_3_2")
                 bot.send_message(message.chat.id,
-                                 '_Молодцы. Вы на шаг ближе к освоению очередной ценности_  👍🏼 _Открывайте меню и '
+                                 '_Молодцы. Вы на шаг ближе к открытию портала в лето_  👍🏼 _Открывайте меню и '
                                  'поехали дальше!_\n'
                                  , parse_mode="Markdown", reply_markup=keyboard.keyboard(message.from_user))
                 bot.send_message(message.chat.id, "Стикер Огонь 3")
@@ -469,6 +479,8 @@ def air1_1(message):
                 bot.send_message(message.chat.id,
                                  '_Вы проходили данное задание. Переходим к этапу 2_',
                                  parse_mode="Markdown")
+                bot.send_sticker(message.chat.id,
+                                 'CAACAgIAAxkBAAEKSnplAhG4q6JXZwisEN6tV5PuwoVTigACWjYAAtua-UtLaF6wxMrMaTAE')
                 bot.send_message(message.chat.id,
                                  '_Слышите? Ветер доносит ноты очень знакомой песни из пляжного ресторанчика\! '
                                  'Но что же это за песня?_\n'
@@ -497,6 +509,8 @@ def air1_2(message):
             miss(message)
         elif message.text.lower() in ['совесть']:
             change(message.from_user, "air_1_1")
+            bot.send_sticker(message.chat.id,
+                             'CAACAgIAAxkBAAEKSnplAhG4q6JXZwisEN6tV5PuwoVTigACWjYAAtua-UtLaF6wxMrMaTAE')
             bot.send_message(message.chat.id,
                              '_Слышите? Ветер доносит ноты очень знакомой песни из пляжного ресторанчика! '
                              'Но что же это за песня?_\n'
@@ -525,7 +539,7 @@ def air1_3(message):
             else:
                 change(message.from_user, "air_1_2")
                 bot.send_message(message.chat.id,
-                                 '_Молодцы. Вы на шаг ближе к освоению очередной ценности_  👍🏼 _Открывайте меню и '
+                                 '_Молодцы. Вы на шаг ближе к открытию портала в лето_  👍🏼 _Открывайте меню и '
                                  'поехали дальше!_\n'
                                  , parse_mode="Markdown", reply_markup=keyboard.keyboard(message.from_user))
                 bot.send_message(message.chat.id, "Стикер Воздух 1")
@@ -552,6 +566,8 @@ def air2_1(message):
                 bot.send_message(message.chat.id,
                                  '_Вы проходили данное задание. Переходим к этапу 2_',
                                  parse_mode="Markdown")
+                bot.send_sticker(message.chat.id,
+                                 'CAACAgIAAxkBAAEKSnplAhG4q6JXZwisEN6tV5PuwoVTigACWjYAAtua-UtLaF6wxMrMaTAE')
                 bot.send_message(message.chat.id,
                                  '_Вспоминать о лете мы будем еще долго, но чтобы его запомнить еще лучше и '
                                  'детальнее память нужно тренировать! Сможете вспомнить, что же спрятано на картинке?_\n'
@@ -580,6 +596,8 @@ def air2_2(message):
             miss(message)
         elif message.text.lower() in ['признание']:
             change(message.from_user, "air_2_1")
+            bot.send_sticker(message.chat.id,
+                             'CAACAgIAAxkBAAEKSnplAhG4q6JXZwisEN6tV5PuwoVTigACWjYAAtua-UtLaF6wxMrMaTAE')
             bot.send_message(message.chat.id,
                              '_Вспоминать о лете мы будем еще долго, но чтобы его запомнить еще лучше и '
                              'детальнее память нужно тренировать! Сможете вспомнить, что же спрятано на картинке?_\n'
@@ -610,7 +628,7 @@ def air2_3(message):
                 bot.send_photo(message.chat.id,
                                'AgACAgIAAxkBAAIBKmUBlUs-i1Gvx_tLykL6AYYDSYHYAAIGzTEb23IISCjL08JPBWSGAQADAgADeQADMAQ')
                 bot.send_message(message.chat.id,
-                                 '_Молодцы. Вы на шаг ближе к освоению очередной ценности_  👍🏼 _Открывайте меню и '
+                                 '_Молодцы. Вы на шаг ближе к открытию портала в лето_  👍🏼 _Открывайте меню и '
                                  'поехали дальше!_\n'
                                  , parse_mode="Markdown", reply_markup=keyboard.keyboard(message.from_user))
                 bot.send_message(message.chat.id, "Стикер Воздух 2")
@@ -637,6 +655,8 @@ def earth1_1(message):
                 bot.send_message(message.chat.id,
                                  '_Вы проходили данное задание. Переходим к этапу 2_',
                                  parse_mode="Markdown")
+                bot.send_sticker(message.chat.id,
+                                 'CAACAgIAAxkBAAEKSnhlAhG21UFRc8vSfLg0VPbs6e4kHgACXzYAAkGH-EsS0BG0h5b3iTAE')
                 bot.send_message(message.chat.id,
                                  '_Представьте, что вы на пляже потеряли телефон или брошку и теперь вам нужно '
                                  'по своим следам выявить место потери. Для удобства, мы поделили пляж на сектора. '
@@ -666,6 +686,8 @@ def earth1_2(message):
             miss(message)
         elif message.text.lower() in ['время']:
             change(message.from_user, "earth_1_1")
+            bot.send_sticker(message.chat.id,
+                             'CAACAgIAAxkBAAEKSnhlAhG21UFRc8vSfLg0VPbs6e4kHgACXzYAAkGH-EsS0BG0h5b3iTAE')
             bot.send_message(message.chat.id,
                              '_Представьте, что вы на пляже потеряли телефон или брошку и теперь вам нужно '
                              'по своим следам выявить место потери. Для удобства, мы поделили пляж на сектора. '
@@ -695,7 +717,7 @@ def earth1_3(message):
             else:
                 change(message.from_user, "earth_1_2")
                 bot.send_message(message.chat.id,
-                                 '_Молодцы. Вы на шаг ближе к освоению очередной ценности_  👍🏼 _Открывайте меню и '
+                                 '_Молодцы. Вы на шаг ближе к открытию портала в лето_  👍🏼 _Открывайте меню и '
                                  'поехали дальше!_\n'
                                  , parse_mode="Markdown", reply_markup=keyboard.keyboard(message.from_user))
                 bot.send_message(message.chat.id, "Стикер Земля 1")
@@ -722,6 +744,8 @@ def earth2_1(message):
                 bot.send_message(message.chat.id,
                                  '_Вы проходили данное задание. Переходим к этапу 2_',
                                  parse_mode="Markdown")
+                bot.send_sticker(message.chat.id,
+                                 'CAACAgIAAxkBAAEKSnhlAhG21UFRc8vSfLg0VPbs6e4kHgACXzYAAkGH-EsS0BG0h5b3iTAE')
                 bot.send_message(message.chat.id,
                                  '_Нейросети сейчас окружают нас даже в путешествиях, помогая составить маршруты'
                                  ' или рассказывая и показывая красивые места.\n'
@@ -752,6 +776,8 @@ def earth2_2(message):
             miss(message)
         elif message.text.lower() in ['время']:
             change(message.from_user, "earth_2_1")
+            bot.send_sticker(message.chat.id,
+                             'CAACAgIAAxkBAAEKSnhlAhG21UFRc8vSfLg0VPbs6e4kHgACXzYAAkGH-EsS0BG0h5b3iTAE')
             bot.send_message(message.chat.id,
                              '_Нейросети сейчас окружают нас даже в путешествиях, помогая составить маршруты'
                              ' или рассказывая и показывая красивые места.\n'
@@ -782,7 +808,7 @@ def earth2_3(message):
             else:
                 change(message.from_user, "earth_2_2")
                 bot.send_message(message.chat.id,
-                                 '_Молодцы. Вы на шаг ближе к освоению очередной ценности_  👍🏼 _Открывайте меню и '
+                                 '_Молодцы. Вы на шаг ближе к открытию портала в лето_  👍🏼 _Открывайте меню и '
                                  'поехали дальше!_\n'
                                  , parse_mode="Markdown", reply_markup=keyboard.keyboard(message.from_user))
                 bot.send_message(message.chat.id, "Стикер Земля 2")
@@ -809,6 +835,8 @@ def earth3_1(message):
                 bot.send_message(message.chat.id,
                                  '_Вы проходили данное задание. Переходим к этапу 2_',
                                  parse_mode="Markdown")
+                bot.send_sticker(message.chat.id,
+                                 'CAACAgIAAxkBAAEKSnhlAhG21UFRc8vSfLg0VPbs6e4kHgACXzYAAkGH-EsS0BG0h5b3iTAE')
                 bot.send_message(message.chat.id,
                                  '_Вы давно ходили в поход? Или вообще не ходили? Ничего страшного, сейчас вместе'
                                  ' к нему подготовимся. Нас ждет путешествие по горам Кавказа, 2 ночи у озера, жаркая,'
@@ -838,6 +866,8 @@ def earth3_2(message):
             miss(message)
         elif message.text.lower() in ['тимбилдинг']:
             change(message.from_user, "earth_3_1")
+            bot.send_sticker(message.chat.id,
+                             'CAACAgIAAxkBAAEKSnhlAhG21UFRc8vSfLg0VPbs6e4kHgACXzYAAkGH-EsS0BG0h5b3iTAE')
             bot.send_message(message.chat.id,
                              '_Вы давно ходили в поход? Или вообще не ходили? Ничего страшного, сейчас вместе'
                              ' к нему подготовимся. Нас ждет путешествие по горам Кавказа, 2 ночи у озера, жаркая,'
@@ -867,7 +897,7 @@ def earth3_3(message):
             else:
                 change(message.from_user, "earth_3_2")
                 bot.send_message(message.chat.id,
-                                 '_Молодцы. Вы на шаг ближе к освоению очередной ценности_  👍🏼 _Открывайте меню и '
+                                 '_Молодцы. Вы на шаг ближе к открытию портала в лето_  👍🏼 _Открывайте меню и '
                                  'поехали дальше!_\n'
                                  , parse_mode="Markdown", reply_markup=keyboard.keyboard(message.from_user))
                 bot.send_message(message.chat.id, "Стикер Земля 3")
@@ -894,6 +924,8 @@ def water1_1(message):
                 bot.send_message(message.chat.id,
                                  '_Вы проходили данное задание. Переходим к этапу 2_',
                                  parse_mode="Markdown")
+                bot.send_sticker(message.chat.id,
+                                 'CAACAgIAAxkBAAEKSnxlAhG781wuehAVBimZSbaSvjnPzwAC9T0AArW8-EtxOhdKihMcPjAE')
                 bot.send_message(message.chat.id,
                                  '_Представьте, что вы попали в гости к своему другу, который только вернулся '
                                  'из отпуска. Вы очень хотите его удивить, рассказав о его отпуске вместо него. '
@@ -927,6 +959,8 @@ def water1_2(message):
             miss(message)
         elif message.text.lower() in ['время']:
             change(message.from_user, "water_1_1")
+            bot.send_sticker(message.chat.id,
+                             'CAACAgIAAxkBAAEKSnxlAhG781wuehAVBimZSbaSvjnPzwAC9T0AArW8-EtxOhdKihMcPjAE')
             bot.send_message(message.chat.id,
                              '_Представьте, что вы попали в гости к своему другу, который только вернулся '
                              'из отпуска. Вы очень хотите его удивить, рассказав о его отпуске вместо него. '
@@ -1026,7 +1060,7 @@ def water1_3(message):
 def final_water1_3(message):
     change(message.from_user, "water_1_2")
     bot.send_message(message.chat.id,
-                     '_Молодцы. Вы на шаг ближе к освоению очередной ценности_ 👍🏼 '
+                     '_Молодцы. Вы на шаг ближе к открытию портала в лето_ 👍🏼 '
                      '_Открывайте меню и поехали дальше!_', parse_mode="Markdown",
                      reply_markup=keyboard.keyboard(message.from_user))
     bot.send_message(message.chat.id, "Стикер Вода 1")
@@ -1055,6 +1089,8 @@ def water2_1(message):
                 bot.send_message(message.chat.id,
                                  '_Вы проходили данное задание. Переходим к этапу 2_',
                                  parse_mode="Markdown")
+                bot.send_sticker(message.chat.id,
+                                 'CAACAgIAAxkBAAEKSnxlAhG781wuehAVBimZSbaSvjnPzwAC9T0AArW8-EtxOhdKihMcPjAE')
                 bot.send_message(message.chat.id,
                                  '_Обожаю когда ко мне летом приезжает много людей, играют со мной и '
                                  'фотографируются на память. Хочу и сейчас чтобы вы оставили мне свои фотокарточки '
@@ -1081,6 +1117,8 @@ def water2_2(message):
             miss(message)
         elif message.text.lower() in ['группа']:
             change(message.from_user, "water_2_1")
+            bot.send_sticker(message.chat.id,
+                             'CAACAgIAAxkBAAEKSnxlAhG781wuehAVBimZSbaSvjnPzwAC9T0AArW8-EtxOhdKihMcPjAE')
             bot.send_message(message.chat.id,
                              '_Обожаю когда ко мне летом приезжает много людей, играют со мной и '
                              'фотографируются на память. Хочу и сейчас чтобы вы оставили мне свои фотокарточки '
@@ -1129,7 +1167,7 @@ def water2_3(message):
                     # bot.delete_message(call.from_user.id, call.message.id)
                     change(message.from_user, "water_2_2")
                     bot.send_message(chat.id,
-                                     '_Молодцы. Вы на шаг ближе к освоению очередной ценности_ 👍🏼 _Открывай меню, '
+                                     '_Молодцы. Вы на шаг ближе к открытию портала в лето_ 👍🏼 _Открывай меню, '
                                      'поехали дальше_',parse_mode="Markdown", reply_markup=keyboard.keyboard(message.from_user))
                     if check_final(chat):
                         end(message)
@@ -1150,7 +1188,9 @@ def water2_3(message):
 
 def end(message):
     bot.send_sticker(message.chat.id,
-                     "CAACAgIAAxkBAAEIHzFkDzxFeaWhNjihFqQaSFaZNWMzSAACWyoAAvMreEibkHdAfD2kCS8E")
+                     "CAACAgIAAxkBAAEKSn9lAhICYzX0fZrQl-hmN_Z5TwjkYgACF0YAAqUFEEjYj5lzUIFNxjAE")
+    bot.send_sticker(message.chat.id,
+                     "CAACAgIAAxkBAAEKSkZlAgABoWZXxef8hvXfWYJNdtSikK4AAio0AAK5UQABSAOfBYq7prLiMAQ")
     bot.send_message(message.chat.id, '_Вау! Я в восторге от того, как хорошо ты разбираешься в ценностях компании.'
                                       ' Я тобой горжусь. Потому что самая главная, СЕКРЕТНАЯ, ценность нашей '
                                       'компании – её люди. Это ТЫ!\n'
