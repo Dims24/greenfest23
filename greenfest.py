@@ -68,10 +68,11 @@ def handle_start(message):
         info.create()
         bot.send_sticker(message.chat.id,
                          "CAACAgIAAxkBAAEKSkJlAf8wjDicj1FxMdp1JVJrKoquYgACZTEAAmKeCUi6gWV5y2hgaTAE")
-        bot.send_message(message.chat.id, '_Привет, дорогой друг!_\n'
+        bot.send_message(message.chat.id, '_Здравствуйте, дорогой друг!_\n'
                                           '\n'
-                                          '_Мы подготовили для тебя квест. Впереди интересные загадки на логику, а также '
-                                          'активности, которые расположены по всей территории._', parse_mode="Markdown")
+                                          '_Мы подготовили для вас квест. Впереди интересные загадки на логику, а также'
+                                          ' активности, которые расположены по всей территории._',
+                         parse_mode="Markdown")
         bot.send_sticker(message.chat.id,
                          "CAACAgIAAxkBAAEKSn9lAhICYzX0fZrQl-hmN_Z5TwjkYgACF0YAAqUFEEjYj5lzUIFNxjAE")
         bot.send_message(message.chat.id,
@@ -83,7 +84,8 @@ def handle_start(message):
                          "2. Войти в игру можно в рамках указанного времени, также есть возможность поставить её на "
                          "паузу и продолжить позднее!\n"
                          "\n"
-                         "3. Ты получишь меню с десятью заданиями. Выбирай любое и нажимай на него\n"
+                         "3. Вы получите меню с десятью заданиями. Выбирайте любое и нажимай на него. "
+                         "Порядок прохождения заданий любой.\n"
                          "\n"
                          "4. Я пришлю карту с обозначением точки офлайн-активности\n"
                          "\n"
@@ -91,15 +93,15 @@ def handle_start(message):
                          "\n"
                          "6. После его прохождения проводник скажет кодовое слово, которое надо написать в чат\n"
                          "\n"
-                         "7. После кода я пришлю тебе логическое задание. Ответ впиши в чат\n"
+                         "7. После кода я пришлю логическое задание. Ответ впишите в чат\n"
                          "\n"
                          "8. После выполнения задания одной ценности появится галочка о прохождении\n"
                          "\n"
                          "9. Задание можно пропустить и вернуться в меню\n"
                          "\n"
-                         "За прохождение всех заданий ты получишь 10 Гринкоинов, для этого нам нужно познакомиться\n"
+                         "За прохождение всех заданий вы получите 10 Гринкоинов, для этого нам нужно познакомиться\n"
                          "\n"
-                         "По любым вопросам обращайся:_ [@blacklist_event](@blacklist_event)\n"
+                         "По любым вопросам обращайтесь:_ [@blacklist_event](@blacklist_event)\n"
                          "\n"
                          "_Если всё понятно, введи свою_ *фамилию*", parse_mode="Markdown")
         bot.register_next_step_handler(message, surname)
@@ -1051,6 +1053,10 @@ def water1_2(message):
         bot.register_next_step_handler(message, water1_2)
 
 
+correct_answers = ['_Отличная работа!_', '_Попадание прямо в цель!_', '_Здорово, молодец!_',
+                   '_Прекрасно справляетесь!_']
+
+
 def water1_3(message):
     try:
         if message.text.lower() in ['пропустить']:
@@ -1058,12 +1064,12 @@ def water1_3(message):
         elif message.text.lower() in ['сочи']:
             if check_answer(message.chat, 'answer', "answer_1"):
                 bot.send_message(message.chat.id,
-                                 'Верно, но подобный ответ уже засчитан',
+                                 '_Не не не, Сочи уже был_',
                                  parse_mode="Markdown", reply_markup=keyboard.keyboard_miss())
                 bot.register_next_step_handler(message, water1_3)
             else:
                 bot.send_message(message.chat.id,
-                                 'Прекрасно справляешься!',
+                                 random.choice(correct_answers),
                                  parse_mode="Markdown", reply_markup=keyboard.keyboard_miss())
                 change_answer(message.chat, 'answer', "answer_1")
                 if check_answer_final(message.chat, 'answer'):
@@ -1073,12 +1079,12 @@ def water1_3(message):
         elif message.text.lower() in ['сувенир', 'сувенирную тарелку', 'тарелку', 'тарелка', 'сувенирная тарелка']:
             if check_answer(message.chat, 'answer', "answer_2"):
                 bot.send_message(message.chat.id,
-                                 'Верно, но подобный ответ уже засчитан',
+                                 '_Верно, но подобный ответ уже засчитан_',
                                  parse_mode="Markdown", reply_markup=keyboard.keyboard_miss())
                 bot.register_next_step_handler(message, water1_3)
             else:
                 bot.send_message(message.chat.id,
-                                 'Прекрасно справляешься!',
+                                 random.choice(correct_answers),
                                  parse_mode="Markdown", reply_markup=keyboard.keyboard_miss())
                 change_answer(message.chat, 'answer', "answer_2")
                 if check_answer_final(message.chat, 'answer'):
@@ -1088,27 +1094,27 @@ def water1_3(message):
         elif message.text.lower() in ['самолёт', 'на самолёте', 'самолётом', 'самолет', 'на самолете', 'самолетом']:
             if check_answer(message.chat, 'answer', "answer_3"):
                 bot.send_message(message.chat.id,
-                                 'Верно, но подобный ответ уже засчитан',
+                                 '_К счастью данный ответ был засчитан раньше_',
                                  parse_mode="Markdown", reply_markup=keyboard.keyboard_miss())
                 bot.register_next_step_handler(message, water1_3)
             else:
                 bot.send_message(message.chat.id,
-                                 'Прекрасно справляешься!',
+                                 random.choice(correct_answers),
                                  parse_mode="Markdown", reply_markup=keyboard.keyboard_miss())
                 change_answer(message.chat, 'answer', "answer_3")
                 if check_answer_final(message.chat, 'answer'):
                     final_water1_3(message)
                 else:
                     bot.register_next_step_handler(message, water1_3)
-        elif message.text.lower() in ['сёрфинг', 'сёрфингом', 'серфинг', 'серфингом']:
+        elif message.text.lower() in ['сёрфинг', 'сёрфингом', 'серфинг', 'серфингом', "сёрфил", 'серфил']:
             if check_answer(message.chat, 'answer', "answer_4"):
                 bot.send_message(message.chat.id,
-                                 'Верно, но подобный ответ уже засчитан',
+                                 '_Этот водный вид спорта, уже засчитан_',
                                  parse_mode="Markdown", reply_markup=keyboard.keyboard_miss())
                 bot.register_next_step_handler(message, water1_3)
             else:
                 bot.send_message(message.chat.id,
-                                 'Прекрасно справляешься!',
+                                 random.choice(correct_answers),
                                  parse_mode="Markdown", reply_markup=keyboard.keyboard_miss())
                 change_answer(message.chat, 'answer', "answer_4")
                 if check_answer_final(message.chat, 'answer'):
