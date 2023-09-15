@@ -2,6 +2,7 @@ import psycopg2
 from contextlib import closing
 from psycopg2.extras import DictCursor
 import datetime
+from datetime import datetime, date, time
 
 
 class Data:
@@ -62,7 +63,7 @@ class Data:
         self.conn.close()
 
     def setPhone(self, number):
-        current_date_time = datetime.datetime.now()
+        current_date_time = datetime.now()
         update_query = "update users set number = %s, start_at = %s where user_id = %s"
         self.cursor.execute(update_query, (number, current_date_time, str(self.user_data.id)))
         self.conn.commit()
@@ -107,27 +108,25 @@ class Data:
         dict_cur.execute(
             f'SELECT air_1_1,air_1_2,earth_1_1,earth_1_2,fire_1_1,fire_1_2,air_2_1,air_2_2,water_1_1,water_1_2,water_2_1,water_2_2,earth_2_1,earth_2_2,fire_2_1,fire_2_2,earth_3_1,earth_3_2,fire_3_1,fire_3_2 FROM tasks WHERE user_id = \'{self.user_data.id}\'')
         rec = dict_cur.fetchone()
-        self.cursor.close()
-        self.conn.close()
+        dict_cur.close()
         return rec
 
     def final(self):
-        current_date_time = datetime.datetime.now()
+        dict_cur = self.conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
+        current_date_time = datetime.now()
         delta = self.delta(current_date_time)
         update_query = "update users set end_at = %s, delta = %s where user_id = %s"
-        self.cursor.execute(update_query, (current_date_time, delta, str(self.user_data.id)))
+        dict_cur.execute(update_query, (current_date_time, delta, str(self.user_data.id)))
+        dict_cur.close()
         self.conn.commit()
-        self.cursor.close()
-        self.conn.close()
 
     def delta(self, end_at):
         dict_cur = self.conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
         dict_cur.execute(f'SELECT start_at from users where user_id = \'{self.user_data.id}\'')
         rec = dict_cur.fetchone()
-        self.cursor.close()
-        self.conn.close()
-        start_datetime = datetime.datetime.combine(datetime.date(1970, 1, 1), rec[0])
-        end_datetime = datetime.datetime.combine(datetime.date(1970, 1, 1), end_at)
+        dict_cur.close()
+        start_datetime = datetime.combine(date(1970, 1, 1), rec[0])
+        end_datetime = datetime.combine(date(1970, 1, 1), end_at.time())
 
         time_difference = end_datetime - start_datetime
 
