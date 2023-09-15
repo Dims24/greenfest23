@@ -12,7 +12,7 @@ import keyboard.main_keyboard as keyboard
 import database.db_aa as db
 from Export.export import export_data
 
-bot = telebot.TeleBot('6537930874:AAF2-_i2wtR_fECWv3JANrofBLMOibG-WzE')
+bot = telebot.TeleBot('6616549457:AAH_N8dlV20ihCGKxaOhqUNR9HgV6Kn5fYM')
 
 
 def timeppp(message):
@@ -33,9 +33,10 @@ incorrect = ['Хм.. даю ещё шанс 😊',
              'Давай-давай! Я в тебя верю!',
              ]
 menedjer = 64783167
-menedjer_1 = 703608663
+menedjer_1 = 64783167
+# menedjer_1 = 703608663
 
-admin_id = '64783167'
+admin_id = '703608663'
 
 
 # 703608663
@@ -231,9 +232,9 @@ def fire1_1(message):
                                  'Ответ напишите в формате: Ответ_\n'
                                  , parse_mode="Markdown", reply_markup=keyboard.keyboard_miss())
                 bot.send_animation(message.chat.id,
-                                   'CgACAgIAAxkBAAIBymUBuGq1gX6rUNMxkQ0ur_OhTD9HAAJtNQAC23IQSJkRFhX3xlARMAQ')
+                                   'CgACAgIAAxkBAANkZQNFLNq22IubCJZooUDvhgLzHR0AAug_AALfaRhIfD7X0-4D5UwwBA')
                 bot.send_photo(message.chat.id,
-                               'AgACAgIAAxkBAAOEZQF1oHWShV1Rck_ako-srlwsGakAAnfMMRvbcghIdYpfVx2b-iABAAMCAAN5AAMwBA')
+                               'AgACAgIAAxkBAANlZQNFU4MEVCoQ6nRkp6eJ8DpkoTIAArTMMRvfaRhIH4jTywJuzJ4BAAMCAAN5AAMwBA')
                 bot.register_next_step_handler(message, fire1_3)
         else:
             bot.send_message(message.chat.id,
@@ -262,9 +263,9 @@ def fire1_2(message):
                              'Ответ напишите в формате: Ответ_\n'
                              , parse_mode="Markdown")
             bot.send_animation(message.chat.id,
-                               'CgACAgIAAxkBAAP6ZQGC445qkv0soM-YQRWZLmYuS6IAAuQ1AALbcghIP5UtsByzqiUwBA')
+                               'CgACAgIAAxkBAANkZQNFLNq22IubCJZooUDvhgLzHR0AAug_AALfaRhIfD7X0-4D5UwwBA')
             bot.send_photo(message.chat.id,
-                           'AgACAgIAAxkBAAOEZQF1oHWShV1Rck_ako-srlwsGakAAnfMMRvbcghIdYpfVx2b-iABAAMCAAN5AAMwBA'
+                           'AgACAgIAAxkBAANlZQNFU4MEVCoQ6nRkp6eJ8DpkoTIAArTMMRvfaRhIH4jTywJuzJ4BAAMCAAN5AAMwBA'
                            , reply_markup=keyboard.keyboard_miss())
             bot.register_next_step_handler(message, fire1_3)
         else:
@@ -280,7 +281,6 @@ def fire1_3(message):
         if message.text.lower() in ['пропустить']:
             miss(message)
         elif message.text.lower() in ['жарко']:
-
             change(message.from_user, "fire_1_2")
             bot.send_message(message.chat.id,
                              '_Молодцы. Вы на шаг ближе к открытию портала в лето_ 👍🏼 _Открывайте меню и '
@@ -319,7 +319,7 @@ def fire2_1(message):
                                  'Отгадайте какой я загадал фильм поменяв все слова названия на противоположные_\n'
                                  , parse_mode="Markdown")
                 bot.send_photo(message.chat.id,
-                               'AgACAgIAAxkBAAIBJmUBiugFuCg3G6NpVznbcwjDUffdAALDzDEb23IISJb6zw4DJyZJAQADAgADeQADMAQ'
+                               'AgACAgIAAxkBAANvZQNHMMoteezQaXGwJSjIDh6R0ZsAAsPMMRvfaRhIWN9K1AtLHqYBAAMCAAN5AAMwBA'
                                , reply_markup=keyboard.keyboard_miss())
                 bot.register_next_step_handler(message, fire2_3)
         else:
@@ -348,7 +348,7 @@ def fire2_2(message):
                              'Отгадайте какой я загадал фильм поменяв все слова названия на противоположные_\n'
                              , parse_mode="Markdown")
             bot.send_photo(message.chat.id,
-                           'AgACAgIAAxkBAAIBJmUBiugFuCg3G6NpVznbcwjDUffdAALDzDEb23IISJb6zw4DJyZJAQADAgADeQADMAQ',
+                           'AgACAgIAAxkBAANvZQNHMMoteezQaXGwJSjIDh6R0ZsAAsPMMRvfaRhIWN9K1AtLHqYBAAMCAAN5AAMwBA',
                            reply_markup=keyboard.keyboard_miss())
             bot.register_next_step_handler(message, fire2_3)
         else:
@@ -402,7 +402,7 @@ def fire3_1(message):
                                  'эмодзи. Попробуйте понять, кто же тут загадан!_\n'
                                  , parse_mode="Markdown")
                 bot.send_photo(message.chat.id,
-                               'AgACAgIAAxkBAAIBJ2UBjOZBmaA8TnO-wj-2ed-clBt5AALRzDEb23IISBUkSaZSFL5DAQADAgADeQADMAQ',
+                               'AgACAgIAAxkBAANwZQNHcAQDoFhSKCl858XEk2KK8D4AAsTMMRvfaRhIYfRxE9YEJDcBAAMCAAN5AAMwBA',
                                reply_markup=keyboard.keyboard_miss())
                 bot.register_next_step_handler(message, fire3_3)
         else:
@@ -426,12 +426,11 @@ def fire3_2(message):
             bot.send_sticker(message.chat.id,
                              'CAACAgIAAxkBAAEKSnZlAhGzFb1BWCzfNqoeKfo9R-uJsAACEjkAArpp-Eub3YPQbW7KUzAE')
             bot.send_message(message.chat.id,
-                             '_Лето самая жаркая пора, так что дам вам свое задание связанное с тем, как вы '
-                             'люди прячетесь от жары. Запираетесь дома, смотрите фильмы под кондиционером. '
-                             'Отгадайте какой я загадал фильм поменяв все слова названия на противоположные_\n'
+                             '_Настоящие коллеги должны понимать друг друга на любом языке! И даже на языке '
+                             'эмодзи. Попробуйте понять, кто же тут загадан!_\n'
                              , parse_mode="Markdown")
             bot.send_photo(message.chat.id,
-                           'AgACAgIAAxkBAAIBJ2UBjOZBmaA8TnO-wj-2ed-clBt5AALRzDEb23IISBUkSaZSFL5DAQADAgADeQADMAQ',
+                           'AgACAgIAAxkBAANwZQNHcAQDoFhSKCl858XEk2KK8D4AAsTMMRvfaRhIYfRxE9YEJDcBAAMCAAN5AAMwBA',
                            reply_markup=keyboard.keyboard_miss())
             bot.register_next_step_handler(message, fire3_3)
         else:
@@ -487,7 +486,7 @@ def air1_1(message):
                                  '_Ответ пишите в формате: *Исполнитель\_Название*_'
                                  , parse_mode="MarkdownV2")
                 bot.send_audio(message.chat.id,
-                               'CQACAgIAAxkBAAIBKGUBkWuoA1DST-Qzl3RIEpjXTA1qAAJaNgAC23IISBbbTcH2f-itMAQ',
+                               'CQACAgIAAxkBAANhZQNEI83wNmfl0nZ-X52gQ62yHRQAAtc_AALfaRhIY51RdvHwfhEwBA',
                                reply_markup=keyboard.keyboard_miss())
                 bot.register_next_step_handler(message, air1_3)
         else:
@@ -517,7 +516,7 @@ def air1_2(message):
                              '_Ответ пишите в формате: *Исполнитель\_Название*_'
                              , parse_mode="MarkdownV2")
             bot.send_audio(message.chat.id,
-                           'CQACAgIAAxkBAAIBKGUBkWuoA1DST-Qzl3RIEpjXTA1qAAJaNgAC23IISBbbTcH2f-itMAQ',
+                           'CQACAgIAAxkBAANhZQNEI83wNmfl0nZ-X52gQ62yHRQAAtc_AALfaRhIY51RdvHwfhEwBA',
                            reply_markup=keyboard.keyboard_miss())
             bot.register_next_step_handler(message, air1_3)
         else:
@@ -536,6 +535,8 @@ def air1_3(message):
             , "фриске_где то лето", "фриске_где-то лето", "жанна фриске лето", "жанна фриске_лето"]:
 
             change(message.from_user, "air_1_2")
+            bot.send_audio(message.chat.id,
+                           'CQACAgIAAxkBAANiZQNEaOphDH5Twf4noQteSyvOHtwAAts_AALfaRhILhxi1CN29JEwBA')
             bot.send_message(message.chat.id,
                              '_Молодцы. Вы на шаг ближе к открытию портала в лето_  👍🏼 _Открывайте меню и '
                              'поехали дальше!_\n'
@@ -574,7 +575,7 @@ def air2_1(message):
                                  '_Ответ пишите в формате: Ответ_'
                                  , parse_mode="Markdown")
                 bot.send_photo(message.chat.id,
-                               'AgACAgIAAxkBAAIBKWUBlDwcYdUovnrlFX9kTANsuOkaAALzzDEb23IISMu7e96jWgpQAQADAgADeQADMAQ'
+                               'AgACAgIAAxkBAANmZQNFwiMCcpqlMiEP4Uge4O8W7PoAArXMMRvfaRhINBbJMhJQdukBAAMCAAN5AAMwBA'
                                , reply_markup=keyboard.keyboard_miss())
                 bot.register_next_step_handler(message, air2_3)
         else:
@@ -604,7 +605,7 @@ def air2_2(message):
                              '_Ответ пишите в формате: Ответ_'
                              , parse_mode="Markdown")
             bot.send_photo(message.chat.id,
-                           'AgACAgIAAxkBAAIBKWUBlDwcYdUovnrlFX9kTANsuOkaAALzzDEb23IISMu7e96jWgpQAQADAgADeQADMAQ',
+                           'AgACAgIAAxkBAANmZQNFwiMCcpqlMiEP4Uge4O8W7PoAArXMMRvfaRhINBbJMhJQdukBAAMCAAN5AAMwBA',
                            reply_markup=keyboard.keyboard_miss())
             bot.register_next_step_handler(message, air2_3)
         else:
@@ -622,7 +623,7 @@ def air2_3(message):
         elif message.text.lower() in ["памятник", "памятник славскому", "славский"]:
             change(message.from_user, "air_2_2")
             bot.send_photo(message.chat.id,
-                           'AgACAgIAAxkBAAIBKmUBlUs-i1Gvx_tLykL6AYYDSYHYAAIGzTEb23IISCjL08JPBWSGAQADAgADeQADMAQ')
+                           'AgACAgIAAxkBAANnZQNF6HUm2q5v8l5E0BHNr_rPXGAAArbMMRvfaRhIwE6RThQPjo8BAAMCAAN5AAMwBA')
             bot.send_message(message.chat.id,
                              '_Молодцы. Вы на шаг ближе к открытию портала в лето_  👍🏼 _Открывайте меню и '
                              'поехали дальше!_\n'
@@ -662,7 +663,7 @@ def earth1_1(message):
                                  '_Ответ пишите в формате: Ответ_'
                                  , parse_mode="Markdown")
                 bot.send_photo(message.chat.id,
-                               'AgACAgIAAxkBAAIBK2UBmu2ynsok1MeDGyX-dIfABcAQAAIC0jEb23IQSN71hr0nhKHHAQADAgADeQADMAQ',
+                               'AgACAgIAAxkBAANjZQNEsX97dkW853KxjTSK8crnL24AArHMMRvfaRhI_R89gjGad54BAAMCAAN5AAMwBA',
                                reply_markup=keyboard.keyboard_miss())
                 bot.register_next_step_handler(message, earth1_3)
         else:
@@ -693,7 +694,7 @@ def earth1_2(message):
                              '_Ответ пишите в формате: Ответ_'
                              , parse_mode="Markdown")
             bot.send_photo(message.chat.id,
-                           'AgACAgIAAxkBAAIBK2UBmu2ynsok1MeDGyX-dIfABcAQAAIC0jEb23IQSN71hr0nhKHHAQADAgADeQADMAQ',
+                           'AgACAgIAAxkBAANjZQNEsX97dkW853KxjTSK8crnL24AArHMMRvfaRhI_R89gjGad54BAAMCAAN5AAMwBA',
                            reply_markup=keyboard.keyboard_miss())
             bot.register_next_step_handler(message, earth1_3)
         else:
@@ -750,7 +751,7 @@ def earth2_1(message):
                                  '_Ответ присылайте в формате: Крылатое выражение _'
                                  , parse_mode="Markdown")
                 bot.send_photo(message.chat.id,
-                               'AgACAgIAAxkBAAIBLGUBnQOOGLmDoOyoAfquJBPHzc8HAAIz0jEb23IQSFCr9Se3d6WHAQADAgADeQADMAQ'
+                               'AgACAgIAAxkBAANuZQNHA3LSpjrxNWO2yXHbEgAB8qgLAALCzDEb32kYSMXmjjNkyH-fAQADAgADeQADMAQ'
                                , reply_markup=keyboard.keyboard_miss())
                 bot.register_next_step_handler(message, earth2_3)
         else:
@@ -769,7 +770,7 @@ def earth2_2(message):
     try:
         if message.text.lower() in ['пропустить']:
             miss(message)
-        elif message.text.lower() in ['время']:
+        elif message.text.lower() in ['инновация']:
             change(message.from_user, "earth_2_1")
             bot.send_sticker(message.chat.id,
                              'CAACAgIAAxkBAAEKSnhlAhG21UFRc8vSfLg0VPbs6e4kHgACXzYAAkGH-EsS0BG0h5b3iTAE')
@@ -782,7 +783,7 @@ def earth2_2(message):
                              '_Ответ присылайте в формате: Крылатое выражение _'
                              , parse_mode="Markdown")
             bot.send_photo(message.chat.id,
-                           'AgACAgIAAxkBAAIBLGUBnQOOGLmDoOyoAfquJBPHzc8HAAIz0jEb23IQSFCr9Se3d6WHAQADAgADeQADMAQ',
+                           'AgACAgIAAxkBAANuZQNHA3LSpjrxNWO2yXHbEgAB8qgLAALCzDEb32kYSMXmjjNkyH-fAQADAgADeQADMAQ',
                            reply_markup=keyboard.keyboard_miss())
             bot.register_next_step_handler(message, earth2_3)
         else:
@@ -797,7 +798,7 @@ def earth2_3(message):
     try:
         if message.text.lower() in ['пропустить']:
             miss(message)
-        elif message.text.lower() in ["гимн"]:
+        elif message.text.lower() in ["одна нога здесь, другая там","одна нога здесь другая там"]:
             change(message.from_user, "earth_2_2")
             bot.send_message(message.chat.id,
                              '_Молодцы. Вы на шаг ближе к открытию портала в лето_  👍🏼 _Открывайте меню и '
@@ -1017,9 +1018,9 @@ def water1_1(message):
                                  '_Ответ присылайте в формате: слово. В одном сообщении ответ на один вопрос._'
                                  , parse_mode="Markdown")
                 bot.send_photo(message.chat.id,
-                               'AgACAgIAAxkBAAIBLWUBoJC3KwbXehKn7SuoDNrKrPe0AAJC0jEb23IQSCt3cz2nSAABDwEAAwIAA3kAAzAE')
+                               'AgACAgIAAxkBAANoZQNGKT3Y5Hee6RgR8PNF0est7j0AArvMMRvfaRhIpF7yIfo3B_gBAAMCAAN5AAMwBA')
                 bot.send_document(message.chat.id,
-                                  'BQACAgIAAxkBAAIBLmUBoTsZsWP2hMxHHI1wktzH2S8NAAJpNAAC23IQSHT41Md5G-AIMAQ',
+                                  'BQACAgIAAxkBAANpZQNGVUmNoFrI8z47nPvSwxCN_gAD-j8AAt9pGEhZlNSqBhrWKTAE',
                                   reply_markup=keyboard.keyboard_miss())
                 bot.register_next_step_handler(message, water1_3)
         else:
@@ -1052,9 +1053,9 @@ def water1_2(message):
                              '_Ответ присылайте в формате: слово. В одном сообщении ответ на один вопрос._'
                              , parse_mode="Markdown")
             bot.send_photo(message.chat.id,
-                           'AgACAgIAAxkBAAIBLWUBoJC3KwbXehKn7SuoDNrKrPe0AAJC0jEb23IQSCt3cz2nSAABDwEAAwIAA3kAAzAE')
+                           'AgACAgIAAxkBAANoZQNGKT3Y5Hee6RgR8PNF0est7j0AArvMMRvfaRhIpF7yIfo3B_gBAAMCAAN5AAMwBA')
             bot.send_document(message.chat.id,
-                              'BQACAgIAAxkBAAIBLmUBoTsZsWP2hMxHHI1wktzH2S8NAAJpNAAC23IQSHT41Md5G-AIMAQ',
+                              'BQACAgIAAxkBAANpZQNGVUmNoFrI8z47nPvSwxCN_gAD-j8AAt9pGEhZlNSqBhrWKTAE',
                               reply_markup=keyboard.keyboard_miss())
             bot.register_next_step_handler(message, water1_3)
         else:
@@ -1152,10 +1153,10 @@ def final_water1_3(message):
 
 # -------------Вода 2---------------------------
 photo = [
-    'AgACAgIAAxkBAAIBL2UBp4PVb0RnPemQeAAB0AQ_01_b0QACatIxG9tyEEiFzGMpDpplIQEAAwIAA3kAAzAE',
-    'AgACAgIAAxkBAAIBMGUBp5qV6-B9b8JsgguVrPx4v4RKAAJr0jEb23IQSLwWt8P8s2LQAQADAgADeQADMAQ',
-    'AgACAgIAAxkBAAIBMWUBp7SbEFy-jwi70_gaoqGzrQk9AAJu0jEb23IQSIh00uzci50-AQADAgADeQADMAQ',
-    'AgACAgIAAxkBAAIBMmUBp8xuOKETJHaR9VM8KRwRfQS5AAJv0jEb23IQSOO9DPyZE_33AQADAgADeQADMAQ'
+    'AgACAgIAAxkBAANqZQNGoCwXHRbr07W5oO-SNzQKdAkAAr3MMRvfaRhIfD23k19KTnQBAAMCAAN5AAMwBA',
+    'AgACAgIAAxkBAANrZQNGrQRQ6Ce-rKXPfDcNSJwAAUB-AAK-zDEb32kYSAUtPL1xtnSxAQADAgADeQADMAQ',
+    'AgACAgIAAxkBAANsZQNGwZJahYADIQWkJsRq8uJzWOwAAr_MMRvfaRhIlyURJ6UWXKEBAAMCAAN5AAMwBA',
+    'AgACAgIAAxkBAANtZQNG0I8ZjBzlp6G_GzKqjPo2olIAAsDMMRvfaRhItS-J2dm2g-cBAAMCAAN5AAMwBA'
 ]
 
 
