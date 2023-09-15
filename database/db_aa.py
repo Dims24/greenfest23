@@ -9,11 +9,11 @@ class Data:
 
     def __init__(self, user_data):
         self.user_data = user_data
-        self.conn = self.getConn()
-        self.cursor = self.getCursor()
+        self.conn = self.get_conn()
+        self.cursor = self.get_cursor()
 
-    def getConn(self):
-        conn = psycopg2.connect(
+    def get_conn(self):
+        return psycopg2.connect(
             dbname='greenfest-bot',
             user='greenfest-bot',
             password='greenfest-bot',
@@ -21,11 +21,8 @@ class Data:
             port='5001'
         )
 
-        return conn
-
-    def getCursor(self):
-        cursor = self.conn.cursor()
-        return cursor
+    def get_cursor(self):
+        return self.conn.cursor()
 
     def create(self):
         check = f'select exists(SELECT user_id FROM users WHERE user_id = \'{self.user_data.id}\')'
