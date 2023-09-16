@@ -111,17 +111,15 @@ class Data:
     def final(self):
         dict_cur = self.conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
         current_date_time = datetime.now()
-        delta = self.delta(current_date_time)
+        delta = self.delta(dict_cur,current_date_time)
         update_query = "update users set end_at = %s, delta = %s where user_id = %s"
         dict_cur.execute(update_query, (current_date_time, delta, str(self.user_data.id)))
         dict_cur.close()
         self.conn.commit()
 
-    def delta(self, end_at):
-        dict_cur = self.conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
+    def delta(self, dict_cur, end_at):
         dict_cur.execute(f'SELECT start_at from users where user_id = \'{self.user_data.id}\'')
         rec = dict_cur.fetchone()
-        dict_cur.close()
         start_datetime = datetime.combine(date(1970, 1, 1), rec[0])
         end_datetime = datetime.combine(date(1970, 1, 1), end_at.time())
 

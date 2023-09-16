@@ -32,11 +32,11 @@ incorrect = ['Хм.. даю ещё шанс 😊',
              'Так-так-так, почти! Но нет!',
              'Давай-давай! Я в тебя верю!',
              ]
-menedjer = 64783167
-menedjer_1 = 64783167
+menedjer = 25530691
+menedjer_1 = 25530691
 # menedjer_1 = 703608663
 
-admin_id = '1248171558'
+admin_id = '703608663'
 
 
 # 703608663
@@ -831,7 +831,7 @@ def earth3_1(message):
                 bot.register_next_step_handler(message, earth3_3)
         else:
             bot.send_photo(message.chat.id,
-                           'AgACAgIAAxkBAAIBNmUED9N6yQWj_inPFHnm6YHFhHN6AALdzDEb32kgSM_3scvn3ePjAQADAgADeQADMAQ',
+                           'AgACAgIAAxkBAAIFKGUEysJFdYXdNU0aKTvIYiG1b0XbAAKl0DEb32koSJzlm8qQ_mzlAQADAgADeQADMAQ',
                            caption='_Пройдите испытание и введите код_', parse_mode="Markdown"
                            , reply_markup=keyboard.keyboard_miss())
             bot.register_next_step_handler(message, earth3_2)
@@ -872,6 +872,10 @@ def earth3_3(message):
         if message.content_type == 'text':
             if message.text.lower() in ['пропустить']:
                 miss(message)
+            else:
+                bot.send_chat_action(message.chat.id, 'typing')
+                bot.send_message(message.chat.id, random.choice(incorrect))
+                bot.register_next_step_handler(message, earth3_3)
         elif message.content_type == 'sticker':
             if message.sticker.file_unique_id == "AgADBTwAApA4-Es":
                 if check_answer(message.chat, 'answer_sticker', "answer_1"):
@@ -962,7 +966,6 @@ def earth3_3(message):
             bot.send_chat_action(message.chat.id, 'typing')
             bot.send_message(message.chat.id, random.choice(incorrect))
             bot.register_next_step_handler(message, earth3_3)
-
     except Exception as error:
         print(f'earth3_3: {error}')
         bot.register_next_step_handler(message, earth3_3)
@@ -977,7 +980,6 @@ def final_earth3_3(message):
                          reply_markup=keyboard.keyboard(message.from_user))
         bot.send_sticker(message.chat.id, get_need_sticker(message, 'earth'))
         if check_final(message.from_user):
-            print(1)
             end(message)
     except Exception as error:
         print(f'final_earth3_3: {error}')
@@ -1210,21 +1212,31 @@ def water2_2(message):
 
 def water2_3(message):
     try:
+        print(message)
         if message.content_type == 'text':
             if message.text.lower() in ['пропустить']:
                 miss(message)
         elif message.content_type == 'photo':
+
             keyboard_inline = types.InlineKeyboardMarkup()
             confirm_button = types.InlineKeyboardButton('Подтвердить', callback_data='confirm')
             cancel_button = types.InlineKeyboardButton('Отменить', callback_data='cancel')
             keyboard_inline.row(confirm_button, cancel_button)
+            user_data = {
+                "id": message.from_user.id,
+                "username": message.from_user.username,
+                "is_bot": message.from_user.is_bot,
+                "first_name": message.from_user.first_name,
+                "language_code": "ru"
+            }
+            user_data_json = json.dumps(user_data, ensure_ascii=False)
             bot.send_photo(admin_id, message.photo[-1].file_id,
                            caption=f'Подтвердите отправку этой фотографии для "{message.from_user.first_name}":\n'
                                    f'\n'
                                    f'Задание Вода 2:\n'
                                    f'\n'
-                                   f'[ {message.chat} ]'
-                                   f'#question_4#',
+                                   f'[ {user_data_json} ]',
+                           # f'#question_4#',
                            reply_markup=keyboard_inline)
 
             @bot.callback_query_handler(func=lambda call: True)
@@ -1232,26 +1244,67 @@ def water2_3(message):
                 text = call.message.caption
                 match = re.search(r'\[(.*?)\]', text)
                 question = re.search(r'\#(.*?)\#', text)
-                text = match.group(1).replace("'", "\"")
+                text = match.group(1)[1:].replace("'", "\"")
                 text_end = text.replace("None", "null")
                 value = json.loads(text_end)
-                chat = types.Chat.de_json(value)
+                chat = types.User.de_json(value)
                 if call.data == 'confirm':
-                    bot.send_message(call.from_user.id, f'Фотография подтверждена у \"{message.from_user.first_name}\"')
+                    bot.send_message(call.from_user.id, f'Фотография подтверждена у \"{chat.first_name}\"')
                     # bot.delete_message(call.from_user.id, call.message.id)
-                    change(message.from_user, "water_2_2")
+                    change(chat, "water_2_2")
                     bot.send_message(chat.id,
                                      '_Молодцы. Вы на шаг ближе к открытию портала в лето_ 👍🏼 _Открывай меню, '
                                      'поехали дальше_', parse_mode="Markdown",
                                      reply_markup=keyboard.keyboard(message.from_user))
-                    bot.send_sticker(message.chat.id, get_need_sticker(message, 'water'))
+
+                    bot.send_sticker(chat.id, get_need_sticker(chat, 'water'))
                     if check_final(chat):
-                        end(message)
+                        bot.send_sticker(chat.id,
+                                         "CAACAgIAAxkBAAEKSn9lAhICYzX0fZrQl-hmN_Z5TwjkYgACF0YAAqUFEEjYj5lzUIFNxjAE")
+                        bot.send_sticker(chat.id,
+                                         "CAACAgIAAxkBAAEKSkZlAgABoWZXxef8hvXfWYJNdtSikK4AAio0AAK5UQABSAOfBYq7prLiMAQ")
+                        bot.send_message(chat.id,
+                                         '_Вау! Вы справились со всем испытаниями и зарядили все стихии. Надеемся, '
+                                         'ваши коллеги такие же целеустремленные и классные, ведь только вместе мы'
+                                         ' откроем портал в лето. Можете наблюдать за общим прогрессом на центральное'
+                                         ' сцене и гордиться своими успехами.\n'
+                                         '\n'
+                                         'Впереди ещё очень много интересного. Желаю тебе приятного отдыха на пляже '
+                                         '“Улетай”_\n',
+                                         parse_mode="Markdown", disable_web_page_preview=True)
                 elif call.data == 'cancel':
                     bot.send_message(chat.id, 'Хм.. даю ещё шанс 😊')
                     # bot.delete_message(call.from_user.id, call.message.id)
-                    bot.send_message(call.from_user.id, f'Фотография отменена у \"{message.from_user.first_name}\"')
-                    bot.register_next_step_handler(message, water2_3)
+                    bot.send_message(call.from_user.id, f'Фотография отменена у \"{chat.first_name}\"')
+                    fake_chat = types.Chat(id=chat.id, type="private", username=chat.username,
+                                           first_name=chat.first_name)
+
+                    data = {
+                        "message_id": 1,
+                        "from": {
+                            "id": chat.id,
+                            "is_bot": chat.is_bot,
+                            "first_name": chat.first_name,
+                            "username": chat.username,
+                            "language_code": chat.language_code
+                        },
+                        "chat": {
+                            "id": chat.id,
+                            "first_name": chat.first_name,
+                            "username": chat.username,
+                            "type": "private"
+                        },
+                        "date": 1694822792,
+                        "text": "Стал"
+                    }
+
+                    json_data = json.dumps(data, indent=3, ensure_ascii=False)
+
+                    # Создайте фейковое сообщение (message) с фейковыми from_user и chat
+                    fake_message = types.Message(message_id=1, date=1234567890, chat=chat, from_user=chat,
+                                                 content_type="text", options=[], json_string=json_data )
+                    print(fake_message)
+                    bot.register_next_step_handler(fake_message, water2_3)
         else:
             bot.send_chat_action(message.chat.id, 'typing')
             bot.send_message(message.chat.id, 'Нужно фото\n',
@@ -1263,6 +1316,7 @@ def water2_3(message):
 
 
 def end(message):
+    markup = telebot.types.ReplyKeyboardRemove()
     bot.send_sticker(message.chat.id,
                      "CAACAgIAAxkBAAEKSn9lAhICYzX0fZrQl-hmN_Z5TwjkYgACF0YAAqUFEEjYj5lzUIFNxjAE")
     bot.send_sticker(message.chat.id,
@@ -1274,7 +1328,7 @@ def end(message):
                                       '\n'
                                       'Впереди ещё очень много интересного. Желаю тебе приятного отдыха на пляже '
                                       '“Улетай”_\n',
-                     parse_mode="Markdown", disable_web_page_preview=True)
+                     parse_mode="Markdown", disable_web_page_preview=True, reply_markup=markup)
     bot.register_next_step_handler(message, end)
 
 
@@ -1352,7 +1406,10 @@ def set_phone(message):
 
 
 def get_need_sticker(message, task):
-    user = db.Data(message.from_user)
+    if hasattr(message, 'from_user'):
+        user = db.Data(message.from_user)
+    else:
+        user = db.Data(message)
     table = user.table()
     table = table[2:]
     if task == 'fire':
