@@ -2,7 +2,7 @@ import psycopg2
 from contextlib import closing
 from psycopg2.extras import DictCursor
 import datetime
-from datetime import datetime, date, time
+from datetime import datetime, date
 
 
 class Data:

@@ -32,11 +32,11 @@ incorrect = ['Хм.. даю ещё шанс 😊',
              'Так-так-так, почти! Но нет!',
              'Давай-давай! Я в тебя верю!',
              ]
-menedjer = 25530691
-menedjer_1 = 25530691
+menedjer = 1248171558
+menedjer_1 = 1248171558
 # menedjer_1 = 703608663
 
-admin_id = '703608663'
+admin_id = '1248171558'
 
 
 # 703608663
@@ -122,10 +122,10 @@ def export(message):
         print(f'export: {error}')
 
 
-@bot.message_handler(content_types=['document', 'photo', 'audio', 'video', 'animation', 'voice', 'sticker'])
-def take(message):
-    print(message)
-    bot.delete_message(message.chat.id, message.message_id)
+# @bot.message_handler(content_types=['document', 'photo', 'audio', 'video', 'animation', 'voice', 'sticker'])
+# def take(message):
+#     print(message)
+#     bot.delete_message(message.chat.id, message.message_id)
 
 
 # -------------Ввод имени---------------------------
@@ -1212,12 +1212,10 @@ def water2_2(message):
 
 def water2_3(message):
     try:
-        print(message)
         if message.content_type == 'text':
             if message.text.lower() in ['пропустить']:
                 miss(message)
         elif message.content_type == 'photo':
-
             keyboard_inline = types.InlineKeyboardMarkup()
             confirm_button = types.InlineKeyboardButton('Подтвердить', callback_data='confirm')
             cancel_button = types.InlineKeyboardButton('Отменить', callback_data='cancel')
@@ -1250,7 +1248,7 @@ def water2_3(message):
                 chat = types.User.de_json(value)
                 if call.data == 'confirm':
                     bot.send_message(call.from_user.id, f'Фотография подтверждена у \"{chat.first_name}\"')
-                    # bot.delete_message(call.from_user.id, call.message.id)
+                    bot.delete_message(call.from_user.id, call.message.id)
                     change(chat, "water_2_2")
                     bot.send_message(chat.id,
                                      '_Молодцы. Вы на шаг ближе к открытию портала в лето_ 👍🏼 _Открывай меню, '
@@ -1259,6 +1257,7 @@ def water2_3(message):
 
                     bot.send_sticker(chat.id, get_need_sticker(chat, 'water'))
                     if check_final(chat):
+                        markup = telebot.types.ReplyKeyboardRemove()
                         bot.send_sticker(chat.id,
                                          "CAACAgIAAxkBAAEKSn9lAhICYzX0fZrQl-hmN_Z5TwjkYgACF0YAAqUFEEjYj5lzUIFNxjAE")
                         bot.send_sticker(chat.id,
@@ -1271,14 +1270,11 @@ def water2_3(message):
                                          '\n'
                                          'Впереди ещё очень много интересного. Желаю тебе приятного отдыха на пляже '
                                          '“Улетай”_\n',
-                                         parse_mode="Markdown", disable_web_page_preview=True)
+                                         parse_mode="Markdown", disable_web_page_preview=True,reply_markup=markup)
                 elif call.data == 'cancel':
                     bot.send_message(chat.id, 'Хм.. даю ещё шанс 😊')
-                    # bot.delete_message(call.from_user.id, call.message.id)
+                    bot.delete_message(call.from_user.id, call.message.id)
                     bot.send_message(call.from_user.id, f'Фотография отменена у \"{chat.first_name}\"')
-                    fake_chat = types.Chat(id=chat.id, type="private", username=chat.username,
-                                           first_name=chat.first_name)
-
                     data = {
                         "message_id": 1,
                         "from": {
@@ -1300,7 +1296,6 @@ def water2_3(message):
 
                     json_data = json.dumps(data, indent=3, ensure_ascii=False)
 
-                    # Создайте фейковое сообщение (message) с фейковыми from_user и chat
                     fake_message = types.Message(message_id=1, date=1234567890, chat=chat, from_user=chat,
                                                  content_type="text", options=[], json_string=json_data )
                     print(fake_message)
